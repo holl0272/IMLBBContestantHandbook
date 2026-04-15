@@ -1,0 +1,3324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IML Contestant Handbook</title>
+  <!--
+    ╔══════════════════════════════════════════════════════════════╗
+    ║  IML CONTESTANT HANDBOOK                                     ║
+    ║                                                              ║
+    ║  DEV  mode:  open index.html in browser — config.js is      ║
+    ║              loaded automatically from the same folder.     ║
+    ║                                                              ║
+    ║  DIST mode:  run  python build.py  → deploy dist/ folder.   ║
+    ║              config.js is inlined; no extra file needed.    ║
+    ║                                                              ║
+    ║  TO UPDATE FOR A NEW YEAR:  edit config.js only.            ║
+    ╚══════════════════════════════════════════════════════════════╝
+  -->
+  <!-- ── Section data files (edit these each year, not index.html) ── -->
+  <script src="data/meta.js"></script>
+  <script src="data/sheets.js"></script>
+  <script src="data/venue.js"></script>
+  <script src="data/welcome.js"></script>
+  <script src="data/letters.js"></script>
+  <script src="data/events.js"></script>
+  <script src="data/team.js"></script>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:         #080808;
+      --blue:       #1b4fa8;
+      --blue-mid:   #2260cc;
+      --blue-light: #5b8fe8;
+      --white:      #ffffff;
+      --off-white:  rgba(255,255,255,0.88);
+      --muted:      rgba(255,255,255,0.50);
+      --border:     rgba(255,255,255,0.08);
+      --font:       'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg); color: var(--white);
+      font-family: var(--font); overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 900;
+      background: rgba(8,8,8,0.94); backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 32px; height: 56px;
+    }
+    .nav-brand { font-size: 15px; font-weight: 700; letter-spacing: 4px;
+      color: var(--white); text-decoration: none; text-transform: uppercase; }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 11px;
+      letter-spacing: 2px; text-transform: uppercase; transition: color .2s; }
+    .nav-links a:hover { color: var(--white); }
+
+    /* ── COVER LOGO ── */
+    .cover-logo {
+      width: clamp(140px, 20vw, 260px);
+      height: auto;
+      display: block;
+      margin: 0 auto 36px;
+    }
+
+    /* ── COVER ── */
+    #cover {
+      min-height: 100vh; padding-top: 56px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      background: radial-gradient(ellipse 80% 60% at 50% 50%,
+        rgba(27,79,168,.38) 0%, transparent 70%), var(--bg);
+      text-align: center; position: relative; overflow: hidden;
+    }
+    #cover::before { content:''; position:absolute;
+      width:600px; height:600px; border-radius:50%;
+      border:1px solid rgba(27,79,168,.18);
+      top:50%; left:50%; transform:translate(-50%,-50%); pointer-events:none; }
+    #cover::after { content:''; position:absolute;
+      width:920px; height:920px; border-radius:50%;
+      border:1px solid rgba(27,79,168,.07);
+      top:50%; left:50%; transform:translate(-50%,-50%); pointer-events:none; }
+    .cover-inner { position:relative; z-index:1; padding:40px 24px; }
+    .cover-eyebrow { font-size:11px; letter-spacing:6px; text-transform:uppercase;
+      color:var(--blue-light); margin-bottom:20px; }
+    .cover-title { font-size:clamp(52px,10vw,130px); font-weight:700;
+      line-height:.92; letter-spacing:-2px; text-transform:uppercase; }
+    .cover-title em { font-style:normal; color:var(--blue-light); }
+    .cover-divider { width:60px; height:2px; background:var(--blue); margin:28px auto; }
+    .cover-meta { font-size:13px; letter-spacing:4px; color:var(--muted);
+      text-transform:uppercase; line-height:2.2; }
+    .cover-scroll { position:absolute; bottom:32px; left:50%; transform:translateX(-50%);
+      display:flex; flex-direction:column; align-items:center; gap:8px;
+      color:var(--muted); font-size:10px; letter-spacing:3px; text-transform:uppercase; }
+    .cover-scroll-line { width:1px; height:40px;
+      background:linear-gradient(to bottom,transparent,var(--blue-light)); }
+
+    /* ── SECTION HEADER ── */
+    .s-header { text-align:center; padding:80px 24px 36px; }
+    .s-num { display:inline-block; font-size:10px; letter-spacing:5px;
+      text-transform:uppercase; color:var(--blue-light);
+      border:1px solid rgba(91,143,232,.3); padding:4px 12px; margin-bottom:20px; }
+    .s-title { font-size:clamp(32px,5vw,72px); font-weight:700;
+      letter-spacing:6px; text-transform:uppercase; }
+
+    /* ── PHOTO GRID (page 15 style) ── */
+    #class-grid { padding-bottom: 48px; }
+    #photo-grid {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 2px; padding: 0 2px;
+    }
+    .grid-cell {
+      position: relative; aspect-ratio: 3/4; overflow: hidden;
+      background: var(--blue); cursor: pointer;
+    }
+    .grid-cell img {
+      width:100%; height:100%; object-fit:cover; object-position:top;
+      display:block; transition:transform .4s ease;
+    }
+    .grid-cell:hover img { transform:scale(1.06); }
+    .grid-name-always {
+      position:absolute; bottom:0; left:0; right:0;
+      background:linear-gradient(transparent,rgba(0,0,0,.8));
+      padding:16px 4px 5px; font-size:9px; font-weight:700;
+      letter-spacing:.3px; text-align:center; line-height:1.2;
+    }
+    .grid-placeholder { width:100%; height:100%; display:flex;
+      align-items:center; justify-content:center;
+      font-size:42px; background:var(--blue); }
+
+    /* ── CONTESTANT PROFILES ── */
+    #contestants { background: var(--bg); }
+    .page-block { padding:60px 5vw 72px; border-top:1px solid var(--border); }
+    .page-block-header { font-size:clamp(11px,1.2vw,13px); font-weight:700;
+      letter-spacing:8px; text-transform:uppercase; color:var(--muted);
+      text-align:center; margin-bottom:56px; }
+    .contestant-trio { display:flex; flex-direction:column; gap:0; }
+    .contestant-entry {
+      display:grid; grid-template-columns:260px 1fr;
+      gap:48px; align-items:start; padding:56px 0;
+      scroll-margin-top:80px;
+    }
+    .contestant-entry + .contestant-entry { border-top:1px solid var(--border); }
+
+    /* Photo frame */
+    .c-photo-wrap {
+      position:relative; aspect-ratio:2/3; overflow:hidden;
+      background:var(--blue); flex-shrink:0;
+    }
+    .c-photo-wrap img { width:100%; height:100%; object-fit:cover;
+      object-position:top center; display:block; }
+    .c-photo-wrap img[data-errored] { display:none; }
+    .c-photo-placeholder {
+      position:absolute; inset:0;
+      display:flex; align-items:center; justify-content:center;
+      background:var(--blue); font-size:60px;
+    }
+    .c-photo-placeholder.hidden { display:none; }
+
+    /* Contestant text */
+    .c-text { padding-top:4px; }
+    .c-name-row { display:flex; align-items:flex-start;
+      justify-content:space-between; gap:12px; margin-bottom:10px; }
+    .c-name { font-size:clamp(28px,3.5vw,52px); font-weight:700;
+      line-height:1.0; letter-spacing:-1px; }
+    .c-flag { font-size:clamp(24px,3vw,44px); flex-shrink:0; line-height:1; }
+    .c-title-tag { font-size:11px; letter-spacing:3px; text-transform:uppercase;
+      color:var(--blue-light); margin-bottom:18px; }
+    .c-bio { font-size:clamp(14px,1.4vw,17px); line-height:1.78;
+      color:var(--off-white); }
+
+    /* ── JUDGES ── */
+    #judges, #tallymasters { padding:0 5vw 80px; border-top:1px solid var(--border); }
+    .judges-grid { display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(330px,1fr)); gap:24px; }
+    .judge-card {
+      display:grid; grid-template-columns:120px 1fr; gap:20px;
+      padding:24px; border:1px solid var(--border);
+      background:rgba(255,255,255,.025); transition:border-color .25s;
+      text-decoration:none; color:inherit;
+    }
+    .judge-card:hover { border-color:rgba(91,143,232,.45); }
+    .judge-photo-wrap {
+      aspect-ratio:2/3; overflow:hidden; background:var(--blue);
+      align-self:start;
+    }
+    .judge-photo-wrap img { width:100%; height:100%; object-fit:cover;
+      object-position:top; display:block; }
+    .judge-body { display:flex; flex-direction:column; gap:7px; }
+    .judge-tag { font-size:10px; letter-spacing:3px; text-transform:uppercase;
+      color:var(--blue-light); }
+    .judge-name { font-size:18px; font-weight:700; line-height:1.2; }
+    .judge-location { font-size:11px; letter-spacing:.5px; color:var(--muted); }
+    .judge-bio { font-size:13px; line-height:1.7; color:var(--off-white); margin-top:2px; }
+    .judge-link { font-size:10px; letter-spacing:2px; color:var(--blue-light);
+      text-transform:uppercase; margin-top:6px; text-decoration:none; }
+    .judge-link:hover { color:var(--white); }
+
+    /* ── IML TEAM ── */
+    #iml-team { padding:0 5vw 100px; border-top:1px solid var(--border); }
+
+    /* Full profile card (when photo + bio available) */
+    .tm-profile {
+      display:grid; grid-template-columns:220px 1fr;
+      gap:40px; align-items:start; padding:48px 0;
+      border-bottom:1px solid var(--border);
+    }
+    .tm-profile:last-child { border-bottom:none; }
+    .tm-photo-wrap {
+      position:relative; aspect-ratio:2/3; overflow:hidden;
+      background:var(--blue); flex-shrink:0;
+    }
+    .tm-photo-wrap img { width:100%; height:100%; object-fit:cover;
+      object-position:top center; display:block; }
+    .tm-photo-placeholder {
+      position:absolute; inset:0; display:flex; align-items:center;
+      justify-content:center; background:var(--blue); font-size:52px; }
+    .tm-photo-placeholder.hidden { display:none; }
+    .tm-body { padding-top:4px; }
+    .tm-role-tag { font-size:11px; letter-spacing:3px; text-transform:uppercase;
+      color:var(--blue-light); margin-bottom:10px; }
+    .tm-name { font-size:clamp(24px,3vw,44px); font-weight:700;
+      line-height:1.05; letter-spacing:-1px; margin-bottom:16px; }
+    .tm-bio { font-size:clamp(14px,1.4vw,16px); line-height:1.78;
+      color:var(--off-white); }
+
+    /* Compact card (name+role only, no photo) */
+    .tm-compact-grid { display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:12px; }
+    .tm-compact-card { padding:20px 22px 22px; border:1px solid var(--border);
+      background:rgba(255,255,255,.025); }
+    .tm-compact-role { font-size:9px; letter-spacing:3px; text-transform:uppercase;
+      color:var(--blue-light); margin-bottom:8px; }
+    .tm-compact-name { font-size:16px; font-weight:700; letter-spacing:.3px; }
+
+    /* Role group header */
+    .tm-group { margin-bottom:48px; }
+    .tm-group-heading { font-size:10px; letter-spacing:5px; text-transform:uppercase;
+      color:var(--muted); padding-bottom:12px; border-bottom:1px solid var(--border);
+      margin-bottom:24px; }
+
+    @media(max-width:680px){
+      .tm-profile { grid-template-columns:1fr; gap:20px; }
+      .tm-photo-wrap { max-width:220px; }
+    }
+
+    /* ── FOOTER ── */
+    footer { text-align:center; padding:40px 24px;
+      border-top:1px solid var(--border);
+      font-size:12px; letter-spacing:2px; color:var(--muted); }
+    footer p + p { margin-top:8px; font-size:11px; }
+
+    /* ── BACK TO TOP ── */
+    #back-top {
+      position:fixed; bottom:28px; right:28px; z-index:800;
+      width:44px; height:44px; background:var(--blue);
+      border:none; cursor:pointer; color:var(--white); font-size:18px;
+      display:flex; align-items:center; justify-content:center;
+      opacity:0; pointer-events:none; transition:opacity .3s;
+    }
+    #back-top.show { opacity:1; pointer-events:all; }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:900px){
+      .contestant-entry { grid-template-columns:200px 1fr; gap:28px; }
+    }
+    @media(max-width:680px){
+      .nav-links { display:none; }
+      .contestant-entry { grid-template-columns:1fr; gap:20px; }
+      .c-photo-wrap { max-width:260px; }
+      #photo-grid { grid-template-columns:repeat(3,1fr); }
+      .judge-card { grid-template-columns:90px 1fr; gap:14px; }
+    }
+    @media(max-width:420px){
+      #photo-grid { grid-template-columns:repeat(2,1fr); }
+    }
+
+    /* ── EXPERIENCE OVERVIEW ── */
+    #experience { padding:0 5vw 80px; border-top:1px solid var(--border); }
+    .exp-intro { max-width:760px; margin:0 auto 52px; text-align:center;
+      font-size:clamp(14px,1.5vw,18px); line-height:1.8; color:var(--off-white); }
+    .exp-grid { display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:12px; }
+    .exp-card {
+      display:block; text-decoration:none; color:inherit;
+      padding:22px 20px 20px; border:1px solid var(--border);
+      background:rgba(255,255,255,.025); transition:border-color .25s, background .25s;
+    }
+    .exp-card:hover { border-color:rgba(91,143,232,.5);
+      background:rgba(27,79,168,.12); }
+    .exp-num { font-size:38px; font-weight:700; color:rgba(27,79,168,.45);
+      line-height:1; margin-bottom:8px; }
+    .exp-label { font-size:13px; font-weight:700; letter-spacing:.5px;
+      line-height:1.3; margin-bottom:6px; }
+    .exp-meta { font-size:11px; color:var(--muted); letter-spacing:.5px; }
+    .exp-badge { display:inline-block; font-size:9px; letter-spacing:2px;
+      text-transform:uppercase; padding:2px 8px; margin-top:8px; }
+    .exp-badge.mandatory { background:rgba(27,79,168,.35); color:var(--blue-light); }
+    .exp-badge.optional  { background:rgba(255,255,255,.08); color:var(--muted); }
+
+    /* ── EVENTS DETAIL ── */
+    #events { padding:0 5vw 80px; border-top:1px solid var(--border); }
+    .event-block { margin-bottom:72px; scroll-margin-top:80px; }
+    .event-header {
+      display:flex; align-items:center; gap:20px; margin-bottom:28px;
+      padding-bottom:20px; border-bottom:1px solid var(--border);
+    }
+    .event-num-badge {
+      width:64px; height:64px; background:var(--blue); flex-shrink:0;
+      display:flex; align-items:center; justify-content:center;
+      font-size:22px; font-weight:700; letter-spacing:-1px;
+    }
+    .event-header-body { flex:1; }
+    .event-title { font-size:clamp(20px,2.5vw,32px); font-weight:700; margin-bottom:4px; }
+    .event-sub { font-size:12px; letter-spacing:3px; text-transform:uppercase;
+      color:var(--muted); }
+    .badge-row { display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; }
+    .badge { font-size:9px; letter-spacing:2px; text-transform:uppercase;
+      padding:3px 10px; display:inline-block; }
+    .badge.mandatory { background:rgba(27,79,168,.4); color:var(--blue-light); }
+    .badge.optional  { background:rgba(255,255,255,.07); color:var(--muted); }
+    .event-body { display:grid;
+      grid-template-columns:1fr 1fr; gap:40px 52px; }
+    @media(max-width:760px){ .event-body { grid-template-columns:1fr; } }
+    .event-col {}
+    .event-qa { margin-bottom:22px; }
+    .event-q { font-size:11px; letter-spacing:2px; text-transform:uppercase;
+      color:var(--blue-light); margin-bottom:6px; }
+    .event-a { font-size:clamp(13px,1.4vw,16px); line-height:1.75;
+      color:var(--off-white); }
+    .event-checklist { margin-top:6px; padding-left:0; list-style:none; }
+    .event-checklist li { font-size:14px; color:var(--off-white); line-height:1.6;
+      padding:4px 0; display:flex; align-items:flex-start; gap:10px; }
+    .event-checklist li::before { content:'□'; color:var(--blue-light);
+      flex-shrink:0; font-size:16px; line-height:1.3; }
+    .callout-box { padding:18px 20px; margin-top:20px;
+      border-left:3px solid var(--blue-mid); background:rgba(27,79,168,.1); }
+    .callout-box.tip { border-color:#5b8fe8; background:rgba(91,143,232,.08); }
+    .callout-label { font-size:9px; letter-spacing:3px; text-transform:uppercase;
+      color:var(--blue-light); margin-bottom:8px; }
+    .callout-box.tip .callout-label { color:#5b8fe8; }
+    .callout-text { font-size:13px; line-height:1.7; color:var(--off-white); }
+    .prep-textarea {
+      width:100%; min-height:72px; background:rgba(255,255,255,.04);
+      border:1px solid var(--border); color:var(--white); padding:10px 12px;
+      font-family:var(--font); font-size:13px; line-height:1.6;
+      resize:vertical; margin-top:8px;
+    }
+    .prep-textarea:focus { outline:none; border-color:rgba(91,143,232,.5); }
+    .prep-textarea::placeholder { color:var(--muted); }
+
+    /* ── FIRST WIVES CLUB ── */
+    #first-wives { padding:0 5vw 80px; border-top:1px solid var(--border); }
+    .fwc-layout { display:grid;
+      grid-template-columns:1fr 380px; gap:52px; align-items:start; }
+    @media(max-width:900px){ .fwc-layout { grid-template-columns:1fr; } }
+    .fwc-letter { font-size:clamp(14px,1.4vw,17px); line-height:1.85;
+      color:var(--off-white); }
+    .fwc-letter p { margin-bottom:18px; }
+    .fwc-letter .letter-open { font-style:italic; color:var(--muted);
+      font-size:13px; margin-bottom:24px; }
+    .fwc-letter .letter-sign { margin-top:28px; font-style:italic;
+      color:var(--muted); font-size:13px; }
+    .fwc-sidebar h3 { font-size:13px; letter-spacing:4px; text-transform:uppercase;
+      color:var(--blue-light); margin-bottom:20px; }
+    .prep-questions { list-style:none; padding:0; }
+    .prep-questions li { margin-bottom:20px; }
+    .prep-q-label { font-size:12px; font-weight:700; letter-spacing:.3px;
+      color:var(--off-white); margin-bottom:6px; }
+
+    /* ── CODE OF CONDUCT ── */
+    #code-of-conduct { padding:0 5vw 80px; border-top:1px solid var(--border); }
+    .coc-intro { max-width:760px; margin:0 auto 56px; text-align:center;
+      font-size:clamp(14px,1.4vw,17px); line-height:1.8; color:var(--off-white); }
+    /* Sub-section headings within CoC */
+    .coc-sub { margin:0 0 48px; }
+    .coc-sub-title { font-size:11px; letter-spacing:5px; text-transform:uppercase;
+      color:var(--blue-light); padding-bottom:14px;
+      border-bottom:1px solid var(--border); margin-bottom:24px; }
+    .coc-sub-lead { font-size:clamp(14px,1.4vw,16px); line-height:1.82;
+      color:var(--off-white); margin-bottom:20px; }
+    /* Ethics key elements / core values grid */
+    .coc-values-grid { display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:12px;
+      margin-bottom:0; }
+    .coc-value-card { padding:22px 22px 20px; border:1px solid var(--border);
+      background:rgba(255,255,255,.025); }
+    .coc-value-label { font-size:11px; font-weight:700; letter-spacing:2px;
+      text-transform:uppercase; color:var(--blue-light); margin-bottom:8px; }
+    .coc-value-num { font-size:28px; font-weight:700;
+      color:rgba(27,79,168,.4); line-height:1; margin-bottom:6px; }
+    .coc-value-text { font-size:13px; line-height:1.72; color:var(--off-white); }
+    /* Behaviour / reporting list */
+    .coc-def-list { display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:12px; }
+    .coc-def-item { padding:20px 22px; border:1px solid var(--border);
+      background:rgba(255,255,255,.02); }
+    .coc-def-term { font-size:11px; font-weight:700; letter-spacing:2px;
+      text-transform:uppercase; color:var(--blue-light); margin-bottom:8px; }
+    .coc-def-desc { font-size:13px; line-height:1.72; color:var(--off-white); }
+    /* Weekend CoC cards */
+    .coc-grid { display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:16px; }
+    .coc-card { padding:28px 26px; border:1px solid var(--border);
+      background:rgba(255,255,255,.02); }
+    .coc-icon { font-size:28px; margin-bottom:12px; }
+    .coc-title { font-size:13px; font-weight:700; letter-spacing:2px;
+      text-transform:uppercase; margin-bottom:10px; }
+    .coc-text { font-size:13px; line-height:1.75; color:var(--off-white); }
+    .coc-text li { margin-bottom:6px; }
+    /* Alert / zero-tolerance box */
+    .coc-alert { padding:20px 24px; border:1px solid rgba(91,143,232,.4);
+      background:rgba(27,79,168,.15); margin-bottom:16px; }
+    .coc-alert p { font-size:13px; line-height:1.72; color:var(--off-white); }
+    .coc-alert strong { color:var(--white); }
+    /* Contact row */
+    .coc-contact { display:flex; gap:32px; flex-wrap:wrap;
+      padding:24px; border:1px solid var(--border);
+      background:rgba(255,255,255,.02); margin-top:24px; }
+    .coc-contact-item { }
+    .coc-contact-label { font-size:10px; letter-spacing:3px;
+      text-transform:uppercase; color:var(--muted); margin-bottom:6px; }
+    .coc-contact-value { font-size:14px; font-weight:700; }
+    .coc-contact-value a { color:var(--blue-light); text-decoration:none; }
+    .coc-contact-value a:hover { color:var(--white); }
+
+    /* ── CLOSING ── */
+    #closing {
+      padding:100px 5vw 80px; border-top:1px solid var(--border);
+      text-align:center; position:relative; overflow:hidden;
+    }
+    #closing::before { content:''; position:absolute;
+      width:700px; height:700px; border-radius:50%;
+      border:1px solid rgba(27,79,168,.12);
+      top:50%; left:50%; transform:translate(-50%,-50%); pointer-events:none; }
+    .closing-eyebrow { font-size:10px; letter-spacing:6px; text-transform:uppercase;
+      color:var(--blue-light); margin-bottom:32px; }
+    .closing-quote { font-size:clamp(22px,3.5vw,48px); font-weight:700;
+      line-height:1.25; letter-spacing:-1px; max-width:860px; margin:0 auto 20px;
+      position:relative; z-index:1; font-style:italic; }
+    .closing-quote-attr { font-size:13px; letter-spacing:3px; color:var(--muted);
+      text-transform:uppercase; margin-bottom:56px; }
+    .closing-divider { width:60px; height:2px; background:var(--blue);
+      margin:0 auto 52px; }
+    .closing-contact { display:flex; gap:48px; justify-content:center;
+      flex-wrap:wrap; margin-bottom:52px; }
+    .closing-contact-item { text-align:center; }
+    .closing-contact-label { font-size:10px; letter-spacing:3px;
+      text-transform:uppercase; color:var(--muted); margin-bottom:8px; }
+    .closing-contact-value { font-size:15px; font-weight:700; }
+    .closing-contact-value a { color:var(--blue-light); text-decoration:none; }
+    .closing-contact-value a:hover { color:var(--white); }
+    .closing-credits { font-size:11px; letter-spacing:2px; color:var(--muted);
+      text-transform:uppercase; line-height:2.2; }
+
+
+    /* ══════════════════════════════════════════
+       PRINT / PDF EXPORT  —  zero-margin, full-bleed
+       US Letter: 8.5 × 11 in  (612 × 792 pt)
+    ══════════════════════════════════════════ */
+    @media print {
+
+      /* ── Page geometry: zero margin, full bleed ── */
+      @page {
+        size: 8.5in 11in portrait;
+        margin: 0;
+      }
+
+      /* ── Colour preservation ── */
+      *, *::before, *::after {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        color-adjust: exact !important;
+        box-sizing: border-box !important;
+      }
+
+      html {
+        width: 8.5in;
+        background: #080808 !important;
+      }
+      body {
+        background: #080808 !important;
+        color: #ffffff !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 8.5in !important;
+        font-size: 9pt !important;
+        overflow: visible !important;
+      }
+
+      /* ── Hide UI chrome ── */
+      nav, #back-top, .cover-scroll,
+      textarea.prep-textarea { display: none !important; }
+
+      /* ══════════════════════════════
+         SHARED SECTION CHROME
+      ══════════════════════════════ */
+      section {
+        padding-left: 0.45in !important;
+        padding-right: 0.45in !important;
+        width: 8.5in !important;
+        box-sizing: border-box !important;
+      }
+      .s-num {
+        font-size: 6.5pt !important;
+        padding: 2pt 8pt !important;
+        margin-bottom: 8pt !important;
+        letter-spacing: 3pt !important;
+      }
+      .s-title {
+        font-size: 22pt !important;
+        letter-spacing: 3pt !important;
+      }
+      .s-header {
+        padding: 0.22in 0 0.14in !important;
+        text-align: center;
+      }
+
+      /* ══════════════════════════════
+         COVER  — full bleed, fills page
+      ══════════════════════════════ */
+      #cover {
+        width: 8.5in !important;
+        height: 11in !important;
+        min-height: 11in !important;
+        overflow: hidden !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        page-break-after: always !important;
+        break-after: page !important;
+        background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(27,79,168,.4) 0%, transparent 70%), #080808 !important;
+      }
+      .cover-inner { padding: 0 0.6in !important; }
+      .cover-logo { width: 1.8in !important; margin: 0 auto 0.3in !important; }
+      .cover-eyebrow { font-size: 8pt !important; letter-spacing: 4pt !important; }
+      .cover-title {
+        font-size: 72pt !important;
+        letter-spacing: -2pt !important;
+        line-height: 0.9 !important;
+      }
+      .cover-divider { margin: 18pt auto !important; }
+      .cover-meta { font-size: 10pt !important; line-height: 2.4 !important; }
+
+      /* ══════════════════════════════
+         CLASS PHOTO GRID  — one exact page
+         Page: 8.5 × 11in  |  Perimeter margin: 0.18in
+         Header zone: 0.18in top + 0.52in title + 0.12in gap = 0.82in
+         Grid area: 11in − 0.82in − 0.18in bottom = 10.0in tall
+                    8.5in − 0.18in × 2 = 8.14in wide
+         8 cols: 8.14/8 = 1.0175in each
+         9 rows: 10.0/9 = 1.111in each  (all 67 cells visible)
+      ══════════════════════════════ */
+      #class-grid {
+        width: 8.5in !important;
+        height: 11in !important;
+        overflow: hidden !important;
+        padding: 0.18in 0.18in 0.18in !important;  /* perimeter black margin */
+        box-sizing: border-box !important;
+        display: block !important;
+        page-break-before: always !important;
+        break-before: page !important;
+        page-break-after: always !important;
+        break-after: page !important;
+      }
+      #class-grid .s-header {
+        height: 0.52in !important;
+        padding: 0 !important;
+        margin-bottom: 0.12in !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+      }
+      #photo-grid {
+        /* explicit height = 11in − 0.18 top − 0.52 header − 0.12 gap − 0.18 bottom = 10.0in */
+        height: 10.0in !important;
+        width: 100% !important;       /* = 8.5 − 0.18 − 0.18 = 8.14in */
+        display: grid !important;
+        grid-template-columns: repeat(8, 1fr) !important;
+        grid-template-rows: repeat(9, 1fr) !important;  /* each row = 10.0/9 = 1.111in */
+        gap: 2px !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+      }
+      .grid-cell {
+        aspect-ratio: unset !important;  /* explicit row height controls size */
+        overflow: hidden !important;
+        background: #1b4fa8 !important;
+        position: relative !important;
+        width: 100% !important;
+        height: 100% !important;
+      }
+      .grid-cell img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        object-position: top center !important;
+        display: block !important;
+      }
+      .grid-name-always {
+        font-size: 5pt !important;
+        padding: 8pt 2pt 2pt !important;
+        letter-spacing: 0 !important;
+        line-height: 1.1 !important;
+      }
+      .grid-placeholder { font-size: 20pt !important; }
+
+      /* ══════════════════════════════
+         CONTESTANT PROFILES
+         Each page-block (3 contestants) = one page
+      ══════════════════════════════ */
+      #contestants {
+        padding: 0 !important;
+        page-break-before: always !important;
+        break-before: page !important;
+      }
+      .page-block {
+        width: 8.5in !important;
+        min-height: 11in !important;
+        height: 11in !important;
+        overflow: hidden !important;
+        padding: 0.18in 0.45in !important;
+        page-break-before: always !important;
+        break-before: page !important;
+        page-break-after: always !important;
+        break-after: page !important;
+        box-sizing: border-box !important;
+        display: flex !important;
+        flex-direction: column !important;
+      }
+      .page-block-header {
+        font-size: 6.5pt !important;
+        letter-spacing: 5pt !important;
+        margin-bottom: 0.12in !important;
+        flex-shrink: 0 !important;
+      }
+      .contestant-trio {
+        flex: 1 !important;
+        display: flex !important;
+        flex-direction: column !important;
+      }
+      .contestant-entry {
+        flex: 1 !important;
+        display: grid !important;
+        grid-template-columns: 1.55in 1fr !important;
+        gap: 0.22in !important;
+        align-items: start !important;
+        padding: 0.13in 0 !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+      .contestant-entry + .contestant-entry {
+        border-top: 0.5pt solid rgba(255,255,255,.08) !important;
+      }
+      .c-photo-wrap {
+        aspect-ratio: 2/3 !important;
+        width: 1.55in !important;
+        overflow: hidden !important;
+      }
+      .c-photo-wrap img {
+        width: 100% !important; height: 100% !important;
+        object-fit: cover !important; object-position: top center !important;
+      }
+      .c-name      { font-size: 20pt !important; line-height: 1.0 !important; letter-spacing: -0.5pt !important; }
+      .c-flag      { font-size: 18pt !important; }
+      .c-title-tag { font-size: 6.5pt !important; letter-spacing: 2pt !important; margin-bottom: 6pt !important; }
+      .c-bio       { font-size: 8pt !important; line-height: 1.6 !important; }
+      .c-text      { padding-top: 2pt !important; }
+      .c-name-row  { margin-bottom: 6pt !important; }
+
+      /* ══════════════════════════════
+         JUDGES
+      ══════════════════════════════ */
+      #judges {
+        page-break-before: always !important;
+        break-before: page !important;
+        padding: 0 0.45in 0.3in !important;
+      }
+      .judges-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 8pt !important;
+      }
+      .judge-card {
+        grid-template-columns: 68pt 1fr !important;
+        gap: 10pt !important;
+        padding: 10pt !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+      .judge-photo-wrap { width: 68pt !important; }
+      .judge-name     { font-size: 10pt !important; margin: 0 !important; }
+      .judge-bio      { font-size: 7.5pt !important; line-height: 1.5 !important; margin-top: 2pt !important; }
+      .judge-tag      { font-size: 6.5pt !important; }
+      .judge-location { font-size: 6.5pt !important; }
+      .judge-link     { display: none !important; }
+      .judge-body     { gap: 4pt !important; }
+
+      /* ══════════════════════════════
+         TALLYMASTERS
+      ══════════════════════════════ */
+      #tallymasters {
+        page-break-before: always !important;
+        break-before: page !important;
+        padding: 0 0.45in 0.3in !important;
+      }
+
+      /* ══════════════════════════════
+         IML TEAM
+      ══════════════════════════════ */
+      #iml-team {
+        page-break-before: always !important;
+        break-before: page !important;
+        padding: 0 0.45in 0.3in !important;
+      }
+      .tm-group { margin-bottom: 16pt !important; }
+      .tm-group-heading { font-size: 6.5pt !important; letter-spacing: 3pt !important; padding-bottom: 6pt !important; margin-bottom: 12pt !important; }
+      .tm-profile {
+        grid-template-columns: 1.3in 1fr !important;
+        gap: 14pt !important;
+        padding: 10pt 0 !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+      .tm-photo-wrap { width: 1.3in !important; }
+      .tm-name     { font-size: 16pt !important; letter-spacing: -0.5pt !important; margin-bottom: 8pt !important; }
+      .tm-bio      { font-size: 7.5pt !important; line-height: 1.6 !important; }
+      .tm-role-tag { font-size: 6.5pt !important; letter-spacing: 2pt !important; margin-bottom: 6pt !important; }
+      .tm-compact-grid {
+        grid-template-columns: repeat(5, 1fr) !important;
+        gap: 6pt !important;
+      }
+      .tm-compact-card { padding: 8pt 10pt !important; }
+      .tm-compact-name { font-size: 9pt !important; }
+      .tm-compact-role { font-size: 6pt !important; }
+
+      /* ══════════════════════════════
+         EXPERIENCE OVERVIEW  — one page
+      ══════════════════════════════ */
+      #experience {
+        width: 8.5in !important;
+        height: 11in !important;
+        overflow: hidden !important;
+        display: flex !important;
+        flex-direction: column !important;
+        padding: 0 0.45in !important;
+        page-break-before: always !important;
+        break-before: page !important;
+        page-break-after: always !important;
+        break-after: page !important;
+      }
+      #experience .s-header { flex-shrink: 0 !important; }
+      .exp-intro { font-size: 8.5pt !important; line-height: 1.65 !important; margin-bottom: 14pt !important; flex-shrink: 0 !important; }
+      .exp-grid {
+        flex: 1 !important;
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 7pt !important;
+        align-content: start !important;
+      }
+      .exp-card  { padding: 9pt 10pt 8pt !important; }
+      .exp-num   { font-size: 20pt !important; margin-bottom: 3pt !important; }
+      .exp-label { font-size: 7.5pt !important; margin-bottom: 4pt !important; }
+      .exp-meta  { font-size: 6.5pt !important; }
+      .exp-badge { font-size: 5.5pt !important; padding: 1pt 5pt !important; margin-top: 5pt !important; }
+
+      /* ══════════════════════════════
+         EVENTS  — each event = one page
+      ══════════════════════════════ */
+      #events {
+        padding: 0 !important;
+        page-break-before: always !important;
+        break-before: page !important;
+      }
+      /* Hide the standalone section header — the section label lives
+         inside the first event block via ::before instead */
+      #events > .s-header { display: none !important; }
+      .event-block {
+        width: 8.5in !important;
+        min-height: 11in !important;
+        height: 11in !important;
+        overflow: hidden !important;
+        padding: 0.15in 0.45in 0.2in !important;
+        box-sizing: border-box !important;
+        page-break-before: always !important;
+        break-before: page !important;
+        page-break-after: always !important;
+        break-after: page !important;
+        display: flex !important;
+        flex-direction: column !important;
+      }
+      /* Section label appears above event 01's header */
+      #events > .event-block:first-child::before {
+        content: 'SECTION 7  \2022  EVENTS IN DETAIL';
+        display: block !important;
+        font-size: 6pt !important;
+        letter-spacing: 4pt !important;
+        text-transform: uppercase !important;
+        color: rgba(255,255,255,.35) !important;
+        margin-bottom: 8pt !important;
+        flex-shrink: 0 !important;
+      }
+      .event-header {
+        flex-shrink: 0 !important;
+        margin-bottom: 12pt !important;
+        padding-bottom: 10pt !important;
+        gap: 14pt !important;
+      }
+      .event-num-badge {
+        width: 34pt !important;
+        height: 34pt !important;
+        font-size: 13pt !important;
+        flex-shrink: 0 !important;
+      }
+      .event-title { font-size: 15pt !important; margin-bottom: 2pt !important; }
+      .event-sub   { font-size: 7pt !important; letter-spacing: 1.5pt !important; }
+      .badge       { font-size: 5.5pt !important; padding: 1.5pt 6pt !important; letter-spacing: 1.5pt !important; }
+      .badge-row   { margin-top: 5pt !important; gap: 5pt !important; }
+      .event-body {
+        flex: 1 !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 16pt 28pt !important;
+        align-content: space-between !important;
+      }
+      .event-qa    { margin-bottom: 10pt !important; }
+      .event-q     { font-size: 6.5pt !important; letter-spacing: 1.5pt !important; margin-bottom: 4pt !important; }
+      .event-a     { font-size: 8pt !important; line-height: 1.58 !important; }
+      .event-checklist li { font-size: 8pt !important; line-height: 1.5 !important; padding: 2pt 0 !important; gap: 7pt !important; }
+      .event-checklist li::before { font-size: 10pt !important; }
+      .callout-box { padding: 9pt 11pt !important; margin-top: 8pt !important; }
+      .callout-label { font-size: 6.5pt !important; margin-bottom: 5pt !important; }
+      .callout-text  { font-size: 7.5pt !important; line-height: 1.55 !important; }
+
+      /* ══════════════════════════════
+         FIRST WIVES CLUB  — one page
+      ══════════════════════════════ */
+      #first-wives {
+        width: 8.5in !important;
+        height: 11in !important;
+        overflow: hidden !important;
+        padding: 0 0.45in !important;
+        box-sizing: border-box !important;
+        page-break-before: always !important;
+        break-before: page !important;
+        page-break-after: always !important;
+        break-after: page !important;
+      }
+      .fwc-layout {
+        grid-template-columns: 1fr 3.1in !important;
+        gap: 0.35in !important;
+      }
+      .fwc-letter { font-size: 8.5pt !important; line-height: 1.75 !important; }
+      .fwc-letter p { margin-bottom: 9pt !important; }
+      .fwc-letter .letter-open { font-size: 8pt !important; margin-bottom: 14pt !important; }
+      .fwc-letter .letter-sign { margin-top: 14pt !important; font-size: 8pt !important; }
+      .fwc-sidebar h3 { font-size: 7pt !important; letter-spacing: 3pt !important; margin-bottom: 12pt !important; }
+      .prep-q-label { font-size: 7.5pt !important; margin-bottom: 4pt !important; }
+      .prep-questions li { margin-bottom: 10pt !important; }
+
+      /* ══════════════════════════════
+         CODE OF CONDUCT
+         Each coc-sub = one full page
+      ══════════════════════════════ */
+      #code-of-conduct {
+        padding: 0 0.45in !important;
+        page-break-before: always !important;
+        break-before: page !important;
+        /* page 1 = section header + intro + first coc-sub (flex column) */
+        width: 8.5in !important;
+        box-sizing: border-box !important;
+      }
+      .coc-intro { font-size: 8.5pt !important; margin-bottom: 10pt !important; flex-shrink: 0 !important; }
+
+      /* Every sub-section fills exactly one page */
+      .coc-sub {
+        width: 8.5in !important;
+        height: 11in !important;
+        padding: 0.15in 0.45in 0.2in !important;
+        margin-left: -0.45in !important;
+        box-sizing: border-box !important;
+        overflow: hidden !important;
+        page-break-before: always !important;
+        break-before: page !important;
+        break-after: page !important;
+        page-break-after: always !important;
+        margin-bottom: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+      }
+      /* First sub: section header + coc-intro sit above it on page 1 */
+      #code-of-conduct > .coc-sub:first-child {
+        page-break-before: avoid !important;
+        break-before: avoid !important;
+        height: auto !important;
+        min-height: 0 !important;
+        flex: 1 !important;
+        padding-top: 0 !important;
+      }
+      /* "Why ethics matter" has only 3 items — use 3-column layout so
+         items fill one row and the page is used effectively */
+      #coc-why-ethics .coc-def-list {
+        grid-template-columns: repeat(3, 1fr) !important;
+      }
+      /* "Why ethics matter" + "IML Weekend" on the same page
+         (they're related and "Why" is short) */
+      #coc-weekend {
+        page-break-before: avoid !important;
+        break-before: avoid !important;
+      }
+
+      .coc-sub-title { font-size: 7pt !important; letter-spacing: 3pt !important; padding-bottom: 8pt !important; margin-bottom: 14pt !important; flex-shrink: 0 !important; }
+      .coc-sub-lead  { font-size: 8pt !important; line-height: 1.65 !important; margin-bottom: 10pt !important; flex-shrink: 0 !important; }
+
+      /* Grids stretch to fill remaining flex space */
+      .coc-values-grid {
+        flex: 1 !important;
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 7pt !important;
+        align-content: stretch !important;
+      }
+      .coc-value-card { padding: 10pt 11pt !important; }
+      .coc-value-num  { font-size: 18pt !important; margin-bottom: 4pt !important; }
+      .coc-value-label { font-size: 6.5pt !important; letter-spacing: 1.5pt !important; margin-bottom: 5pt !important; }
+      .coc-value-text  { font-size: 7.5pt !important; line-height: 1.55 !important; }
+      .coc-def-list {
+        flex: 1 !important;
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 7pt !important;
+        align-content: stretch !important;
+      }
+      .coc-def-item { padding: 9pt 11pt !important; page-break-inside: avoid !important; break-inside: avoid !important; }
+      .coc-def-term { font-size: 6.5pt !important; letter-spacing: 1.5pt !important; margin-bottom: 5pt !important; }
+      .coc-def-desc { font-size: 7.5pt !important; line-height: 1.55 !important; }
+      .coc-grid {
+        flex: 1 !important;
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 7pt !important;
+        align-content: stretch !important;
+      }
+      .coc-card { padding: 10pt 12pt !important; page-break-inside: avoid !important; break-inside: avoid !important; }
+      .coc-icon  { font-size: 16pt !important; margin-bottom: 6pt !important; }
+      .coc-title { font-size: 7.5pt !important; margin-bottom: 6pt !important; letter-spacing: 1.5pt !important; }
+      .coc-text  { font-size: 7.5pt !important; line-height: 1.55 !important; }
+      .coc-alert p { font-size: 7.5pt !important; }
+      .coc-contact { padding: 10pt 12pt !important; gap: 20pt !important; margin-top: 10pt !important; flex-shrink: 0 !important; }
+      .coc-contact-label { font-size: 6.5pt !important; margin-bottom: 4pt !important; }
+      .coc-contact-value { font-size: 8.5pt !important; }
+
+      /* ══════════════════════════════
+         CLOSING  — one page
+      ══════════════════════════════ */
+      #closing {
+        width: 8.5in !important;
+        height: 11in !important;
+        overflow: hidden !important;
+        padding: 0 0.45in !important;
+        box-sizing: border-box !important;
+        page-break-before: always !important;
+        break-before: page !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+      }
+      .closing-eyebrow { font-size: 7pt !important; letter-spacing: 4pt !important; margin-bottom: 24pt !important; }
+      .closing-quote   { font-size: 22pt !important; line-height: 1.2 !important; margin-bottom: 14pt !important; max-width: 7in !important; }
+      .closing-quote-attr { font-size: 8pt !important; margin-bottom: 36pt !important; }
+      .closing-divider { margin: 0 auto 36pt !important; }
+      .closing-contact { gap: 36pt !important; margin-bottom: 36pt !important; flex-wrap: nowrap !important; }
+      .closing-contact-label { font-size: 7pt !important; }
+      .closing-contact-value { font-size: 9pt !important; }
+      .closing-credits { font-size: 7pt !important; letter-spacing: 1.5pt !important; line-height: 2 !important; }
+
+      /* ══════════════════════════════
+         FOOTER
+      ══════════════════════════════ */
+      footer {
+        page-break-before: always !important;
+        break-before: page !important;
+        font-size: 7pt !important;
+        padding: 0.4in 0.45in !important;
+        letter-spacing: 1.5pt !important;
+      }
+
+    }
+
+
+
+    /* ── INTRO SECTIONS (pages 3–14) ── */
+
+    /* Letter / welcome page */
+    .letter-page {
+      min-height: 100vh; padding: 80px 5vw 80px;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      border-top: 1px solid var(--border);
+    }
+    .letter-page-inner {
+      max-width: 680px; width: 100%;
+    }
+    .letter-eyebrow {
+      font-size: 10px; letter-spacing: 5px; text-transform: uppercase;
+      color: var(--blue-light); margin-bottom: 32px;
+    }
+    .letter-body {
+      font-size: clamp(15px,1.5vw,18px); line-height: 1.88;
+      color: var(--off-white);
+    }
+    .letter-body p { margin-bottom: 22px; }
+    .letter-sign {
+      margin-top: 36px; font-size: 15px; font-style: italic;
+      color: var(--muted);
+    }
+
+    /* History page */
+    #history {
+      padding: 80px 5vw; border-top: 1px solid var(--border);
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .history-founders {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 48px; max-width: 900px; width: 100%; margin: 48px 0;
+      align-items: start;
+    }
+    @media(max-width:680px){ .history-founders { grid-template-columns: 1fr; gap: 24px; } }
+    .founder-card {
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.025);
+      padding: 0; overflow: hidden;
+    }
+    .founder-photo {
+      width: 100%; aspect-ratio: 3/4; object-fit: cover;
+      object-position: center top; display: block;
+      filter: grayscale(20%) brightness(0.92);
+    }
+    .founder-card-body { padding: 28px 26px; }
+    .founder-dates {
+      font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--blue-light); margin-bottom: 10px;
+    }
+    .founder-name {
+      font-size: clamp(20px,2.5vw,30px); font-weight: 700;
+      letter-spacing: -0.5px; margin-bottom: 14px; line-height: 1.1;
+    }
+    .founder-bio {
+      font-size: 14px; line-height: 1.75; color: var(--off-white);
+    }
+    .history-body {
+      max-width: 680px; text-align: center;
+      font-size: clamp(15px,1.5vw,18px); line-height: 1.85;
+      color: var(--off-white);
+    }
+
+    /* Archive links / videos */
+    #archive {
+      padding: 80px 5vw; border-top: 1px solid var(--border);
+    }
+    .archive-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px,1fr));
+      gap: 12px; max-width: 1200px; margin: 0 auto;
+    }
+    .archive-card {
+      display: flex; flex-direction: column;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.025); text-decoration: none;
+      color: inherit; transition: border-color .2s, background .2s;
+      overflow: hidden;
+    }
+    .archive-card:hover {
+      border-color: rgba(91,143,232,.5);
+      background: rgba(27,79,168,.12);
+    }
+    .archive-thumb {
+      width: 100%; aspect-ratio: 16/9;
+      background: linear-gradient(135deg, #0b1525 0%, #162040 50%, #0b1e38 100%);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .archive-thumb img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      opacity: 0.85; transition: opacity .2s;
+    }
+    .archive-card:hover .archive-thumb img { opacity: 1; }
+    .archive-play {
+      position: absolute;
+      width: 56px; height: 40px;
+      background: rgba(180,0,0,0.9);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; color: #fff;
+      padding-left: 4px;
+      transition: background .2s, transform .2s;
+      pointer-events: none;
+    }
+    .archive-card:hover .archive-play {
+      background: rgba(230,0,0,1); transform: scale(1.1);
+    }
+    .archive-icon { display: none; }
+    .archive-label {
+      padding: 12px 14px;
+      font-size: 13px; font-weight: 600; line-height: 1.4;
+    }
+
+    /* Table of contents */
+    #toc {
+      padding: 80px 5vw; border-top: 1px solid var(--border);
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .toc-list {
+      list-style: none; padding: 0; max-width: 640px;
+      width: 100%; margin: 0 auto;
+    }
+    .toc-list li {
+      display: flex; align-items: baseline; gap: 0;
+      padding: 14px 0; border-bottom: 1px solid var(--border);
+    }
+    .toc-list li:last-child { border-bottom: none; }
+    .toc-num {
+      font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--blue-light); width: 36px; flex-shrink: 0;
+    }
+    .toc-item-title {
+      font-size: clamp(16px,1.8vw,22px); font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase; flex: 1;
+    }
+    .toc-arrow { color: var(--muted); font-size: 14px; }
+    .toc-list a {
+      display: flex; align-items: baseline; gap: 0;
+      width: 100%; text-decoration: none; color: inherit;
+      transition: color .2s;
+    }
+    .toc-list a:hover .toc-item-title { color: var(--blue-light); }
+    .toc-note {
+      max-width: 640px; margin: 36px auto 0;
+      font-size: 13px; line-height: 1.7; color: var(--muted);
+      border-left: 2px solid var(--border); padding-left: 18px;
+    }
+
+    /* Venue page */
+    #venue {
+      padding: 80px 5vw; border-top: 1px solid var(--border);
+    }
+    .venue-layout {
+      display: grid; grid-template-columns: 1fr 360px;
+      gap: 56px; align-items: start; max-width: 1100px; margin: 0 auto;
+    }
+    @media(max-width:900px){ .venue-layout { grid-template-columns: 1fr; } }
+    .venue-body {}
+    .venue-name {
+      font-size: clamp(24px,3vw,42px); font-weight: 700;
+      letter-spacing: -1px; margin-bottom: 6px; line-height: 1.1;
+    }
+    .venue-address {
+      font-size: 13px; letter-spacing: 2px; color: var(--muted);
+      text-transform: uppercase; margin-bottom: 36px;
+    }
+    .venue-section { margin-bottom: 28px; }
+    .venue-section-label {
+      font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--blue-light); margin-bottom: 10px;
+    }
+    .venue-section-text {
+      font-size: clamp(14px,1.4vw,16px); line-height: 1.78;
+      color: var(--off-white);
+    }
+    .venue-sidebar {}
+    .venue-map-wrap {
+      width: 100%; margin-bottom: 16px;
+      border: 1px solid var(--border); overflow: hidden;
+      position: relative;
+    }
+    .venue-map-wrap iframe {
+      display: block; width: 100%; height: 320px; border: 0;
+      filter: invert(0.9) hue-rotate(195deg) saturate(0.8) brightness(0.85);
+    }
+    .venue-map-link {
+      display: block; text-align: center;
+      padding: 9px 0; background: rgba(27,79,168,.2);
+      border-top: 1px solid var(--border);
+      font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--blue-light); text-decoration: none;
+    }
+    .venue-map-link:hover { background: rgba(27,79,168,.35); color: #fff; }
+    /* Print-only static map image (hidden on screen) */
+    .venue-map-print { display: none; }
+    /* Nearby spots map */
+    .nearby-map-wrap { width: 100%; margin-bottom: 20px; border: 1px solid var(--border); overflow: hidden; }
+    .nearby-map-wrap iframe { display: block; width: 100%; height: 280px; border: 0; filter: invert(0.9) hue-rotate(195deg) saturate(0.8) brightness(0.85); }
+    .nearby-map-print { display: none; }
+    /* keep old placeholder class for backwards compat */
+    .nearby-map-link { display: block; text-align: center; padding: 8px 0; background: rgba(27,79,168,.15); border-top: 1px solid var(--border); font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--blue-light); text-decoration: none; }
+    /* keep old placeholder class for backwards compat */
+    .venue-map-placeholder {
+      aspect-ratio: 1/1; background: rgba(27,79,168,.15);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 12px; text-decoration: none;
+      color: inherit; transition: border-color .2s;
+      margin-bottom: 16px;
+    }
+    .venue-map-placeholder:hover { border-color: rgba(91,143,232,.5); }
+    .venue-map-icon { font-size: 48px; }
+    .venue-map-label { font-size: 11px; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--blue-light); }
+    .callout-box-intro {
+      padding: 20px 22px; border-left: 3px solid var(--blue-mid);
+      background: rgba(27,79,168,.1); margin-bottom: 14px;
+    }
+    .callout-box-intro.tip { border-color: #5b8fe8; background: rgba(91,143,232,.08); }
+    .callout-box-intro .callout-label { font-size: 9px; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--blue-light); margin-bottom: 8px; }
+    .callout-box-intro.tip .callout-label { color: #5b8fe8; }
+    .callout-box-intro .callout-text {
+      font-size: 14px; line-height: 1.7; color: var(--off-white); }
+
+    /* Nearby spots map */
+    #nearby {
+      padding: 0 5vw 80px; border-top: 1px solid var(--border);
+    }
+    .nearby-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
+      gap: 10px;
+    }
+    .nearby-card {
+      padding: 18px 20px; border: 1px solid var(--border);
+      background: rgba(255,255,255,.025);
+    }
+    .nearby-type {
+      font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--blue-light); margin-bottom: 8px;
+    }
+    .nearby-name { font-size: 15px; font-weight: 700; }
+
+    /* Print rules for intro pages */
+    @media print {
+      .letter-page {
+        width: 8.5in !important; height: 11in !important;
+        min-height: 11in !important; overflow: hidden !important;
+        padding: 0.7in 0.7in !important; box-sizing: border-box !important;
+        page-break-before: always !important; break-before: page !important;
+        page-break-after: always !important; break-after: page !important;
+        justify-content: center !important;
+      }
+      .letter-eyebrow { font-size: 7pt !important; margin-bottom: 18pt !important; }
+      .letter-body { font-size: 10pt !important; line-height: 1.75 !important; }
+      .letter-body p { margin-bottom: 12pt !important; }
+      .letter-sign { font-size: 9pt !important; margin-top: 18pt !important; }
+
+      #history {
+        width: 8.5in !important; min-height: 11in !important;
+        padding: 0.4in 0.6in !important; box-sizing: border-box !important;
+        page-break-before: always !important; break-before: page !important;
+        page-break-after: always !important; break-after: page !important;
+      }
+      .history-founders { gap: 20pt !important; margin: 24pt 0 !important; }
+      .founder-card { padding: 0 !important; }
+      .founder-photo { width: 100% !important; aspect-ratio: 3/4 !important; max-height: 200pt !important; object-fit: cover !important; }
+      .founder-card-body { padding: 12pt 14pt !important; }
+      .founder-name { font-size: 16pt !important; }
+      .founder-bio { font-size: 8pt !important; }
+      .founder-dates { font-size: 7pt !important; }
+      .history-body { font-size: 9pt !important; line-height: 1.7 !important; }
+
+      #archive {
+        width: 8.5in !important; min-height: 11in !important;
+        padding: 0.4in 0.6in !important; box-sizing: border-box !important;
+        page-break-before: always !important; break-before: page !important;
+        page-break-after: always !important; break-after: page !important;
+      }
+      .archive-grid { grid-template-columns: repeat(3,1fr) !important; gap: 8pt !important; }
+      .archive-card { padding: 0 !important; }
+      .archive-thumb { aspect-ratio: 16/9 !important; }
+      .archive-label { padding: 6pt 8pt !important; font-size: 7.5pt !important; }
+      .venue-map-wrap iframe { display: none !important; }
+      .venue-map-print { display: block !important; width: 100% !important; height: 200pt !important; object-fit: cover !important; }
+      .nearby-map-wrap iframe { display: none !important; }
+      .nearby-map-print { display: block !important; width: 100% !important; height: 2.5in !important; object-fit: cover !important; margin-bottom: 10pt !important; }
+
+      #toc {
+        width: 8.5in !important; min-height: 11in !important;
+        padding: 0.4in 0.6in !important; box-sizing: border-box !important;
+        page-break-before: always !important; break-before: page !important;
+        page-break-after: always !important; break-after: page !important;
+      }
+      .toc-list li { padding: 10pt 0 !important; }
+      .toc-item-title { font-size: 14pt !important; }
+      .toc-num { font-size: 7pt !important; }
+      .toc-note { font-size: 8pt !important; }
+
+      #venue {
+        width: 8.5in !important; min-height: 11in !important;
+        padding: 0.4in 0.6in !important; box-sizing: border-box !important;
+        page-break-before: always !important; break-before: page !important;
+        page-break-after: always !important; break-after: page !important;
+      }
+      .venue-layout { grid-template-columns: 1fr 240pt !important; gap: 28pt !important; }
+      .venue-name { font-size: 20pt !important; }
+      .venue-address { font-size: 7pt !important; }
+      .venue-section-text { font-size: 8pt !important; line-height: 1.6 !important; }
+      .venue-section-label { font-size: 7pt !important; }
+      .callout-box-intro .callout-text { font-size: 8pt !important; }
+      .callout-box-intro .callout-label { font-size: 6pt !important; }
+
+      #nearby {
+        padding: 0.2in 0.6in 0.4in !important;
+        page-break-before: avoid !important; break-before: avoid !important;
+        page-break-after: always !important; break-after: page !important;
+      }
+      .nearby-grid { grid-template-columns: repeat(4,1fr) !important; gap: 6pt !important; }
+      .nearby-card { padding: 8pt 10pt !important; }
+      .nearby-type { font-size: 6pt !important; }
+      .nearby-name { font-size: 9pt !important; }
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="#cover" class="nav-brand" id="nav-brand">IML</a>
+  <ul class="nav-links">
+    <li><a href="#welcome">Welcome</a></li>
+    <li><a href="#toc">Contents</a></li>
+    <li><a href="#venue">Venue</a></li>
+    <li><a href="#class-grid" id="nav-class-label">Class</a></li>
+    <li><a href="#contestants">Contestants</a></li>
+    <li><a href="#judges">Judges</a></li>
+    <li><a href="#tallymasters">Tallymasters</a></li>
+    <li><a href="#iml-team">IML Team</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#events">Events</a></li>
+    <li><a href="#code-of-conduct">Conduct</a></li>
+  </ul>
+  <button onclick="window.print()" style="
+    background:var(--blue); border:none; color:var(--white); cursor:pointer;
+    font-size:10px; letter-spacing:2px; text-transform:uppercase;
+    padding:0 16px; height:32px; margin-left:16px;
+    font-family:var(--font); transition:background .2s;
+  " onmouseover="this.style.background='#2260cc'" onmouseout="this.style.background='var(--blue)'">
+    &#x1F5A8;&nbsp; Export PDF
+  </button>
+</nav>
+
+<!-- ── COVER ── -->
+<section id="cover">
+  <div class="cover-inner">
+    <img src="IMLLogo.jpg" alt="International Mr. Leather" class="cover-logo">
+    <p class="cover-eyebrow">Official Contestant Handbook</p>
+    <h1 class="cover-title">CONTESTANT<br><em>HANDBOOK</em></h1>
+    <div class="cover-divider"></div>
+    <p class="cover-meta" id="cover-meta">
+      Loading&hellip;
+    </p>
+  </div>
+  <div class="cover-scroll">
+    <div class="cover-scroll-line"></div>
+    SCROLL
+  </div>
+</section>
+
+
+<!-- ── PAGE 3: WELCOME LETTER (rendered from config.js) ── -->
+<section id="welcome" class="letter-page">
+  <div class="letter-page-inner">
+    <p class="letter-eyebrow" id="welcome-eyebrow"></p>
+    <div class="letter-body" id="welcome-body"></div>
+  </div>
+</section>
+
+<!-- ── PAGE 5: HISTORY ── -->
+<section id="history">
+  <div class="s-header">
+    <span class="s-num">History</span>
+    <h2 class="s-title">Founded in 1979</h2>
+  </div>
+  <p class="history-body">
+    The International Mister Leather competition was founded in 1979 by Chuck Renslow
+    and his then partner Dom Orejudos, as a way to increase visibility for the leather
+    community and celebrate the best of our community. As IML <span class="iml-year-label"></span> contestants,
+    you continue their work and legacy.
+  </p>
+  <div class="history-founders">
+    <div class="founder-card">
+      <img class="founder-photo"
+           src="https://upload.wikimedia.org/wikipedia/en/thumb/7/7e/Chuck_Renslow_In_Loving_Memory.jpg/400px-Chuck_Renslow_In_Loving_Memory.jpg"
+           alt="Chuck Renslow">
+      <div class="founder-card-body">
+        <p class="founder-dates">1929 &ndash; 2017</p>
+        <h3 class="founder-name">Charles &ldquo;Chuck&rdquo; Renslow</h3>
+        <p class="founder-bio">Chuck Renslow was a Chicago-based leather community pioneer, photographer, publisher, and activist. He co-founded International Mr. Leather in 1979 as a celebration of leather culture and community. His vision transformed a local gathering into one of the world&rsquo;s most respected leather events, drawing contestants and attendees from across the globe.</p>
+      </div>
+    </div>
+    <div class="founder-card">
+      <img class="founder-photo"
+           src="https://upload.wikimedia.org/wikipedia/en/thumb/4/40/DomOrejudos.jpg/400px-DomOrejudos.jpg"
+           alt="Dom Orejudos">
+      <div class="founder-card-body">
+        <p class="founder-dates">1933 &ndash; 1991</p>
+        <h3 class="founder-name">Dom Orejudos</h3>
+        <p class="founder-bio">Dom Orejudos &mdash; known artistically as Etienne &mdash; was a celebrated illustrator and dancer whose work defined the visual language of leather culture. As co-founder of IML and designer of the iconic IML logo in 1979, his artistic vision became inseparable from the identity of the competition and the broader leather community he helped build.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PAGE 6: ARCHIVE / VIDEO LINKS ── -->
+<section id="archive">
+  <div class="s-header">
+    <span class="s-num">Be Part of History</span>
+    <h2 class="s-title">IML on Film</h2>
+  </div>
+  <div class="archive-grid">
+    <a class="archive-card" href="https://www.youtube.com/results?search_query=IML+Tribute+Chuck+Renslow+IML40" target="_blank" rel="noopener">
+      <div class="archive-thumb">
+        <img src="https://img.youtube.com/vi/dS2S2Bm9kWU/hqdefault.jpg"
+             alt="IML Tribute to Chuck Renslow"
+             onerror="this.style.display='none'">
+        <span class="archive-play">&#x25B6;</span>
+      </div>
+      <span class="archive-label">IML&rsquo;s Tribute to Chuck Renslow &mdash; IML40 Celebration Video</span>
+    </a>
+    <a class="archive-card" href="https://www.youtube.com/results?search_query=Chuck+Renslow+talks+about+unity+leather" target="_blank" rel="noopener">
+      <div class="archive-thumb">
+        <img src="https://img.youtube.com/vi/LXG4JlCVNhY/hqdefault.jpg"
+             alt="Chuck Renslow Talks About Unity"
+             onerror="this.style.display='none'">
+        <span class="archive-play">&#x25B6;</span>
+      </div>
+      <span class="archive-label">Chuck Renslow Talks About Unity</span>
+    </a>
+    <a class="archive-card" href="https://www.youtube.com/results?search_query=First+Black+International+Mr+Leather+1984" target="_blank" rel="noopener">
+      <div class="archive-thumb">
+        <img src="https://img.youtube.com/vi/0wK6YMnbXBU/hqdefault.jpg"
+             alt="First Black International Mr. Leather 1984"
+             onerror="this.style.display='none'">
+        <span class="archive-play">&#x25B6;</span>
+      </div>
+      <span class="archive-label">The First Black International Mr. Leather &mdash; 1984</span>
+    </a>
+    <a class="archive-card" href="https://www.youtube.com/results?search_query=IML+2017+winner+announcement" target="_blank" rel="noopener">
+      <div class="archive-thumb">
+        <img src="https://img.youtube.com/vi/OHAqf8BXKGA/hqdefault.jpg"
+             alt="IML 2017 Winner"
+             onerror="this.style.display='none'">
+        <span class="archive-play">&#x25B6;</span>
+      </div>
+      <span class="archive-label">IML 2017 Winner Announcement</span>
+    </a>
+    <a class="archive-card" href="https://www.youtube.com/results?search_query=International+Mr+Leather+1989+clips" target="_blank" rel="noopener">
+      <div class="archive-thumb">
+        <img src="https://img.youtube.com/vi/Xx2tNSvHmGk/hqdefault.jpg"
+             alt="IML 1989"
+             onerror="this.style.display='none'">
+        <span class="archive-play">&#x25B6;</span>
+      </div>
+      <span class="archive-label">Clips from International Mr. Leather 1989</span>
+    </a>
+    <a class="archive-card" href="https://www.leatherarchives.org/" target="_blank" rel="noopener">
+      <div class="archive-thumb">
+        <img src="https://www.leatherarchives.org/images/la-m-logo-stacked.png"
+             alt="Leather Archives and Museum"
+             style="object-fit:contain; padding:20px; background:#111;"
+             onerror="this.style.display='none'">
+        <span class="archive-play">&#x1F3DB;</span>
+      </div>
+      <span class="archive-label">Leather Archives &amp; Museum &mdash; Chicago</span>
+    </a>
+  </div>
+</section>
+
+<!-- ── PAGE 7: TABLE OF CONTENTS ── -->
+<section id="toc">
+  <div class="s-header">
+    <span class="s-num">Navigation</span>
+    <h2 class="s-title">Table of Contents</h2>
+  </div>
+  <ul class="toc-list">
+    <li>
+      <a href="#welcome">
+        <span class="toc-num">1</span>
+        <span class="toc-item-title">Welcome to IML</span>
+        <span class="toc-arrow">&#x2192;</span>
+      </a>
+    </li>
+    <li>
+      <a href="#class-grid">
+        <span class="toc-num">2</span>
+        <span class="toc-item-title">Your Class of <span class="iml-year-label"></span></span>
+        <span class="toc-arrow">&#x2192;</span>
+      </a>
+    </li>
+    <li>
+      <a href="#judges">
+        <span class="toc-num">3</span>
+        <span class="toc-item-title">Your IML Judges</span>
+        <span class="toc-arrow">&#x2192;</span>
+      </a>
+    </li>
+    <li>
+      <a href="#iml-team">
+        <span class="toc-num">4</span>
+        <span class="toc-item-title">Your IML Team</span>
+        <span class="toc-arrow">&#x2192;</span>
+      </a>
+    </li>
+    <li>
+      <a href="#experience">
+        <span class="toc-num">5</span>
+        <span class="toc-item-title">Your IML Experience</span>
+        <span class="toc-arrow">&#x2192;</span>
+      </a>
+    </li>
+    <li>
+      <a href="#first-wives">
+        <span class="toc-num">6</span>
+        <span class="toc-item-title">The First Wives&rsquo; Club</span>
+        <span class="toc-arrow">&#x2192;</span>
+      </a>
+    </li>
+    <li>
+      <a href="#code-of-conduct">
+        <span class="toc-num">7</span>
+        <span class="toc-item-title">IML Code of Conduct</span>
+        <span class="toc-arrow">&#x2192;</span>
+      </a>
+    </li>
+  </ul>
+  <p class="toc-note">
+    The information provided in this handbook is for contestants&rsquo; use only.
+    Additional information is available via the IML app or the IML website.
+    During the course of the competition some information may change &mdash;
+    please listen to the IML team for exact instructions during Orientation and
+    each event. When in doubt, ask.
+  </p>
+</section>
+
+<!-- ── PAGES 10–14: VENUE ── -->
+<section id="venue">
+  <div class="s-header">
+    <span class="s-num">Section 1</span>
+    <h2 class="s-title">Welcome to Chicago</h2>
+  </div>
+  <div class="venue-layout">
+    <div class="venue-body" id="venue-body"><!-- rendered by JS --></div>
+
+    <div class="venue-sidebar" id="venue-sidebar"><!-- rendered by JS --></div>
+  </div>
+</section>
+
+<!-- ── NEARBY SPOTS ── -->
+<section id="nearby">
+  <div class="s-header" style="padding-top:48px;">
+    <span class="s-num" id="nearby-city-label">Chicago</span>
+    <h2 class="s-title">Nearby Spots</h2>
+  </div>
+  <div class="nearby-map-wrap" id="nearby-map"><!-- map rendered by JS --></div>
+  <div class="nearby-grid" id="nearby-grid"><!-- rendered by JS --></div>
+</section>
+
+<!-- ── CLASS PHOTO GRID (page 15) ── -->
+<section id="class-grid">
+  <div class="s-header">
+    <span class="s-num">Section 2</span>
+    <h2 class="s-title">Your Class of <span class="iml-year-label"></span></h2>
+  </div>
+  <div id="photo-grid">
+    <div style="grid-column:1/-1;text-align:center;padding:80px;font-size:13px;letter-spacing:3px;color:var(--muted)">
+      Loading contestants&hellip;
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTESTANT PROFILES (pages 16+) ── -->
+<section id="contestants">
+  <div id="contestants-container"></div>
+</section>
+
+<!-- ── JUDGES (pages 31–33, sourced from internationalmrleather.com/judges) ── -->
+<section id="judges">
+  <div class="s-header">
+    <span class="s-num">Section 3</span>
+    <h2 class="s-title">Your IML Judges</h2>
+  </div>
+  <div class="judges-grid">
+
+    <a class="judge-card" href="https://www.internationalmrleather.com/judges/rene-hebert" target="_blank" rel="noopener">
+      <div class="judge-photo-wrap">
+        <img src="https://static.wixstatic.com/media/dc9023_481133f2631248febc20c634d632096b~mv2.png/v1/fill/w_400,h_600,al_c,q_85/Rene_Hebert.png" alt="Rene Hebert" loading="eager">
+      </div>
+      <div class="judge-body">
+        <span class="judge-tag">International Mr. Leather 2025</span>
+        <h3 class="judge-name">Rene Hebert &nbsp;🇨🇦</h3>
+        <p class="judge-location">Montreal, Quebec, Canada</p>
+        <p class="judge-bio">Your Friendly Neighborhood Bootblack and International Mr. Leather 2025. Rene is a versatile switch who prioritizes connected experiences in play. An accomplished bootblack and kink educator with over 14 years at the stand — the first bootblack to win the IML title. When not bootblacking he can be found nerding out over card and video games, telling bad jokes, and singing along with showtunes in his car.</p>
+        <span class="judge-link">Full profile →</span>
+      </div>
+    </a>
+
+    <a class="judge-card" href="https://www.internationalmrleather.com/judges/antoin" target="_blank" rel="noopener">
+      <div class="judge-photo-wrap">
+        <img src="https://static.wixstatic.com/media/dc9023_c667d97025094d11b4936ec1b85e7781~mv2.png/v1/fill/w_400,h_600,al_c,q_85/Antoin.png" alt="Antoin" loading="eager">
+      </div>
+      <div class="judge-body">
+        <span class="judge-tag">Judge</span>
+        <h3 class="judge-name">Antoin</h3>
+        <p class="judge-location">Global</p>
+        <p class="judge-bio">Brand Manager and Events Producer for Recon, a proud rubber man of colour well-known in the global fetish community for over 19 years. Through producing Recon's worldwide play parties, hosting the Recon Podcast and Kinky PoC panel, he's gained a deep understanding of community diversity. He has served on juries internationally and empowers everyone he meets to be their authentic selves.</p>
+        <span class="judge-link">Full profile →</span>
+      </div>
+    </a>
+
+    <a class="judge-card" href="https://www.internationalmrleather.com/judges/master-dart" target="_blank" rel="noopener">
+      <div class="judge-photo-wrap">
+        <img src="https://static.wixstatic.com/media/dc9023_de44bc254730498e8e2a0715cfb02455~mv2.png/v1/fill/w_400,h_600,al_c,q_85/MasterDart.png" alt="Master Dart" loading="eager">
+      </div>
+      <div class="judge-body">
+        <span class="judge-tag">Judge</span>
+        <h3 class="judge-name">Master Dart</h3>
+        <p class="judge-bio">Visit the full profile on the IML website for Master Dart's complete biography and background.</p>
+        <span class="judge-link">Full profile →</span>
+      </div>
+    </a>
+
+    <a class="judge-card" href="https://www.internationalmrleather.com/judges/issa-arden" target="_blank" rel="noopener">
+      <div class="judge-photo-wrap">
+        <img src="https://static.wixstatic.com/media/dc9023_4e52d22fdb14446d8a1c93cb61bf68ce~mv2.jpg/v1/fill/w_400,h_600,al_c,q_85/Issa_Arden.jpg" alt="Issa Arden" loading="eager">
+      </div>
+      <div class="judge-body">
+        <span class="judge-tag">Judge</span>
+        <h3 class="judge-name">Issa Arden</h3>
+        <p class="judge-bio">Issa Arden has been in leather and rubber for over 25 years. She serves on the Executive Committee and as head of Education for MIR. They curated exhibitions for the Leather Archives & Museum and were on ABW's board after serving as Contestant Coordinator, on IML's social media team, on staff for the Leather Hall of Fame, and held two Louisiana leather titles.</p>
+        <span class="judge-link">Full profile →</span>
+      </div>
+    </a>
+
+    <a class="judge-card" href="https://www.internationalmrleather.com/judges/lascivious-jane" target="_blank" rel="noopener">
+      <div class="judge-photo-wrap">
+        <img src="https://static.wixstatic.com/media/dc9023_ebef99d575f347cfb2939d6f7ae837d4~mv2.png/v1/fill/w_400,h_600,al_c,q_85/Lascivious_Jane.png" alt="Lascivious Jane" loading="eager">
+      </div>
+      <div class="judge-body">
+        <span class="judge-tag">International Ms. Leather 2016</span>
+        <h3 class="judge-name">Lascivious Jane</h3>
+        <p class="judge-bio">International Ms. Leather 2016 and Ms. Philadelphia Leather 2015. Sex educator by day and kinky burlesquer by night — creator of Liberty City Kings Drag and Burlesque. A prominent MC and judge in the leather community, she brings humor, expertise, and fire to every stage she graces.</p>
+        <span class="judge-link">Full profile →</span>
+      </div>
+    </a>
+
+    <a class="judge-card" href="https://www.internationalmrleather.com/judges/jody-anderson" target="_blank" rel="noopener">
+      <div class="judge-photo-wrap">
+        <img src="https://static.wixstatic.com/media/dc9023_18ab3b73264943048425302f73bc6008~mv2.png/v1/fill/w_400,h_600,al_c,q_85/Jody_Anderson.png" alt="Jody Anderson" loading="eager">
+      </div>
+      <div class="judge-body">
+        <span class="judge-tag">Judge</span>
+        <h3 class="judge-name">Jody Anderson</h3>
+        <p class="judge-bio">Visit the full profile on the IML website for Jody Anderson's complete biography and background.</p>
+        <span class="judge-link">Full profile →</span>
+      </div>
+    </a>
+
+    <a class="judge-card" href="https://www.internationalmrleather.com/judges/leonardo-iriarte" target="_blank" rel="noopener">
+      <div class="judge-photo-wrap">
+        <img src="https://static.wixstatic.com/media/dc9023_a71df1d3e8c241349daab0cb588e876e~mv2.png/v1/fill/w_400,h_600,al_c,q_85/Leonardo_Iriarte.png" alt="Leonardo Iriarte" loading="eager">
+      </div>
+      <div class="judge-body">
+        <span class="judge-tag">Mr. Los Angeles Leather 2011</span>
+        <h3 class="judge-name">Leonardo Iriarte &nbsp;🇺🇸</h3>
+        <p class="judge-bio">Mr. Los Angeles Leather 2011 — the first Latino to hold the title. Leonardo has been an active member of the leather community for over a decade, organizing events and championing the visibility of Latinos in the leather scene. He brings a deep passion for community building and inclusivity to his role as judge.</p>
+        <span class="judge-link">Full profile →</span>
+      </div>
+    </a>
+
+    <a class="judge-card" href="https://www.internationalmrleather.com/judges/michael-byrne" target="_blank" rel="noopener">
+      <div class="judge-photo-wrap">
+        <img src="https://static.wixstatic.com/media/dc9023_a14309277be94b56bb016ef6927eed67~mv2.jpg/v1/fill/w_400,h_600,al_c,q_85/Michael_Byrne.jpg" alt="Michael Byrne" loading="eager">
+      </div>
+      <div class="judge-body">
+        <span class="judge-tag">Mr. Dublin Leather 2001</span>
+        <h3 class="judge-name">Michael Byrne &nbsp;🇮🇪</h3>
+        <p class="judge-location">Dublin, Ireland</p>
+        <p class="judge-bio">A Queer activist for over 30 years, co-founder of L.U.B.E. Ireland (Leather Uniform Bear Encounter), co-producer of Dublin Leather Weekend and Den Daddy Mr. Dublin Leather. Michael competed at IML as Mr. Dublin Leather 2001 and has traveled to numerous Queer events worldwide to support a new generation of Leathermen.</p>
+        <span class="judge-link">Full profile →</span>
+      </div>
+    </a>
+
+    <a class="judge-card" href="https://www.internationalmrleather.com/judges/vince-andrews" target="_blank" rel="noopener">
+      <div class="judge-photo-wrap">
+        <img src="https://static.wixstatic.com/media/dc9023_a6696bae701a49d7a2823c905c66826e~mv2.png/v1/fill/w_400,h_600,al_c,q_85/Vince_Andrews.png" alt="Vince Andrews" loading="eager">
+      </div>
+      <div class="judge-body">
+        <span class="judge-tag">Judge &amp; Author</span>
+        <h3 class="judge-name">Vince Andrews &nbsp;🇺🇸</h3>
+        <p class="judge-bio">Author of <em>The Leather and BDSM Handbook</em> — a comprehensive guide to the leather lifestyle. Vince has spent years as a custom leather maker, creating sashes and title patches for titleholders across the Midwest. His knowledge spans both the craft and the culture of leather.</p>
+        <span class="judge-link">Full profile →</span>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- ── TALLYMASTERS ── -->
+<section id="tallymasters">
+  <div class="s-header">
+    <span class="s-num">Section 4</span>
+    <h2 class="s-title">Tallymasters</h2>
+  </div>
+  <div class="judges-grid">
+
+    <a class="judge-card" href="https://www.internationalmrleather.com/judges/cluff-reyes-26" target="_blank" rel="noopener">
+      <div class="judge-photo-wrap">
+        <img src="https://static.wixstatic.com/media/dc9023_a65592450f314d198b9f24aa17fcd088~mv2.png/v1/fill/w_400,h_600,al_c,q_85/Cluff_Reyes.png" alt="Cluff Reyes" loading="eager">
+      </div>
+      <div class="judge-body">
+        <span class="judge-tag">Tallymaster</span>
+        <h3 class="judge-name">Cluff Reyes &nbsp;🇺🇸</h3>
+        <p class="judge-location">Cleveland, Ohio, United States</p>
+        <p class="judge-bio">Mr. Jock 2012 and Mr. Stud 2012. A member of Delta Brotherhood International and Associate Member of the Chicago Hellfire Club, Cluff has been involved in the leather community for over twenty years. His ongoing personal mission is helping others discover and thrive in their kinks while building his leather family. Outside of leather: technology, motorcycles, and camping.</p>
+        <span class="judge-link">Full profile →</span>
+      </div>
+    </a>
+
+    <div class="judge-card" style="cursor:default;">
+      <div class="judge-photo-wrap" style="background:var(--blue);display:flex;align-items:center;justify-content:center;font-size:42px;">🏅</div>
+      <div class="judge-body">
+        <span class="judge-tag">Tallymaster</span>
+        <h3 class="judge-name">Omar Hekal &nbsp;🇺🇸</h3>
+        <p class="judge-location">Woodridge, New Jersey, United States</p>
+        <p class="judge-bio">Founder of Allegro Arts Academy, a performing arts studio in Carlstadt, New Jersey. Omar has performed in Broadway Bares to benefit Broadway Cares/Equity Fights AIDS. He has been an IML contestant handler and is excited to return as Tally Master, dedicated to promoting artistic expression and a well-rounded spirit to succeed in every aspect of life.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── IML TEAM (page 35) ── -->
+<section id="iml-team">
+  <div class="s-header">
+    <span class="s-num">Section 5</span>
+    <h2 class="s-title">Your IML Team</h2>
+  </div>
+  <div id="team-container">
+    <div style="text-align:center;padding:60px;font-size:13px;letter-spacing:3px;color:var(--muted)">
+      Loading team&hellip;
+    </div>
+  </div>
+</section>
+
+
+<!-- ++ EXPERIENCE OVERVIEW ++ -->
+<section id="experience">
+  <div class="s-header">
+    <span class="s-num">Section 6</span>
+    <h2 class="s-title">Your IML Experience</h2>
+  </div>
+  <p class="exp-intro">
+    IML weekend is packed with thirteen distinct events &mdash; from the opening ceremony to
+    the crowning night. Some are mandatory; others are optional but unforgettable.
+    Click any card to jump straight to the full details and prep notes.
+  </p>
+  <div class="exp-grid">
+    <a class="exp-card" href="#event-1">
+      <div class="exp-num">01</div>
+      <div class="exp-label">Registration</div>
+      <div class="exp-meta">Wednesday 7–10pm &middot; Congress Plaza Hotel</div>
+      <span class="exp-badge optional">Optional</span>
+    </a>
+        <a class="exp-card" href="#event-2">
+      <div class="exp-num">02</div>
+      <div class="exp-label">Contestant Orientation &amp; Check-In</div>
+      <div class="exp-meta">Thursday &middot; Congress Plaza Hotel</div>
+      <span class="exp-badge mandatory">Mandatory</span>
+    </a>
+    <a class="exp-card" href="#event-3">
+      <div class="exp-num">03</div>
+      <div class="exp-label">Welcome Cocktail Reception</div>
+      <div class="exp-meta">Thursday &middot; Congress Plaza Hotel</div>
+      <span class="exp-badge mandatory">Mandatory</span>
+    </a>
+    <a class="exp-card" href="#event-4">
+      <div class="exp-num">04</div>
+      <div class="exp-label">Contestant Judging &mdash; Leather</div>
+      <div class="exp-meta">Friday &middot; Main Stage</div>
+      <span class="exp-badge mandatory">Mandatory</span>
+    </a>
+    <a class="exp-card" href="#event-5">
+      <div class="exp-num">05</div>
+      <div class="exp-label">IML Vendor Fair</div>
+      <div class="exp-meta">Friday &middot; Exhibition Hall</div>
+      <span class="exp-badge optional">Optional</span>
+    </a>
+    <a class="exp-card" href="#event-6">
+      <div class="exp-num">06</div>
+      <div class="exp-label">Contestant Interview</div>
+      <div class="exp-meta">Friday&ndash;Saturday &middot; Private Rooms</div>
+      <span class="exp-badge mandatory">Mandatory</span>
+    </a>
+    <a class="exp-card" href="#event-7">
+      <div class="exp-num">07</div>
+      <div class="exp-label">Community Service Project</div>
+      <div class="exp-meta">Saturday Morning</div>
+      <span class="exp-badge optional">Optional</span>
+    </a>
+    <a class="exp-card" href="#event-8">
+      <div class="exp-num">08</div>
+      <div class="exp-label">Contestant Judging &mdash; Uniform / Fantasy</div>
+      <div class="exp-meta">Saturday &middot; Main Stage</div>
+      <span class="exp-badge mandatory">Mandatory</span>
+    </a>
+    <a class="exp-card" href="#event-9">
+      <div class="exp-num">09</div>
+      <div class="exp-label">First Wives&#39; Club Brunch</div>
+      <div class="exp-meta">Saturday Morning</div>
+      <span class="exp-badge optional">Optional</span>
+    </a>
+    <a class="exp-card" href="#event-10">
+      <div class="exp-num">10</div>
+      <div class="exp-label">Play Spaces &amp; Social Events</div>
+      <div class="exp-meta">Thursday&ndash;Saturday &middot; Various</div>
+      <span class="exp-badge optional">Optional</span>
+    </a>
+    <a class="exp-card" href="#event-11">
+      <div class="exp-num">11</div>
+      <div class="exp-label">Contestant Dinner</div>
+      <div class="exp-meta">Saturday Evening</div>
+      <span class="exp-badge mandatory">Mandatory</span>
+    </a>
+    <a class="exp-card" href="#event-12">
+      <div class="exp-num">12</div>
+      <div class="exp-label">Finals &amp; Crowning Ceremony</div>
+      <div class="exp-meta">Sunday &middot; Main Stage</div>
+      <span class="exp-badge mandatory">Mandatory</span>
+    </a>
+    <a class="exp-card" href="#event-13">
+      <div class="exp-num">13</div>
+      <div class="exp-label">Post-Contest Celebration</div>
+      <div class="exp-meta">Sunday Night</div>
+      <span class="exp-badge optional">Optional</span>
+    </a>
+  </div>
+</section>
+
+<!-- ++ EVENTS DETAIL ++ -->
+<section id="events">
+  <div class="s-header">
+    <span class="s-num">Section 7</span>
+    <h2 class="s-title">Events in Detail</h2>
+  </div>
+
+  <div class="event-block" id="event-1">
+    <div class="event-header">
+      <div class="event-num-badge">01</div>
+      <div class="event-header-body">
+        <h3 class="event-title">Registration</h3>
+        <p class="event-sub">Wednesday 7&ndash;10pm &middot; Congress Plaza Hotel</p>
+        <div class="badge-row"><span class="badge optional">Optional</span></div>
+      </div>
+    </div>
+    <div class="event-body">
+      <div class="event-col">
+        <div class="event-qa">
+          <p class="event-q">What is it?</p>
+          <p class="event-a">By attending this event, you can confirm registration and technical details,
+          complete all of the necessary paperwork and schedule your official IML photo shoot prior to
+          Thursday&rsquo;s Orientation. Upon arrival, a Contestant Handler will assist you in confirming
+          your application information used in making your contestant badge, the contest program insert,
+          and contestant address list.</p>
+        </div>
+        <div class="event-qa">
+          <p class="event-q">What&rsquo;s it like?</p>
+          <p class="event-a">This gives you your first taste of IML in a casual and relaxed atmosphere.
+          You can meet the IML team, other contestants and your handler for the competition. It also
+          ensures you are all set for the coming days.</p>
+        </div>
+        <div class="event-qa">
+          <p class="event-q">Is it judged?</p>
+          <p class="event-a">This event isn&rsquo;t judged. However, please note you must be fully
+          registered by 12:00 noon the following day if you do not attend this event.</p>
+        </div>
+      </div>
+      <div class="event-col">
+        <div class="event-qa">
+          <p class="event-q">What should I wear or bring?</p>
+          <ul class="event-checklist">
+            <li>At least one piece of legal photo ID (driver&rsquo;s licence, passport)</li>
+            <li>Any information needed for changes to your application</li>
+            <li>Your Chicago contact details &mdash; hotel name and room number</li>
+          </ul>
+          <p class="event-a" style="margin-top:10px;">Feel free to dress casually for this event.</p>
+        </div>
+        <div class="event-qa">
+          <p class="event-q">How long will it be?</p>
+          <p class="event-a">Confirming your details should take no more than a few minutes &mdash;
+          come in anytime from 7&ndash;10pm.</p>
+        </div>
+        <div class="event-qa">
+          <p class="event-q">Can my partner attend?</p>
+          <p class="event-a">Yes!</p>
+        </div>
+        <div class="callout-box">
+          <p class="callout-label">Good to know</p>
+          <p class="callout-text">If you can&rsquo;t attend this event, you will have the option to
+          confirm your details at the start of Orientation the following day.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <div class="event-block" id="event-2">
+    <div class="event-header">
+      <div class="event-num-badge">02</div>
+      <div class="event-header-body">
+        <h3 class="event-title">Contestant Orientation &amp; Check-In</h3>
+        <p class="event-sub">Thursday &middot; Congress Plaza Hotel, Gold Room</p>
+        <div class="badge-row"><span class="badge mandatory">Mandatory</span></div>
+      </div>
+    </div>
+    <div class="event-body">
+      <div class="event-col">
+        <div class="event-qa">
+          <p class="event-q">What happens here?</p>
+          <p class="event-a">You meet your handler, collect your contestant badge and materials, get
+          your photo taken for official records, and receive your room assignment and schedule for the
+          full weekend. IML staff will walk you through the weekend timeline and answer any last-minute
+          questions.</p>
+        </div>
+        <div class="event-qa">
+          <p class="event-q">What to bring</p>
+          <ul class="event-checklist">
+            <li>Government-issued photo ID</li>
+            <li>Completed contestant forms (if not already submitted)</li>
+            <li>Your leather gear (clean, polished, ready)</li>
+            <li>Any medical information your team should know</li>
+          </ul>
+        </div>
+        <div class="callout-box">
+          <p class="callout-label">Remember</p>
+          <p class="callout-text">This is your first impression on the IML team and on your fellow
+          contestants. Arrive on time, be present, and introduce yourself warmly.</p>
+        </div>
+      </div>
+      <div class="event-col">
+        <div class="event-qa">
+          <p class="event-q">Your prep notes</p>
+          <textarea class="prep-textarea" placeholder="Add personal notes here&hellip;" rows="4"></textarea>
+        </div>
+        <div class="callout-box tip">
+          <p class="callout-label">Top Tip</p>
+          <p class="callout-text">Learn your handler&rsquo;s name and cell number immediately.
+          They are your lifeline for the entire weekend.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="event-block" id="event-3">
+    <div class="event-header">
+      <div class="event-num-badge">03</div>
+      <div class="event-header-body">
+        <h3 class="event-title">Welcome Cocktail Reception</h3>
+        <p class="event-sub">Thursday Evening &middot; Congress Plaza Hotel</p>
+        <div class="badge-row"><span class="badge mandatory">Mandatory</span></div>
+      </div>
+    </div>
+    <div class="event-body">
+      <div class="event-col">
+        <div class="event-qa">
+          <p class="event-q">What happens here?</p>
+          <p class="event-a">An evening mixer where you meet your fellow contestants, judges, tallymasters,
+          and the wider IML community. Informal &mdash; conversation, drinks, and community.
+          Dress in leather or uniform.</p>
+        </div>
+        <div class="event-qa">
+          <p class="event-q">What to wear</p>
+          <ul class="event-checklist">
+            <li>Leather or uniform gear &mdash; this is a leather event</li>
+            <li>Contestant badge / sash if provided</li>
+            <li>Comfortable footwear (you&rsquo;ll be on your feet)</li>
+          </ul>
+        </div>
+        <div class="callout-box">
+          <p class="callout-label">Remember</p>
+          <p class="callout-text">Judges are observing from the moment they see you. Be genuine,
+          gracious, and present.</p>
+        </div>
+      </div>
+      <div class="event-col">
+        <div class="event-qa">
+          <p class="event-q">Talking points to prepare</p>
+          <ul class="event-checklist">
+            <li>Your title and home community</li>
+            <li>Why IML matters to you personally</li>
+            <li>One thing you hope to learn this weekend</li>
+          </ul>
+        </div>
+        <div class="event-qa">
+          <p class="event-q">Your prep notes</p>
+          <textarea class="prep-textarea" placeholder="Add personal notes here&hellip;" rows="3"></textarea>
+        </div>
+        <div class="callout-box tip">
+          <p class="callout-label">Top Tip</p>
+          <p class="callout-text">Learn two or three other contestants&rsquo; names before the night is over.
+          The camaraderie you build here lasts a lifetime.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="event-block" id="event-4">
+    <div class="event-header">
+      <div class="event-num-badge">04</div>
+      <div class="event-header-body">
+        <h3 class="event-title">Contestant Judging &mdash; Leather</h3>
+        <p class="event-sub">Friday &middot; Main Stage, Congress Plaza Hotel</p>
+        <div class="badge-row"><span class="badge mandatory">Mandatory</span></div>
+      </div>
+    </div>
+    <div class="event-body">
+      <div class="event-col">
+        <div class="event-qa">
+          <p class="event-q">What happens here?</p>
+          <p class="event-a">All contestants parade across the main stage in their leather gear. Judges
+          score on presentation, confidence, leather craft, and how you carry yourself. This is
+          the iconic IML moment &mdash; the stage is yours.</p>
+        </div>
+        <div class="event-qa">
+          <p class="event-q">Scoring criteria</p>
+          <ul class="event-checklist">
+            <li>Quality and condition of leather gear</li>
+            <li>Stage presence and confidence</li>
+            <li>Overall presentation and grooming</li>
+            <li>How authentically you embody the leather aesthetic</li>
+          </ul>
+        </div>
+        <div class="callout-box">
+          <p class="callout-label">Remember</p>
+          <p class="callout-text">The judges want to see <em>you</em> &mdash; your authentic leather self.
+          Don&rsquo;t perform; inhabit.</p>
+        </div>
+      </div>
+      <div class="event-col">
+        <div class="event-qa">
+          <p class="event-q">Gear checklist</p>
+          <ul class="event-checklist">
+            <li>Leather polished and conditioned</li>
+            <li>All hardware shined</li>
+            <li>Boots &mdash; spit-polished or mirror-finish</li>
+            <li>Sash / title badge secured</li>
+            <li>Backup boot laces / snap repair kit</li>
+          </ul>
+        </div>
+        <div class="event-qa">
+          <p class="event-q">Your prep notes</p>
+          <textarea class="prep-textarea" placeholder="Add personal notes here&hellip;" rows="3"></textarea>
+        </div>
+        <div class="callout-box tip">
+          <p class="callout-label">Top Tip</p>
+          <p class="callout-text">Practice your walk. Find your pace. Slow is confident. Rushed is nervous.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="event-block" id="event-5">
+    <div class="event-header">
+      <div class="event-num-badge">05</div>
+      <div class="event-header-body">
+        <h3 class="event-title">IML Vendor Fair</h3>
+        <p class="event-sub">Friday &middot; Exhibition Hall</p>
+        <div class="badge-row"><span class="badge optional">Optional</span></div>
+      </div>
+    </div>
+    <div class="event-body">
+      <div class="event-col">
+        <div class="event-qa">
+          <p class="event-q">What happens here?</p>
+          <p class="event-a">One of the world&rsquo;s largest leather and fetish vendor fairs. Hundreds of
+          vendors from across the globe selling leather gear, toys, art, books, and more. A great place
+          to meet community members and support the broader leather ecosystem.</p>
+        </div>
+        <div class="callout-box">
+          <p class="callout-label">Remember</p>
+          <p class="callout-text">You are a contestant all weekend. How you carry yourself at the Vendor
+          Fair &mdash; especially with fans and community members &mdash; is part of your IML presence.</p>
+        </div>
+      </div>
+      <div class="event-col">
+        <div class="event-qa">
+          <p class="event-q">Your prep notes</p>
+          <textarea class="prep-textarea" placeholder="Add personal notes here&hellip;" rows="3"></textarea>
+        </div>
+        <div class="callout-box tip">
+          <p class="callout-label">Top Tip</p>
+          <p class="callout-text">Visit vendors who support your local leather community.
+          Personal connections here often outlast the weekend.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="event-block" id="event-6">
+    <div class="event-header">
+      <div class="event-num-badge">06</div>
+      <div class="event-header-body">
+        <h3 class="event-title">Contestant Interview</h3>
+        <p class="event-sub">Friday&ndash;Saturday &middot; Private Interview Rooms</p>
+        <div class="badge-row"><span class="badge mandatory">Mandatory</span></div>
+      </div>
+    </div>
+    <div class="event-body">
+      <div class="event-col">
+        <div class="event-qa">
+          <p class="event-q">What happens here?</p>
+          <p class="event-a">A private 20-minute interview with the full judging panel. You&rsquo;ll be asked
+          about your background in leather, your community work, your vision for the IML title, and
+          your knowledge of leather history and culture. This is the highest-weighted component of
+          your score.</p>
+        </div>
+        <div class="event-qa">
+          <p class="event-q">Common interview themes</p>
+          <ul class="event-checklist">
+            <li>Your leather journey &mdash; how you got here</li>
+            <li>Community service and advocacy</li>
+            <li>What IML means to the global leather community</li>
+            <li>How you would use the title to make an impact</li>
+            <li>Leather history, culture, and its future</li>
+          </ul>
+        </div>
+        <div class="callout-box">
+          <p class="callout-label">Remember</p>
+          <p class="callout-text">The judges are not looking for perfect answers. They want to know who
+          you are. Be honest, be specific, be yourself.</p>
+        </div>
+      </div>
+      <div class="event-col">
+        <div class="event-qa">
+          <p class="event-q">Practice questions &mdash; your answers</p>
+          <textarea class="prep-textarea" placeholder="What does holding the IML title mean to you?" rows="3"></textarea>
+          <textarea class="prep-textarea" placeholder="Describe a time your community work made a tangible difference." rows="3"></textarea>
+          <textarea class="prep-textarea" placeholder="Where do you see leather culture in 20 years?" rows="3"></textarea>
+        </div>
+        <div class="callout-box tip">
+          <p class="callout-label">Top Tip</p>
+          <p class="callout-text">Know your bio cold &mdash; and be ready to say something true about yourself
+          that isn&rsquo;t in your bio. Judges appreciate depth beyond the paper.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="event-block" id="event-7">
+    <div class="event-header">
+      <div class="event-num-badge">07</div>
+      <div class="event-header-body">
+        <h3 class="event-title">Community Service Project</h3>
+        <p class="event-sub">Saturday Morning</p>
+        <div class="badge-row"><span class="badge optional">Optional</span></div>
+      </div>
+    </div>
+    <div class="event-body">
+      <div class="event-col">
+        <div class="event-qa">
+          <p class="event-q">What happens here?</p>
+          <p class="event-a">Contestants who choose to participate join a coordinated community service
+          activity &mdash; typically benefiting a Chicago-area LGBTQ+ or leather organisation.
+          Details are announced at orientation. Participation is not scored but is strongly encouraged
+          as an expression of leather values.</p>
+        </div>
+        <div class="callout-box">
+          <p class="callout-label">Remember</p>
+          <p class="callout-text">The leather community is built on service. Showing up here speaks
+          louder than any interview answer.</p>
+        </div>
+      </div>
+      <div class="event-col">
+        <div class="event-qa">
+          <p class="event-q">Your prep notes</p>
+          <textarea class="prep-textarea" placeholder="Add personal notes here&hellip;" rows="3"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="event-block" id="event-8">
+    <div class="event-header">
+      <div class="event-num-badge">08</div>
+      <div class="event-header-body">
+        <h3 class="event-title">Contestant Judging &mdash; Uniform / Fantasy</h3>
+        <p class="event-sub">Saturday &middot; Main Stage, Congress Plaza Hotel</p>
+        <div class="badge-row"><span class="badge mandatory">Mandatory</span></div>
+      </div>
+    </div>
+    <div class="event-body">
+      <div class="event-col">
+        <div class="event-qa">
+          <p class="event-q">What happens here?</p>
+          <p class="event-a">The second stage judging event. You may appear in uniform (military,
+          police, fire, or other), fetish gear, or fantasy leather. This category celebrates the full
+          breadth of leather and kink expression. You have more creative freedom here &mdash; use it.</p>
+        </div>
+        <div class="event-qa">
+          <p class="event-q">Outfit checklist</p>
+          <ul class="event-checklist">
+            <li>Outfit chosen and fitted in advance</li>
+            <li>All pieces clean and pressed / polished</li>
+            <li>Footwear appropriate and secured</li>
+            <li>Any props or accessories tested</li>
+          </ul>
+        </div>
+        <div class="callout-box">
+          <p class="callout-label">Remember</p>
+          <p class="callout-text">Fantasy does not mean costume. Whatever you wear, commit to it with
+          full conviction. Authenticity reads from the back row.</p>
+        </div>
+      </div>
+      <div class="event-col">
+        <div class="event-qa">
+          <p class="event-q">Your prep notes</p>
+          <textarea class="prep-textarea" placeholder="Describe your outfit concept&hellip;" rows="3"></textarea>
+        </div>
+        <div class="callout-box tip">
+          <p class="callout-label">Top Tip</p>
+          <p class="callout-text">Rehearse how you&rsquo;ll walk in this outfit specifically.
+          Uniform boots walk differently than leather boots. Know your gear.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="event-block" id="event-9">
+    <div class="event-header">
+      <div class="event-num-badge">09</div>
+      <div class="event-header-body">
+        <h3 class="event-title">First Wives&#39; Club Brunch</h3>
+        <p class="event-sub">Saturday Morning &middot; Congress Plaza Hotel</p>
+        <div class="badge-row"><span class="badge optional">Optional</span></div>
+      </div>
+    </div>
+    <div class="event-body">
+      <div class="event-col">
+        <div class="event-qa">
+          <p class="event-q">What happens here?</p>
+          <p class="event-a">A beloved IML tradition &mdash; a brunch gathering for the partners, spouses,
+          and significant others of contestants. A space for support, laughter, and community
+          away from the competition floor. See the dedicated section of this handbook for full details.</p>
+        </div>
+        <div class="callout-box">
+          <p class="callout-label">Remember</p>
+          <p class="callout-text">Your support network matters. The people who travel with you are part
+          of your IML story. Make sure they feel included in the weekend.</p>
+        </div>
+      </div>
+      <div class="event-col">
+        <div class="event-qa">
+          <p class="event-q">Your prep notes</p>
+          <textarea class="prep-textarea" placeholder="Notes for your partner / support person&hellip;" rows="3"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="event-block" id="event-10">
+    <div class="event-header">
+      <div class="event-num-badge">10</div>
+      <div class="event-header-body">
+        <h3 class="event-title">Play Spaces &amp; Social Events</h3>
+        <p class="event-sub">Thursday&ndash;Saturday Evening &middot; Various Locations</p>
+        <div class="badge-row"><span class="badge optional">Optional</span></div>
+      </div>
+    </div>
+    <div class="event-body">
+      <div class="event-col">
+        <div class="event-qa">
+          <p class="event-q">What happens here?</p>
+          <p class="event-a">IML weekend hosts a variety of evening social events and play spaces.
+          These are consensual adult spaces governed by explicit community agreements. Attendance is
+          entirely optional and personal. Your participation &mdash; or non-participation &mdash; is not evaluated.</p>
+        </div>
+        <div class="callout-box">
+          <p class="callout-label">Remember</p>
+          <p class="callout-text">You are always a contestant in public spaces. The Code of Conduct
+          applies at all times. Consent, respect, and community care are non-negotiable.</p>
+        </div>
+      </div>
+      <div class="event-col">
+        <div class="callout-box tip">
+          <p class="callout-label">Top Tip</p>
+          <p class="callout-text">Know your limits and honour them. IML weekend is a marathon. Rest
+          when you need to. A well-rested contestant performs better on stage and in interview.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="event-block" id="event-11">
+    <div class="event-header">
+      <div class="event-num-badge">11</div>
+      <div class="event-header-body">
+        <h3 class="event-title">Contestant Dinner</h3>
+        <p class="event-sub">Saturday Evening &middot; Congress Plaza Hotel, Grand Ballroom</p>
+        <div class="badge-row"><span class="badge mandatory">Mandatory</span></div>
+      </div>
+    </div>
+    <div class="event-body">
+      <div class="event-col">
+        <div class="event-qa">
+          <p class="event-q">What happens here?</p>
+          <p class="event-a">A formal dinner for all contestants, handlers, judges, tallymasters, and
+          the IML team. Dress: leather or formal. A moment of celebration and reflection before
+          the Finals. Speeches, recognition of community milestones, and shared community time.</p>
+        </div>
+        <div class="callout-box">
+          <p class="callout-label">Remember</p>
+          <p class="callout-text">By Saturday evening, you have already earned your place here. Relax,
+          be present, and soak in the experience &mdash; regardless of what tomorrow holds.</p>
+        </div>
+      </div>
+      <div class="event-col">
+        <div class="event-qa">
+          <p class="event-q">Your prep notes</p>
+          <textarea class="prep-textarea" placeholder="Add personal notes here&hellip;" rows="3"></textarea>
+        </div>
+        <div class="callout-box tip">
+          <p class="callout-label">Top Tip</p>
+          <p class="callout-text">Use dinner to thank your handler and your support team.
+          Gratitude is a leather value too.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="event-block" id="event-12">
+    <div class="event-header">
+      <div class="event-num-badge">12</div>
+      <div class="event-header-body">
+        <h3 class="event-title">Finals &amp; Crowning Ceremony</h3>
+        <p class="event-sub">Sunday &middot; Main Stage, Congress Plaza Hotel</p>
+        <div class="badge-row"><span class="badge mandatory">Mandatory</span></div>
+      </div>
+    </div>
+    <div class="event-body">
+      <div class="event-col">
+        <div class="event-qa">
+          <p class="event-q">What happens here?</p>
+          <p class="event-a">The culminating event of IML weekend. Top finalists are announced; the new
+          International Mr. Leather is crowned before a packed audience. All contestants participate
+          in the opening parade regardless of whether they advance to finals. This is the moment the
+          community gathers for.</p>
+        </div>
+        <div class="event-qa">
+          <p class="event-q">Finals day checklist</p>
+          <ul class="event-checklist">
+            <li>All leather gear polished and ready</li>
+            <li>Sash / title badge secure</li>
+            <li>Hydrated and rested</li>
+            <li>Handler briefed on your needs</li>
+            <li>Emergency repair kit backstage</li>
+          </ul>
+        </div>
+        <div class="callout-box">
+          <p class="callout-label">Remember</p>
+          <p class="callout-text">Whether you&rsquo;re called as a finalist or not &mdash; walk that stage like
+          you mean every step. The community is watching, and they are proud of you.</p>
+        </div>
+      </div>
+      <div class="event-col">
+        <div class="event-qa">
+          <p class="event-q">If you are called as a finalist</p>
+          <ul class="event-checklist">
+            <li>Stage question may be asked &mdash; prepare a 45-second answer</li>
+            <li>Stay composed regardless of the question</li>
+            <li>Speak to the back of the room</li>
+            <li>Breathe. Pause. Then answer.</li>
+          </ul>
+        </div>
+        <div class="event-qa">
+          <p class="event-q">Your prep notes</p>
+          <textarea class="prep-textarea" placeholder="Stage question themes to prepare&hellip;" rows="3"></textarea>
+        </div>
+        <div class="callout-box tip">
+          <p class="callout-label">Top Tip</p>
+          <p class="callout-text">There is no wrong answer to a stage question &mdash; only an uninhabited
+          one. Whatever you say, say it like you mean it.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="event-block" id="event-13">
+    <div class="event-header">
+      <div class="event-num-badge">13</div>
+      <div class="event-header-body">
+        <h3 class="event-title">Post-Contest Celebration</h3>
+        <p class="event-sub">Sunday Night &middot; Various Venues</p>
+        <div class="badge-row"><span class="badge optional">Optional</span></div>
+      </div>
+    </div>
+    <div class="event-body">
+      <div class="event-col">
+        <div class="event-qa">
+          <p class="event-q">What happens here?</p>
+          <p class="event-a">After the crowning, Chicago&rsquo;s leather venues host celebratory events
+          across the weekend&rsquo;s closing night. Time to decompress, celebrate with your fellow
+          contestants, and enjoy the community you&rsquo;ve spent the weekend building.
+          Details are shared at the Finals.</p>
+        </div>
+        <div class="callout-box">
+          <p class="callout-label">Remember</p>
+          <p class="callout-text">You came. You competed. You represented your community on one of
+          leather&rsquo;s greatest stages. That is worth celebrating &mdash; full stop.</p>
+        </div>
+      </div>
+      <div class="event-col">
+        <div class="callout-box tip">
+          <p class="callout-label">Top Tip</p>
+          <p class="callout-text">Exchange contacts with the contestants you&rsquo;ve connected with.
+          Your IML class is your family now &mdash; stay in touch.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ++ FIRST WIVES CLUB ++ -->
+<section id="first-wives">
+  <div class="s-header">
+    <span class="s-num">Section 8</span>
+    <h2 class="s-title">The First Wives&#39; Club</h2>
+  </div>
+  <div class="fwc-layout" id="fwc-layout"><!-- rendered by JS --></div>
+</section>
+
+<!-- ++ CODE OF CONDUCT ++ -->
+<section id="code-of-conduct">
+  <div class="s-header">
+    <span class="s-num">Section 9</span>
+    <h2 class="s-title">Code of Conduct</h2>
+  </div>
+  <p class="coc-intro">
+    International Mr. Leather is committed to running a responsible and transparent event,
+    setting high ethical standards for ourselves and our attendees, supporting each other,
+    and embracing best practices for success and sustainability.
+  </p>
+
+  <!-- IMLBB Ethics -->
+  <div class="coc-sub" id="coc-ethics">
+    <p class="coc-sub-title">IMLBB Ethics</p>
+    <p class="coc-sub-lead">Key elements of our code of ethics:</p>
+    <div class="coc-values-grid">
+      <div class="coc-value-card">
+        <p class="coc-value-label">Integrity</p>
+        <p class="coc-value-text">Being truthful and acting with honesty in all situations.</p>
+      </div>
+      <div class="coc-value-card">
+        <p class="coc-value-label">Confidentiality</p>
+        <p class="coc-value-text">Protecting sensitive information about volunteers and attendees.</p>
+      </div>
+      <div class="coc-value-card">
+        <p class="coc-value-label">Professionalism</p>
+        <p class="coc-value-text">Maintaining high standards of conduct and competence in one&rsquo;s responsibilities.</p>
+      </div>
+      <div class="coc-value-card">
+        <p class="coc-value-label">Fairness</p>
+        <p class="coc-value-text">Treating everyone equally and without bias.</p>
+      </div>
+      <div class="coc-value-card">
+        <p class="coc-value-label">Respect</p>
+        <p class="coc-value-text">Valuing the dignity and worth of others.</p>
+      </div>
+      <div class="coc-value-card">
+        <p class="coc-value-label">Compliance with Laws &amp; Regulations</p>
+        <p class="coc-value-text">Adhering to all applicable legal requirements. International Mr. Leather, LLC and IMLBB enforce a zero-tolerance policy regarding physical and sexual offenses, which applies to individuals charged with, indicted for, convicted of, or required to register due to such offenses.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- IMLBB Core Values -->
+  <div class="coc-sub" id="coc-core-values">
+    <p class="coc-sub-title">IMLBB Core Values</p>
+    <div class="coc-values-grid">
+      <div class="coc-value-card">
+        <p class="coc-value-num">1</p>
+        <p class="coc-value-label">Diversity and Representation</p>
+        <p class="coc-value-text">We value individuals who actively work to bring a range of perspectives and voices into conversations, creating a sense of belonging for all. We live at the intersectionality of queer, kinky, leather, and sexual explorer.</p>
+      </div>
+      <div class="coc-value-card">
+        <p class="coc-value-num">2</p>
+        <p class="coc-value-label">Insightful Leadership</p>
+        <p class="coc-value-text">We demonstrate a depth of understanding about the community, its history, and its evolving needs. We possess the experience to recognize authentic leadership and the potential to inspire meaningful connections. We value actions over words.</p>
+      </div>
+      <div class="coc-value-card">
+        <p class="coc-value-num">3</p>
+        <p class="coc-value-label">Emotional Intelligence</p>
+        <p class="coc-value-text">We value skilled communicators, capable of distinguishing between dialogue, debate, and conflict, and who know when to engage in each constructively. We appreciate strength of character; however, the ability to take direction is critical.</p>
+      </div>
+      <div class="coc-value-card">
+        <p class="coc-value-num">4</p>
+        <p class="coc-value-label">Commitment to Community Building</p>
+        <p class="coc-value-text">We believe in fostering relationships and creating spaces where our community and diverse attendees feel welcome. We prioritize the ability to connect, uplift, and mentor others over surface-level attributes.</p>
+      </div>
+      <div class="coc-value-card">
+        <p class="coc-value-num">5</p>
+        <p class="coc-value-label">Fairness and Integrity</p>
+        <p class="coc-value-text">We are committed to impartiality, transparency, and ethical decision-making, ensuring that everyone is given a fair opportunity to shine. We value individuals who act with honesty, fairness, and strong moral principles, even in difficult situations. We value the courage to do what&rsquo;s right.</p>
+      </div>
+      <div class="coc-value-card">
+        <p class="coc-value-num">6</p>
+        <p class="coc-value-label">Dedication to Growth</p>
+        <p class="coc-value-text">We are learners who continually engage with the leather and fetish communities to stay informed about shifting dynamics, challenges, and aspirations. We value self-examination, the ability to challenge assumptions, and to forge new ways forward.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Volunteer Standards -->
+  <div class="coc-sub" id="coc-volunteer">
+    <p class="coc-sub-title">Volunteer Standards</p>
+    <div class="coc-def-list">
+      <div class="coc-def-item">
+        <p class="coc-def-term">Respectful Behaviour</p>
+        <p class="coc-def-desc">Treating all individuals, including staff, other volunteers, and beneficiaries, with courtesy and dignity, regardless of background or circumstances.</p>
+      </div>
+      <div class="coc-def-item">
+        <p class="coc-def-term">Confidentiality</p>
+        <p class="coc-def-desc">Protecting sensitive information about individuals encountered during volunteer work.</p>
+      </div>
+      <div class="coc-def-item">
+        <p class="coc-def-term">Non-Discrimination</p>
+        <p class="coc-def-desc">Avoiding bias or discriminatory actions based on factors like race, religion, gender, or sexual orientation.</p>
+      </div>
+      <div class="coc-def-item">
+        <p class="coc-def-term">Professionalism</p>
+        <p class="coc-def-desc">Maintaining a positive attitude, adhering to established policies and procedures, and being punctual and reliable.</p>
+      </div>
+      <div class="coc-def-item">
+        <p class="coc-def-term">Accountability</p>
+        <p class="coc-def-desc">Taking responsibility for actions and reporting any concerns or ethical breaches to appropriate authorities.</p>
+      </div>
+      <div class="coc-def-item">
+        <p class="coc-def-term">Honesty and Integrity</p>
+        <p class="coc-def-desc">Acting with transparency and upholding ethical standards in all interactions.</p>
+      </div>
+      <div class="coc-def-item">
+        <p class="coc-def-term">Conflict of Interest Disclosure</p>
+        <p class="coc-def-desc">Disclosing any potential conflicts of interest that could impact the volunteer role.</p>
+      </div>
+      <div class="coc-def-item">
+        <p class="coc-def-term">Appropriate Communication</p>
+        <p class="coc-def-desc">Maintaining professional communication channels and avoiding inappropriate language or behaviour.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Why ethics matter -->
+  <div class="coc-sub" id="coc-why-ethics">
+    <p class="coc-sub-title">Why a Volunteer Code of Ethics Matters</p>
+    <div class="coc-def-list">
+      <div class="coc-def-item">
+        <p class="coc-def-term">Protects Beneficiaries</p>
+        <p class="coc-def-desc">Ensures volunteers prioritize the well-being and safety of those they serve and work with.</p>
+      </div>
+      <div class="coc-def-item">
+        <p class="coc-def-term">Maintains Organizational Reputation</p>
+        <p class="coc-def-desc">Upholds the positive image of the organization by ensuring volunteers behave responsibly.</p>
+      </div>
+      <div class="coc-def-item">
+        <p class="coc-def-term">Promotes Positive Volunteer Experience</p>
+        <p class="coc-def-desc">Provides clear expectations for volunteers, leading to a more fulfilling and ethical volunteering experience.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- IML Weekend Code of Conduct -->
+  <div class="coc-sub" id="coc-weekend">
+    <p class="coc-sub-title">IML Weekend Code of Conduct</p>
+    <p class="coc-sub-lead">International Mr. Leather (IML) is proud to welcome all leather community members and those who wish to learn more about the leather community, and we acknowledge that we have a responsibility to provide a safe environment. IML welcomes, affirms, and celebrates diversity in all its forms. Every member of the IML Organization is bound by this code of conduct and will respect and honor the dignity of every person who participates in IML Weekend.</p>
+    <p class="coc-sub-lead">We require adherence to this code of conduct as a condition of attending IML. This code of conduct applies to all participants &mdash; trustees, staff, volunteers, vendors, contestants, judges, contractors, and attendees. All participants acknowledge that they are attending a sex-positive event that contains some sexually explicit content. All participants of IML must be at least 21 years of age.</p>
+    <div class="coc-grid">
+
+      <div class="coc-card">
+        <div class="coc-icon">&#x1F91D;</div>
+        <h3 class="coc-title">Harassment</h3>
+        <p class="coc-text">IML is dedicated to providing a harassment-free experience for all, regardless of age, race, gender, gender identity or expression, sexual orientation, disability, physical appearance, body size, personal beliefs, fetish interests or religion. Harassment of any kind is considered a serious breach of this code of conduct.</p>
+        <ul class="coc-text" style="padding-left:18px; margin-top:12px;">
+          <li>Discrimination or unfair treatment based on any protected characteristic</li>
+          <li>Non-consensual physical contact of any kind</li>
+          <li>Unwelcome sexual attention</li>
+          <li>Deliberate intimidation, threats, stalking, or following</li>
+        </ul>
+        <p class="coc-text" style="margin-top:12px;"><strong style="color:var(--white);">NO means NO.</strong> Participants asked to stop harassing behaviour must comply immediately. Contact the help desk on the 1st floor of the hotel.</p>
+      </div>
+
+      <div class="coc-card">
+        <div class="coc-icon">&#x1F6AB;</div>
+        <h3 class="coc-title">Controlled Substances</h3>
+        <p class="coc-text">IML has a zero-tolerance policy regarding illegal substances. Any person believed to be selling or otherwise distributing any controlled substance will be reported to the appropriate authorities.</p>
+      </div>
+
+      <div class="coc-card">
+        <div class="coc-icon">&#x1F6A8;</div>
+        <h3 class="coc-title">Weapons and Replicas</h3>
+        <p class="coc-text">No functioning or realistic appearing firearm may be carried or displayed at any time, regardless of any government permits you may possess. Projectile devices or props which may cause annoyance to others are not allowed.</p>
+      </div>
+
+      <div class="coc-card">
+        <div class="coc-icon">&#x1F4F7;</div>
+        <h3 class="coc-title">Photography &amp; Video</h3>
+        <p class="coc-text">Photography and video recording for personal use is generally allowed. Ask permission prior to recording or photographing others &mdash; if an individual does not wish to be photographed, their wishes must be respected.</p>
+        <p class="coc-text" style="margin-top:10px;">IML has official photographers identified by unique credentials. By entering an IML venue, you may be photographed by them.</p>
+      </div>
+
+      <div class="coc-card">
+        <div class="coc-icon">&#x1F4E2;</div>
+        <h3 class="coc-title">Reporting</h3>
+        <p class="coc-text">If you are subject to unacceptable behaviour, notice someone else is being subjected to it, or have concerns this Code of Conduct is not being followed:</p>
+        <ul class="coc-text" style="padding-left:18px; margin-top:10px;">
+          <li>Contact the help desk on the 1st floor of the hotel</li>
+          <li>Email <a href="mailto:conduct@imrl.com" style="color:var(--blue-light);">conduct@imrl.com</a></li>
+        </ul>
+        <p class="coc-text" style="margin-top:10px;">All reports will remain confidential. IML does not tolerate retaliation against anyone reporting a violation. Failure to abide by this Code of Conduct may result in removal from the event.</p>
+      </div>
+
+    </div>
+
+    <div class="coc-contact">
+      <div class="coc-contact-item">
+        <p class="coc-contact-label">Help Desk</p>
+        <p class="coc-contact-value">1st Floor, Congress Plaza Hotel</p>
+      </div>
+      <div class="coc-contact-item">
+        <p class="coc-contact-label">Email</p>
+        <p class="coc-contact-value"><a href="mailto:conduct@imrl.com">conduct@imrl.com</a></p>
+      </div>
+      <div class="coc-contact-item">
+        <p class="coc-contact-label">Directed To</p>
+        <p class="coc-contact-value">IML Operations LLC Board of Directors</p>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ++ CLOSING ++ -->
+<section id="closing">
+  <p class="closing-eyebrow" id="closing-eyebrow"></p>
+  <blockquote class="closing-quote" id="closing-quote-text"></blockquote>
+  <p class="closing-quote-attr" id="closing-quote-attr"></p>
+  <div class="closing-divider"></div>
+  <div class="closing-contact">
+    <div class="closing-contact-item">
+      <p class="closing-contact-label">Website</p>
+      <p class="closing-contact-value"><a href="https://www.internationalmrleather.com" target="_blank" rel="noopener">internationalmrleather.com</a></p>
+    </div>
+    <div class="closing-contact-item">
+      <p class="closing-contact-label">Email</p>
+      <p class="closing-contact-value"><a href="mailto:info@iml.org">info@iml.org</a></p>
+    </div>
+    <div class="closing-contact-item">
+      <p class="closing-contact-label">Emergency (Weekend)</p>
+      <p class="closing-contact-value">Provided at Check-In</p>
+    </div>
+    <div class="closing-contact-item">
+      <p class="closing-contact-label">Location</p>
+      <p class="closing-contact-value" id="closing-venue-label"></p>
+    </div>
+  </div>
+  <p class="closing-credits" id="closing-credits"></p>
+</section>
+
+<footer id="site-footer">
+  <p id="footer-copyright"></p>
+  <p id="footer-data-note"></p>
+</footer>
+
+<button id="back-top" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+/* ══════════════════════════════════════════
+   CONFIG  ← All year-specific values live in config.js.
+   When config.js is loaded as a separate <script> tag (dev),
+   those constants are already defined.
+   When built via build.py, config.js is inlined above this block.
+══════════════════════════════════════════ */
+
+/* Derived sheet URLs from config.js constants */
+const SHEET_CSV =
+  `https://docs.google.com/spreadsheets/d/${CONTESTANTS_SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(CONTESTANTS_SHEET_TAB)}`;
+const TEAM_SHEET_CSV =
+  `https://docs.google.com/spreadsheets/d/${TEAM_SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(TEAM_SHEET_TAB)}`;
+const TEAM_EMBEDDED = TEAM_MEMBERS; /* alias for backwards-compat */
+
+/* ── Country → Flag emoji ── */
+const FLAGS = {
+  'usa':'🇺🇸','united states':'🇺🇸','us':'🇺🇸',
+  'australia':'🇦🇺','au':'🇦🇺',
+  'spain':'🇪🇸','españa':'🇪🇸',
+  'brazil':'🇧🇷','brasil':'🇧🇷',
+  'italy':'🇮🇹','italia':'🇮🇹',
+  'colombia':'🇨🇴',
+  'ireland':'🇮🇪',
+  'norway':'🇳🇴',
+  'germany':'🇩🇪','deutschland':'🇩🇪',
+  'france':'🇫🇷',
+  'uk':'🇬🇧','united kingdom':'🇬🇧',
+  'netherlands':'🇳🇱','holland':'🇳🇱',
+  'sweden':'🇸🇪',
+  'mexico':'🇲🇽','méxico':'🇲🇽',
+  'canada':'🇨🇦',
+  'eu':'🇪🇺','europe':'🇪🇺',
+  'austria':'🇦🇹',
+  'portugal':'🇵🇹',
+  'argentina':'🇦🇷',
+  'new zealand':'🇳🇿',
+  'south africa':'🇿🇦',
+  'japan':'🇯🇵',
+  'belgium':'🇧🇪',
+  'switzerland':'🇨🇭',
+  'denmark':'🇩🇰',
+  'finland':'🇫🇮',
+  'canary islands':'🇮🇨','gran canaria':'🇮🇨',
+};
+
+function getFlag(country) {
+  return FLAGS[(country || '').toLowerCase().trim()] || '';
+}
+
+/* ══════════════════════════════════════════
+   CONFIG RENDERING
+   Reads from config.js constants and populates DOM.
+══════════════════════════════════════════ */
+function applyConfig() {
+  const year = IML_YEAR;
+  const num  = IML_NUMBER;
+  const edition = `IML #${num}`;
+
+  document.title = `${edition} // ${year} Contestant Handbook`;
+
+  const navBrand = document.getElementById('nav-brand');
+  if (navBrand) navBrand.textContent = `IML ${year}`;
+  const navClass = document.getElementById('nav-class-label');
+  if (navClass) navClass.textContent = `Class of ${year}`;
+
+  document.querySelectorAll('.iml-year-label').forEach(el => { el.textContent = year; });
+
+  const coverMeta = document.getElementById('cover-meta');
+  if (coverMeta) coverMeta.innerHTML =
+    `${edition} &nbsp;&middot;&nbsp; ${year}<br>${VENUE.name}<br>${VENUE.city}, ${VENUE.state}`;
+
+  const eyebrow = document.getElementById('welcome-eyebrow');
+  const body    = document.getElementById('welcome-body');
+  if (eyebrow) eyebrow.textContent = WELCOME_LETTER.eyebrow;
+  if (body) body.innerHTML = WELCOME_LETTER.paragraphs.map(p=>`<p>${p}</p>`).join('') +
+    `<p class="letter-sign">${WELCOME_LETTER.signature}</p>`;
+
+  const venueBody    = document.getElementById('venue-body');
+  const venueSidebar = document.getElementById('venue-sidebar');
+  if (venueBody) {
+    venueBody.innerHTML = `
+      <h3 class="venue-name">${VENUE.name}</h3>
+      <p class="venue-address">${VENUE.address} &nbsp;&middot;&nbsp; ${VENUE.city}, ${VENUE.state} ${VENUE.zip} &nbsp;&middot;&nbsp; ${VENUE.country}</p>
+      <div class="venue-section">
+        <p class="venue-section-label">About the Hotel</p>
+        <p class="venue-section-text">The Congress Plaza Hotel &amp; Convention Center was originally built in 1893 and has been a Chicago icon for over 125 years. Within close proximity are Millennium Park, Grant Park, Navy Pier, Shedd Aquarium, and several museums.</p>
+      </div>
+      <div class="venue-section">
+        <p class="venue-section-label">Getting There from the Airport</p>
+        <p class="venue-section-text">${VENUE.airportNote}</p>
+      </div>
+      <div class="venue-section">
+        <p class="venue-section-label">Nearby Amenities</p>
+        <p class="venue-section-text">${VENUE.amenitiesNote}</p>
+      </div>
+      ${VENUE.northTowerTip ? `<div class="callout-box-intro"><p class="callout-label">Good to Know</p><p class="callout-text">The hotel is very wide. We advise you request a room in the <strong>North Tower</strong> if possible. Most contestant activities take place in one central area. Contestants will be transported to competition venues not in the hotel.</p></div>` : ''}
+      <div class="callout-box-intro">
+        <p class="callout-label">International Contestants</p>
+        <p class="callout-text">All international contestants must obtain the necessary travel authorisation and documents to enter the United States. Visit <a href="https://www.cbp.gov/" target="_blank" style="color:var(--blue-light);">cbp.gov</a> for details.</p>
+      </div>`;
+  }
+  if (venueSidebar) {
+    const bbox = VENUE.mapBbox.split(',').map(encodeURIComponent).join('%2C');
+    const [mlat, mlon] = VENUE.mapMarker.split(',');
+    venueSidebar.innerHTML = `
+      <div class="venue-map-wrap">
+        <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${mlat}%2C${mlon}"
+          title="${VENUE.name}, ${VENUE.city}" allowfullscreen></iframe>
+        <img class="venue-map-print"
+          src="https://render.openstreetmap.org/cgi-bin/export?bbox=${VENUE.mapBbox}&scale=5000&format=png"
+          alt="Map of ${VENUE.name}" loading="eager">
+        <a class="venue-map-link" href="${VENUE.googleMapsUrl}" target="_blank" rel="noopener">
+          &#x1F5FA;&nbsp; Open in Google Maps
+        </a>
+      </div>
+      <div class="callout-box-intro tip">
+        <p class="callout-label">Top Tip &mdash; Packing Your Leather</p>
+        <p class="callout-text">When traveling to ${VENUE.city}, try not to pack all your leather in one suitcase to be checked in. If possible, spread your gear amongst a few bags. For extra peace of mind, have your most delicate or important items with you as carry-on luggage.</p>
+      </div>`;
+  }
+
+  const nearbyCity = document.getElementById('nearby-city-label');
+  if (nearbyCity) nearbyCity.textContent = VENUE.city;
+
+  // Nearby map — OSM iframe on screen, static image in print
+  const nearbyMapEl = document.getElementById('nearby-map');
+  if (nearbyMapEl) {
+    // Slightly wider bbox to show the neighborhood around the hotel
+    const [minlon, minlat, maxlon, maxlat] = VENUE.mapBbox.split(',').map(Number);
+    const pad = 0.012;
+    const wideBbox = `${(minlon-pad).toFixed(4)},${(minlat-pad).toFixed(4)},${(maxlon+pad).toFixed(4)},${(maxlat+pad).toFixed(4)}`;
+    const wideEnc  = wideBbox.split(',').map(encodeURIComponent).join('%2C');
+    const [mlat, mlon] = VENUE.mapMarker.split(',');
+    nearbyMapEl.innerHTML = `
+      <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=${wideEnc}&layer=mapnik&marker=${mlat}%2C${mlon}"
+        title="Nearby spots around ${VENUE.name}" allowfullscreen></iframe>
+      <img class="nearby-map-print"
+        src="https://render.openstreetmap.org/cgi-bin/export?bbox=${wideBbox}&scale=10000&format=png"
+        alt="Map of nearby spots" loading="eager">
+      <a class="nearby-map-link" href="${VENUE.googleMapsUrl}" target="_blank" rel="noopener">
+        &#x1F5FA;&nbsp; Explore in Google Maps
+      </a>`;
+  }
+
+  const nearbyGrid = document.getElementById('nearby-grid');
+  if (nearbyGrid && NEARBY_SPOTS) nearbyGrid.innerHTML = NEARBY_SPOTS.map(s =>
+    `<div class="nearby-card"><p class="nearby-type">${s.type}</p><p class="nearby-name">${s.name}</p></div>`).join('');
+
+  const fwcLayout = document.getElementById('fwc-layout');
+  if (fwcLayout && FIRST_WIVES_LETTER) {
+    const F = FIRST_WIVES_LETTER;
+    fwcLayout.innerHTML = `
+      <div class="fwc-letter">
+        <p class="letter-open">${F.intro}</p>
+        ${F.paragraphs.map(p=>`<p>${p}</p>`).join('')}
+      </div>
+      <div class="fwc-sidebar">
+        <h3>Questions to discuss with your partner before you arrive</h3>
+        <ul class="prep-questions">
+          ${(F.questions||[]).map(q=>`<li><p class="prep-q-label">${q}</p><textarea class="prep-textarea" placeholder="Your thoughts\u2026" rows="2"></textarea></li>`).join('')}
+        </ul>
+      </div>`;
+  }
+
+  const closingEyebrow = document.getElementById('closing-eyebrow');
+  const closingQ = document.getElementById('closing-quote-text');
+  const closingA = document.getElementById('closing-quote-attr');
+  const closingVenue = document.getElementById('closing-venue-label');
+  const closingCreds = document.getElementById('closing-credits');
+  if (closingEyebrow) closingEyebrow.innerHTML = `${edition} &nbsp;&middot;&nbsp; ${year} Contestant Handbook`;
+  if (closingQ && CLOSING_QUOTE) closingQ.textContent = `\u201c${CLOSING_QUOTE.text}\u201d`;
+  if (closingA && CLOSING_QUOTE) closingA.textContent = CLOSING_QUOTE.attribution;
+  if (closingVenue) closingVenue.innerHTML = `${VENUE.name}<br>${VENUE.city}, ${VENUE.state}`;
+  if (closingCreds) closingCreds.innerHTML =
+    `${edition} &nbsp;&middot;&nbsp; ${year} &nbsp;&middot;&nbsp; ${VENUE.name}, ${VENUE.city}<br>Produced by International Mr. Leather, Inc.<br>Handbook design: Digital edition`;
+
+  const footerCopy = document.getElementById('footer-copyright');
+  const footerNote = document.getElementById('footer-data-note');
+  if (footerCopy) footerCopy.innerHTML = `&copy; ${year} International Mr. Leather Inc.`;
+  if (footerNote) footerNote.innerHTML =
+    `Contestant data synced live from the IML ${year} registration database. Judges sourced from <a href="https://www.internationalmrleather.com/judges" target="_blank" style="color:var(--blue-light)">internationalmrleather.com/judges</a>.`;
+}
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', applyConfig);
+} else {
+  applyConfig();
+}
+
+/* ── Drive helpers ── */
+function extractDriveId(input) {
+  if (!input) return null;
+  if (/^[a-zA-Z0-9_-]{10,}$/.test(input)) return input;
+  let m = input.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+  if (!m) m = input.match(/\/d\/([a-zA-Z0-9_-]+)/);
+  return m ? m[1] : null;
+}
+function drivePhoto(input, size = 'w800') {
+  // Primary: drive.google.com/thumbnail — works publicly without browser auth cookies
+  const id = extractDriveId(input);
+  return id ? `https://drive.google.com/thumbnail?id=${id}&sz=${size}` : null;
+}
+function driveThumb(input) {
+  // Fallback: lh3 CDN direct link
+  const id = extractDriveId(input);
+  return id ? `https://lh3.googleusercontent.com/d/${id}=w800` : null;
+}
+
+/* ── Truncate to N words ── */
+function truncate(text, n = 100) {
+  const words = (text || '').trim().split(/\s+/);
+  return words.length <= n ? (text || '').trim() : words.slice(0, n).join(' ') + '\u2026';
+}
+
+/* ── HTML escape ── */
+function esc(s) {
+  return String(s || '')
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+/* ── Chunk array ── */
+function chunk(arr, n) {
+  const out = [];
+  for (let i = 0; i < arr.length; i += n) out.push(arr.slice(i, i + n));
+  return out;
+}
+
+/* ── CSV parser (handles quotes/newlines) ── */
+function parseCSV(raw) {
+  const rows = [];
+  let inQ = false, cur = '', fields = [];
+  for (let i = 0; i < raw.length; i++) {
+    const c = raw[i];
+    if (c === '"') {
+      if (inQ && raw[i+1] === '"') { cur += '"'; i++; }
+      else inQ = !inQ;
+    } else if (c === ',' && !inQ) {
+      fields.push(cur); cur = '';
+    } else if (c === '\n' && !inQ) {
+      fields.push(cur);
+      if (fields.some(Boolean)) rows.push(fields);
+      fields = []; cur = '';
+    } else if (c !== '\r') {
+      cur += c;
+    }
+  }
+  if (cur || fields.length) { fields.push(cur); if (fields.some(Boolean)) rows.push(fields); }
+  return rows;
+}
+
+/* ══════════════════════════════════════════
+   MAIN
+══════════════════════════════════════════ */
+/* ── Embedded snapshot (auto-generated from Google Sheet) ── */
+const EMBEDDED = [{"name": "Pup Verde", "title": "Texas Bootblack", "bio": "Pup Verde (they/them/pup) comes wagging from Austin, Texas. When bootblacking is mentioned, their ears perk up and their tail wags with excitement. As a Deaf/Hard of Hearing and neurodiverse person, Pup they are dedicated to ensuring the craft remains accessible and inclusive for all bootblacks and clients alike. They find deep joy in teaching basic leather care to the community. When not at the stand, Pup is probably in the kitchen baking, gaming, or or snapping photos and immersed in astrophotography.", "fileId": "15as84dthtt0HYqVSWoP9usQcml3GaZnq", "country": "USA"}, {"name": "Derek McCandless", "title": "Mr. Fire Island Leather 2025", "bio": "Derek is from York, Pennsylvania, is a former sailor from the Navy, currently a member of Veterans Leather Alliance, and the 23rd Mr. Fire Island Leather. First introduced into the leather community while serving, now he spends his time in Out & Proud bowling league he helped form, co-founder of Pets of Central PA, co-founder of Central PA Leather group, and helping raise funds for his local LGBTQ+ center in Harrisburg. In his free time he watches anime, plays Magic the Gathering, makes killer cocktails, and travels with his husband and boy.", "fileId": "1zIMVokbKShCAqJ0l3BFoNd1d_CqGottX", "country": "USA"}, {"name": "Scotty Grefseng", "title": "Mr. America\u2019s Finest City Leather 204/2025", "bio": "I am a San Diego based leatherman and Pup who enjoys multiple different fetishes and kinks, but too many to try and flag at the same time or risk blowing out the stitching in my back pockets. The less I\u2019m wearing, the more comfortable I am, as long as the heat is on, and I don\u2019t just mean the thermostat being turned up.", "fileId": "1HqdL5q2cMixXlyjSbc4nkW_h6qJUUMAu", "country": "USA"}, {"name": "Titan Fenrir", "title": "Mr. Rt. 66 Leather 2025", "bio": "Once a lost pup, Titan Fenrir, found his voice and purpose within the community, embracing his identity as a kinkster, leather man, and educator. A defender by nature and profession, he fights daily for the dignity, rights, and lives of others by starting and facilitating recovery and support programs, to teaching impromptu pop-up education moments. Inspired by the wolf Fenrir, he balances strength with submission, leadership with restraint. Titan Fenrir is grounded in a river of hope; a science and a conviction that tomorrow can be better than today when people are seen, heard, and loved.", "fileId": "16Po77115a1mNH5xJ1i7lp3pqUF7isQDy", "country": "USA"}, {"name": "shane", "title": "Mr Eagle Portland 2025", "bio": "My name is Shane Orr, I live in Portland Oregon with my partner and our two cats. I\u2019m 55 years old and a pharmacist by trade. I have been a member of the leather community for 30 years in several different states around the country. I am a versatile switch and enjoy a variety of kinks.", "fileId": "1RKv2a4xJ3Fb8a4bT0bdgP32ww4itD85p", "country": "USA"}, {"name": "BB", "title": "Laird Leatherman 2025", "bio": "BB, Laird Leatherman 2025, is a community volunteer with years of experience advocating for mental and sexual health, HIV and AIDS awareness, leadership development, and queer focused advocacy and governance. Originally from Sri Lanka and now calling Melbourne home, BB brings the lived experience of a leather person of colour and immigrant. His title year focused on amplifying underrepresented voices, celebrating intersectional experiences, and strengthening connections across communities. Driven by a commitment to visibility and empowerment, BB works to uplift fetish and kink communities while raising funds to support LGBTQIA+ people in need, fostering spaces where authenticity and diversity thrives.", "fileId": "1aCrpqVaPdKW-R-c7ezlzQkoQQXhwQIwd", "country": "Australia"}, {"name": "Jafar Jaafar", "title": "Mr. Eagle Wilton Manors 2026", "bio": "I am Mr. Eagle of Wilton Manors 2026, and my leather journey is rooted in authenticity, service, and community. Leather gave me confidence, chosen family, and a space where I could fully own who I am. I believe in honoring tradition while making room for growth, visibility, and inclusivity. When I\u2019m not in leather, I\u2019m a registered dietitian passionate about helping others thrive\u2014and a devoted cat dad. I proudly wear my title to uplift, connect, and represent the heart of our leather community.", "fileId": "1xQp0m6XljDq9wWj1YDPWz5OXwu77cKOh", "country": "USA"}, {"name": "Ames Robin", "title": "Mx Atlanta Eagle 2024", "bio": "Ames is a transmasc Photographer with an emphasis on sex and body positive portraiture. He is the inaugural Mx Atlanta Eagle", "fileId": "1cd5p0PGE38LJ5vfNuDVE1htiT7h9HrRm", "country": "USA"}, {"name": "Sgt. Alex", "title": "Mr. Cincinnati Leather '25", "bio": "Sgt. Alex was born in Venezuela and lives in Cincinnati with his dog, Moca. He is the founder of Fetish & Leather Panama and former President of the Latin American Leather & Fetish Alliance (2024\u201325). Grounded in fellowship and authenticity, he builds bridges across borders by promoting education, visibility, and connection within global communities. A proud member of BLUF and ILBS, he believes strength and warmth can coexist in leadership. Professionally, he works in market research and analytics, enjoying spirituality, chocolate, and travel\u2014finding purpose in shared stories that strengthen the kink community through collaboration, accountability, and inclusive service-driven leadership.", "fileId": "1YtmTF7hoQMiGf-z1-jiDoAW0dDIJ8Cgg", "country": "USA"}, {"name": "SwitchBlade", "title": "Mr. NJ Leather 2025", "bio": "SwitchBlade, aka pup Spliffy, is the current Mr. New Jersey Leather 2025. Like his name, he is sharp with his tongue and a switch in most kinks. A playful puppy with a sadistic side, keeps a flogger ready in exchange for a head scratch or belly rub! A sexual health provider/champion by day, and a proud kinkster/leatherman/pup by night; he can also be found dancing for events at a local bar near you. From volunteering to educating or organizing moshes and being judge\u2019s boy, if it is a service SwitchBalde can offer, he will be the first to sign up!", "fileId": "1ZOrYo8-cVAccOZ2Fbz6SPR5TSkMXO7Kg", "country": "USA"}, {"name": "Austin Abernathy", "title": "Mr. Firedancer 2024", "bio": "Austin Abernathy (he/him), Mr. Firedancer 2024, is a charismatic volunteer in the Queer & Leather community. This witty leatherman inspires others to get their hands dirty with him, volunteering to build up our community spaces. Austin\u2019s boots on the ground effort is aimed at empowering members of the Queer community to feel celebrated and supported. In his downtime, Austin enjoys bringing a second life to reclaimed leather projects.", "fileId": "128BfEIe7qEklVKCsE65Sdy_-9xCh8ET0", "country": "USA"}, {"name": "Sir Jim", "title": "R&J Leather Mr. Classic Leather 2025", "bio": "Sir Jim is from Cleveland Ohio, where he won R&J Leather Mr. Classic Leather 2025. As a physician, he educated patients, residents, and practicing doctors. Our Leather Community inspires him through its commitment to mentoring the next generation. Since retiring in 2024, Sir Jim taught and learned at CLAW, LLC, KBC and Leatherfolk book clubs. When chairing events through his leather club for AIDS and HIV charities, Sir Jim strives to make education fun. As club Secretary and Newsletter editor, keeping up with leather community means reporting every level from local bars to International Events.", "fileId": "1xJ88AGb0Nj8VIn54CXEY9IhSA3kQMX4m", "country": "USA"}, {"name": "Chuso", "title": "Mister Leather Spain 2025", "bio": "Chuso, as Mister Leather Spain 25, in his second year as the current titleholder, is focused on community support, visibility, and international connections. His journey in the leather comunity has been marked by personal growth and learning through active listening and respect for diversity within the global leather community. All of this learning is reflected in his work promoting mental health awareness, connecting with new people, and honoring our elders. His professional experience has strengthened his sense of responsibility. By participating in IML, Chuso aims to share the growth of the Spanish leather community and help strengthen connections between countries.", "fileId": "1Mftsdl_4FsAY300UlJVqiCABf9ysQh-B", "country": "Spain"}, {"name": "Brad Speck", "title": "Mr. Cleveland Leather 2025", "bio": "Brad Speck (Mr. Cleveland Leather 2025) started his leather journey in the late 1900's, he has blended being a performing artist, kinkster, and activist throughout his life. He has served on 10 different nonprofit boards and has helped raise hundreds of thousands of dollars for various LGBTQ+ charities. When not in leather, he is a realtor, musician, burlesque performer (the Major Treble), and currently serves as President of the Cleveland Pride Band. Insert joke about rusty trombones here.", "fileId": "12ZbxoL-YKoEuBvwV3pKX7bQc6PtkLSTY", "country": "USA"}, {"name": "Renan Botelho - Mestre Cruel", "title": "Mister Fetish Brazil 2025", "bio": "BDSM Master, with more than 10 year on the Brazilian Community, I'm a researcher and educator on Kinky community, especially on the Brazilian scene. I use the fetish on my work as theatre director and have a podcast where I interview the community to share our historys and experiences. Beyond that, I have more than 50 videos with short lessons about kinky on my Youtube channel and Instagram. I also produce BDSM videos on X, and I\u2019m a collector of Books and Kinky fine arts. On my year as Mr Fetish Brazil, I've been to over 110 community events", "fileId": "1la6kKzHtJTc88oSKG-htKB4A32HvYvdo", "country": "Brazil"}, {"name": "Kai", "title": "Italian Fetishman of the Year 2025", "bio": "You can call me Kai. I was elected Italian Fetishman of the Year 2025, in Milan in March of 2025, and have been representing my club, Leather & Fetish Milano, as well as the Italian fetish community around Europe. Coming from the north of Italy, I\u2019ve grown up bilingual, speaking both German & Italian, and being part of both cultures. Currently I\u2019m living in Vienna, Austria. Outside of my life in leather, I play rugby in a inclusive (LGBTQIA+) club, the Vienna Eagles RFC. Besides that, I love eating and getting to know new people. So, wanna share a pizza?", "fileId": "1dXKZwLvHtWMGG_Bz2h7i5fiXoVEnrqEX", "country": "Italy"}, {"name": "Nerdy Otter", "title": "Mr. Dallas Eagle 2025", "bio": "Randall (aka Nerdy Otter) is proud to serve as Mr. Dallas Eagle 2025. Randall uses he/him pronouns and identifies as a demisexual, otter, introvert, but ultimately believes labels are for clothes. Randall brings both curiosity and heart to the leather community. Known for his quick wit, nerdy charm, and commitment to service, Randall believes leather is for everyone and is at its best when it builds bridges \u2014 between people, experiences, and generations. He\u2019s also been known to make connections between childhood games and values within the leather community \u2013 maybe he has identified with the leather community since birth.", "fileId": "1otJfknD9ggb5g2Vvn2gozLpeAAG4BcmC", "country": "USA"}, {"name": "Matt Swanson", "title": "Mr. GNI Leather 2025", "bio": "Mr. GNI Leather 2025 represents Gay Naturists International and lives in the District of Columbia. He is 41 year-old life-long nudist, with over a decade of ties to the leather community in the DC area. Matt is a pledge with Potomac MC and a friend of the DC Boys of Leather. His interests include photography, activism, camping, fitness, and volunteering with community organizations. Matt has two black cats: Midna and Binx.", "fileId": "1UduMFlYc3r1BEGvyaRR6-FJiDQWiNHYn", "country": "USA"}, {"name": "Ben C", "title": "Mr Anvil Phoenix 2025", "bio": "Born in Albuquerque, New Mexico, I relocated to Phoenix in 2001, where I began to explore and embrace my leather identity. I am a proud member and events coordinator of the Arizona Men of Leather and competed for the title of Mr. Anvil Phoenix 2024, earning First Runner-Up before winning the title in 2025. I created the Arizona Leather Pride Flag, making Arizona the second state after Colorado to have a state-specific leather pride flag. Through my title and involvement, I have raised funds and awareness for Mulligan\u2019s Manor, the Alzheimer\u2019s Association of Arizona, NourishPHX, and the Leather Archives Museum.", "fileId": "1AGW4MXQNnInCcMS2D__g2CKmPX3QaRlt", "country": "USA"}, {"name": "Jacob Harland", "title": "Mr Queensland Leather 2025", "bio": "Jacob is a proud poz Queenslander, pig, and lifelong leather lover. He is an outgoing goofball and a strong believer that community is built through service, connection, and solidarity. Whether representing his community to the media and government or kneeling in a darkroom or urinal, Jacob carries his values everywhere. He is one of Brisbane Pride's directors and has volunteered with many queer charities and community groups. After time away due to injuries, Jacob has gratefully reconnected with his body, kinks, and people. A daggy dad to his friends, he loves travel, cooking, gaming, and helping people come together.", "fileId": "1bybWtWbKAAdIc33VzZOWlEKdJiqnlNT7", "country": "Australia"}, {"name": "Jaiver Amador (J.Amador)", "title": "Mr.Colombia Leather 2026", "bio": "Mi nombre es Jaiver Amador (J. Amador). Soy Administrador de Servicios de Salud y Mag\u00edster en Salud P\u00fablica, con amplia trayectoria en el sector p\u00fablico y comunitario en Colombia, donde he ejercido como Secretario de Salud, Coordinador de Promoci\u00f3n y Prevenci\u00f3n y Gerente Hospitalario, siempre comprometido con el bienestar colectivo y la justicia social. He sido aliado activo de la comunidad LGBTIQ+, promoviendo educaci\u00f3n, diversidad y respeto. A trav\u00e9s de la fundaci\u00f3n Manos que Transforman y Construyen, trabajo por el cuidado de adultos mayores vulnerables. Como Mr. Colombia Leather 2026, represento liderazgo, servicio, orgullo leather y humanidad.", "fileId": "1f7bp-dgTJp4r0ClXn06nfoZ7BcewVkkl", "country": "Colombia"}, {"name": "Richard Smoot", "title": "Mr. STP Leather 2026", "bio": "Richard is Mr. NC Triangle Leather 2024, MAL 2025 contestant, and currently Mr. STP Leather 2026. Richard was inspired to start his leather journey after attending Mr. NC Triangle Leather 2023. Due to warmth and inclusion he immediately felt within the leather community he knew he\u2019d finally found his home and is proud to be a member of Sir Tom\u2019s leather family. Richard is a father of two adult children, and now operates a B&B in North Carolina. He appears regularly as Go-Go dad at Flex Night Club Raleigh, he also produces adult content under the stage name Todd Fellow.", "fileId": "1MKtSPqQ8jgmXW1uCCwFuJ-0oNmmH9673", "country": "USA"}, {"name": "Kevin", "title": "Mr. San Diego Leather 2025", "bio": "Kevin is a queer, kinky, sober, neurodivergent gear nerd, proudly representing his hometown as Mr. San Diego Leather 2025. He is honoured to spend every day sharing Leather from behind the counter at Gear San Diego, endeavoring to be a safe and friendly guide to the community that changed his life for the better, just as others did for him. Kevin\u2019s greatest passion lies in helping others find the gear, club, or event where they can truly spread their wings and fly. He is an FAA certified drone pilot, enthusiastic film and TV nerd, occasional gymnast, and Doctor Who megafan.", "fileId": "17COeKsM1wegYMCTQtgfAZ3TkhhOBY_S-", "country": "USA"}, {"name": "Doc Elite", "title": "Mr. Reno Leather 2025-2026", "bio": "Doc Elite is Mr. Reno Leather 2025-2026. Originally from New York City, he relocated to Reno in 2022. A proud advocate for the leather community's legacy of supporting health causes, Doc Elite represents the \"Biggest Little City in the World\" regionally and nationally, as well as partnering locally with organizations like Gilead and Northern Nevada HOPES. Beyond the leather scene, Doc Elite holds a Ph.D. and is an adjunct professor of digital media at NYU and USC. In his leisure time, Doc Elite enjoys traveling to leather events, reading about leather history, and spending time with his supportive husband.", "fileId": "1oS51FSKqcwKL_GSeuJ4MaBrZTYg5RQNg", "country": "USA"}, {"name": "Paul Gosselin", "title": "Mr. CMEN Leather 2025", "bio": "Paul Gosselin is Mr. CMEN Leather 2025 and a Los Angeles\u2013based storyteller, producer, and proud naturist. An active member of CMEN since 2018, he first attended the West Coast Gathering and never looking back. Best known as the creator of the queer soap opera\u2013inspired digital series Misguided, Paul brings a lifelong love of melodrama, heart, and joy into his leather life.", "fileId": "1lHzOkdJPYcHcUyEs3PttOsYf4ZOIWUdF", "country": "USA"}, {"name": "Hottesome ( Quintin Ellis Jr)", "title": "Mr Bullet Leather 2025", "bio": "I'm Hottesome, you may remember me from things such as Dore Alley 2024 (Volunteer, Event Greeter and Donation collector... I'll leave that open), Encuerado Weekend 2025 (Agua Frescas volunteer and donations), or that cigar leather \u24cb bear who shows up and does his best to support every single person or at least make sure they feel seen and heard. As an L.A. Communtiy Ambassador much of what I do in my professional life overlaps with my personal and not so private selves. I try to lead with empathy in everything I do #BeAuthentic and definitely listen before judging.", "fileId": "1FismLQlBiutDuGi0_dJ7VEU1ZmR_HEMq", "country": "USA"}, {"name": "Daddy LeVan", "title": "Mr. Louisiana Leather 2026", "bio": "Known for over 20 years as Chef Kent, Daddy LeVan is taking the Michelin-star level of service and hospitality and focusing it on the leather community. Traveling over 7K miles, encouraging people to \u201cexplore their appetites and find their seat at the table.\u201d And in doing so, learning more about his own tastes. There is no wrong way to be you. Indulge yourself. Daddy LeVan is honored to serve as Mr. Louisiana Leather 2026. Stay hungry!", "fileId": "1yGPR1xZE8VkioKCUEMUelPOR-52EQ3nH", "country": "USA"}, {"name": "Noble LaPier", "title": "Mr. GayDays Leather 2025", "bio": "Noble LaPier is a titleholder with a heart of gold who brings a story of love, happiness, and self-value as the foundation of his title year. Noble\u2019s past experiences helps remind his community that personal happiness and growth comes first. You need to love yourself, before you can love others. Noble often travels the east coast for community events to support. His passion in life has always been the theater and the experiences people have. Noble continues to work at a non-profit broadway tour-house so that he may see the joy that the arts can bring to his community.", "fileId": "1i4IN1YjVgs2fUgg76PleWX0g8y2Pm3v_", "country": "USA"}, {"name": "Jamie RYan", "title": "Mister Leather Europe 2026", "bio": "Jamie is this year's Mister Leather Europe and represents ECMC and Leathermen of Ireland. He's been involved in the European scene for over a decade, and is a proud member of Qualgeist Berlin, Proteus, BLUF, and the Leather Archives & Museum. He also likes to photograph his leather journeys across Europe. He believes that everyone has potential for growth through leather and physically showing up is most valuable thing we can do as a community. His lifelong dream is to open a local clubhouse so he can get tied, gagged and flogged every day from home!", "fileId": "1pq8E3FXpkI5C_Zb1yiPy-SvYuu6p0WeY", "country": "Ireland"}, {"name": "Red Panda Matt", "title": "Mr. Mayhem Leather 2025", "bio": "The fiery, friendly, fisting instructor from New York City. Red Panda Matt is a Brooklyn based leatherboy who loves to educate his community on safe sober kink practices. Mr. Mayhem Leather 2025 and New York City Mx. Kink 2023, Red Panda is most know for creating fisting choreographed lip-syncs, teaching side-by-side anal vaginal fisting classes, hosting cigar charity events, and gogo dancing for body positive parties across the US. Never afraid to lend a helping hand, Red Panda will gladly cause just the right amount of mayhem to make sure all our voices are heard.", "fileId": "13P5opLA5iPufS71h8i3BUfr0a6K7P2Y7", "country": "USA"}, {"name": "Isaac Cardona", "title": "Mr. Alamo City Leather 2025", "bio": "Isaac\u2019s journey started in 2004 when he saw an IML recording at his local bar. Since 2023, Isaac has been a founding Board member of The San Antonio Leathermen. His degree in accounting has helped him become the Treasurer. Isaac is active in the San Antonio Kink Community, discovering his own kinks to find his primal side. Isaac also volunteers for various Alamo City Leather Association and San Antonio Leathermen events. As Mr. Alamo City Leather 2025, Isaac strives to create bridges between various groups. To that end, he has organized clothing, food, and toy drives.", "fileId": "1M18-5zFDVNDduSvy94GgzAdMC6_LEj65", "country": "USA"}, {"name": "JCub Hart", "title": "Mr Ohio Leather 2025", "bio": "JCub Hart (he/him) is from Cleveland, Ohio and has won the titles Mr. Ohio Leather 2025 and Mr. Leather Akron 2024. He has spent his time as a titleholder raising funds and awareness for Transgender organizations like TransOhio and Margie\u2019s Hope. In 2025 he was awarded the Transgender Ally Award by Margie\u2019s Hope. He is also a founding member and former president of Queers in Cleveland Kink and continues to serve on their board. He is an active musician in and serves as Treasurer for the Cleveland Pride Band.", "fileId": "1QozsDtrB4QZa6lR7-A483vqJqXbIgh1C", "country": "USA"}, {"name": "Jeff Silver", "title": "Mr Providence Eagle 2026", "bio": "Sir Jeff silver 52 years old from Salem NH the live free or die state. Will edit this more, just wanted to get it in for now.", "fileId": "16YwT8WUoY-B-70VviCcOTYyQ9yNkEgwF", "country": "USA"}, {"name": "Kevin", "title": "Mr. Missouri Leather 2025", "bio": "Hi, I\u2019m Kevin, 37, and I\u2019ve been part of the leather community for 16 years. I\u2019m a real estate broker and owner of my own company, and I love building community, connection, and spaces people are proud to call home.", "fileId": "1ai7XvjjQGQvcaI6GxPxhogLi6H-qcvym", "country": ""}, {"name": "Stefan Sch\u00e4fer", "title": "Mr Fetish Germany 2025", "bio": "I am Stefan, LCNW K\u00f6hlk\u00f6nig 2023 and Mr Fetish Germany 2025, actively engaged in the fetish community in Germany and across Europe. Through my voluntary roles, such as Social Welfare Officer of the Frankfurt Leather Club, I support members as a trusted point of contact and actively advocate for visibility, diversity, and acceptance. As an ambassador for the campaign FETISH WITHOUT LIMITS, I provide education on fetish and sexual health and connect fetish socials, AIDS support organizations, and CSD groups to break down prejudice and strengthen community bonds. For me, fetish is more than a hobby \u2014 it is family.", "fileId": "1yesKkAefGPKfbRys_ISypuMapA_cqtat", "country": ""}, {"name": "Jimmy Basset", "title": "Northeast Drummer Bootblack 2017", "bio": "Jimmy (he/him) is a vers fisting bottom, very good boy, and your 2017 Northeast Drummer Bootblack. A skilled Bootblack with his focus on giving good chair, Jimmy founded Take a Stand in 2021 to help showcase Bootblacks around the world. Currently based in Bavaria, Germany, Jimmy has been honored to work with Bootblacks across Europe including serving as judge for Bootblack Europe 2025 and working various events including Darklands, Easter Berlin, and various fetish weekends. He believes in curating a fun and sexy experience for anyone who sits in his stand whether they wear leather, latex, or nothing at all.", "fileId": "1D0dGZHlV_PnTKZ8DYMdL4Ewla3WGBS61", "country": ""}, {"name": "Mason Volt", "title": "Mr. Kentucky Leather 2025", "bio": "Fill in later", "fileId": "1tvq6D6-bwdu-X7wXzbQX535A1b7h7F66", "country": ""}, {"name": "Pendragon Nic (stage name)", "title": "Pride of the Hide 2023", "bio": "Originally from Wales, Australia is now home. Leather, fetish, BDSM are my fetishes. My Title win, Pride of the Hide 2023 was a life changer! I am now on the Hide admin team, a member of Sydney Leather Men and regular attendee of Leather and Fetish events. I volunteer with ACON (Aids Council of NSW) as a Sexpert, giving safe sex guidance. I intended to compete at IML in 2025, but was diagnosed with cancer requiring urgent surgery and treatment. I am recovering well. It has been a goal in my recovery to compete at IML48 in 2026.", "fileId": "111XTB8aDPTL5xLwyiEigFzhwBd7EpowE", "country": ""}, {"name": "Shkody aka. Puppy Dino", "title": "Mr. Fetish Germany 2026", "bio": "Shkody, aka Puppy Dino, is the reigning Mr. Fetish Germany 2026. As the first Muslim Albanian candidate for International Mister Leather, he proudly represents visibility, resilience, and diversity, advocating for a fetish community where all identities and cultures belong.", "fileId": "1Qw8xbQES3-ggsIzk2nR1qbYjEOv58MB2", "country": ""}, {"name": "Boy Evan", "title": "Mr. Keystone Leather 2024", "bio": "Boy Evan hails from the Lehigh Valley, Pennsylvania. He is the Inaugural Mr. Keystone Leather 2024, a proud U.S. Army veteran, and a member of the Bucks MC and the Veterans Leather Alliance. Leather found him during a time of personal rebuilding, and it became the space where he learned trust, accountability, and how to lead with heart. As Road Captain of the Bucks MC, he has the honor of running Santa Saturday\u00ae, bringing together like-minded people and organizations with a shared purpose of raising funds for nonprofits in need and strengthening collective impact through service. He dedicates his time...", "fileId": "1m2QbzS2YgyVV80ZTKm-6F4jl67Ve2Buz", "country": ""}, {"name": "Abe Villarreal", "title": "Mr. RGV Leather 2025", "bio": "Abe Villarreal is a proud lifelong resident of the Rio Grande Valley and Mr. RGV Leather 2025. Shaped by the Valley\u2019s rich binational, bicultural roots, Abe learned early the power of visibility in spaces that can feel unaccepting. Coming out later in life, he found healing through community members who held space for him\u2014teaching him to live loudly, visibly, and unapologetically. Both in the community and professionally, Abe works to ensure queer people feel seen, supported, and celebrated. His mission is unity, resilience, and shared strength across every color of the rainbow.", "fileId": "1UtYkpFnpOiWFhy8HJ0GttRRdwtJgBDcM", "country": ""}, {"name": "AntoineINCuir", "title": "M. Cuir Montr\u00e9al 2025", "bio": "I am Mr. Leather Montreal 2025, Antoine Incuir, a proud Lebanese man representing Montreal. Rooted in resilience and community, I stand as a visible advocate for LGBTQ+ rights and HIV awareness, prevention, and education. My journey blends culture, leather, and leadership, using visibility to open conversations and build safer, inclusive spaces. As a host and collaborator, I create and support multiple events across the Montreal area, celebrating diversity, consent, and connection. I believe representation matters, and I proudly amplify voices, honor our histories, and inspire solidarity\u2014locally and beyond\u2014through action, empathy, and unwavering pride.", "fileId": "1SkucDLc1az7eDxJm_i8vDWJN0chgEcey", "country": ""}, {"name": "Johnny Rodriguez", "title": "San Francisco Team Friendly Ambassador 2026", "bio": "As a Two-Spirit elder in training, the 2025 Team Friendly San Francisco Ambassador,and a Social Worker, Johnny provides mental health services for under-resourced communities in San Francisco. He organizes ceremonies and events for queer and trans Latine and indigiqueer/two-spirit communities. Most recently Johnny was elected to the board for San Francisco\u2019s Leather & LGBTQ Cultural district, where he aims to keep SoMa kinky and expand more spaces for trans, disabled people and people of color. Johnny flags grey, black, and gold on the left; dark pink and gold lam\u00e9 on the right; and enjoys chasing pups.", "fileId": "1gwzNApFEH0WSplK93BxBGxraY1OyLYGh", "country": ""}, {"name": "Denzel Belin", "title": "Mr. Twin Cities Leather 2026", "bio": "Denzel Belin proudly calls Minnesota his home and currently serves as the president of Twin Cities Spectrum, a BIPOC leather, kink, and fetish club. Belin is a board member of Minnesota Leather Pride. In addition, he is an associate member of Atons of Minneapolis and Twin Cities Cuttles. Belin works as a writer and actor for The Brave New Workshop sketch comedy theater. He\u2019s been a host and speaker for Twin Cities Quorum, Planned Parenthood NCS, and more. Belin flags Navy Blue, Light Blue, and Hunter Green all on the left side. Instagram: @from_washington.", "fileId": "1K5zKqlZ0GVCM8ad3Q_5pbQr8ov636YlX", "country": ""}, {"name": "Nicholas \"Nick\" Wzorek (boy nick)", "title": "Iowa Leather 2026", "bio": "boy nick is you current Iowa Leather 2026. He has been involved in the Leather and Kink Community since 2018. boy nick has felt a welcoming presence to the community when he attended his first Leather event, Nebraska Leather Weekend. He flags hunter green on the right as he finds the right Sir/Daddy to serve. You can catch him at The Blazing Saddle in Des Moines, Iowa on Gear Night making sure everyone is feeling welcome and to make sure the feel like they belong.", "fileId": "", "country": ""}, {"name": "Liam Clark", "title": "Mr Australian Leather 2025", "bio": "Liam Clark is Mr Australian Leather 2025, Melbourne Rubberman 2016 and first runner-up at Mr International Rubber XX. Originally from the regional city of Albury-Wodonga, Liam has been a fixture in the Melbourne and Australian fetish community since his first gear social back in 2013. A proud multi-fetishist, Liam believes in embracing all of his fetishes proudly and openly. Outside of fetish life, Liam is the Head of Customer Support for a small brand of house paint, was formerly the Head of Press for Estonia at the Eurovision Song Contest and he is currently hyper-fixating on the television show Survivor.", "fileId": "1ZYKl1FVSdw8BfNHK9mGwIobtiI4zHDWB", "country": ""}, {"name": "Stefan Rixdorf", "title": "Mister Leather Berlin 2025", "bio": "I\u2019m Stefan, last Mr. Leather Berlin before the title changes to Mr. Fetish. Southern German born and raised, I moved to Berlin 25 years ago, for a job in hotel and catering. Meanwhile I\u2019m a cabin manager with a major airline. I found my way into the leather and fetish scene when I joined the Sisters of Perpetual Indulgence in 2004, traditional allies of the fetish scene. I continue to work closely with the Sisters, collecting donations and supporting Prides, events and queer businesses in Berlin and Germany. Hobbies are running, cooking and having a good time.", "fileId": "1XV9xHZlKNV3TUrG5NxZJm5QWJZaPWd_v", "country": ""}, {"name": "Luis Beltran", "title": "Sydney Mr Leather 2025", "bio": "A Spaniard raised in Germany who now calls Sydney/Gadigal home, Luis considers himself an international citizen. He speaks five languages and has lived in four countries. His journey into the leather community began in Barcelona in 2018 and has flourished in Sydney where he was named Sydney Mr Leather 2025. He is a proud member of the Sydney Leather Men and a frequent collaborator with Studio Kink. Professionally, Luis is an International Marketing and Clinical Education Manager in healthcare. Whether it be facilitating a medical tutorial, or presenting a kink workshop, Luis\u2019 biggest passion is combining education with community.", "fileId": "1lnSU6XzI-Vr0ytMBswuOWeRvYvb0y1BP", "country": ""}, {"name": "Rodney Nettles", "title": "MX.AFCLG 2024/2025", "bio": "My name is Rodney Nettles. I proudly serve as an active member in the leather and queer community. I have served in the leather community for almost 20 years and the title holder community for seven. I am both the inaugural Mr. San Diego Cub 2020 and the inaugural Mx. Americas Finest City Leather Guild 2024/2025. Even though I hold my city\u2019s first non-binary title, I wholeheartedly identify as a man of leather. In my leather journey, I stand on the principles of upholding diversity and inclusion without sacrificing my integrity. I am looking forward to competing in the IML!", "fileId": "1dV1Tixe5Q9Z6k-7-XB7Sx2QioSxwo4Dj", "country": ""}, {"name": "Mees", "title": "Mister Leather Netherlands 2025", "bio": "Life as a leather man is exciting and liberating to Mees, and he wants everyone to get a chance to experience that themselves. During his title year, his goal was to get as many people as possible to see, touch, and ideally wear leather gear -- especially those who wouldn't normally get the opportunity. On Sundays, Mees works at De Trut, a volunteer-run queer club night that raises money for queer and HIV/AIDS-related projects. Among other causes, in 2025 De Trut funded Project Bloom, which provides young HIV-positive mothers in Uganda with the health care they need.", "fileId": "1Rb7eBvPc8UhumXDTN497_uK0_fvqFkwl", "country": ""}, {"name": "Honey Davenport", "title": "Mr. Palm Springs Leather 2026", "bio": "Honey Davenport: Mr. Palm Springs Leather 2026 Honey Davenport is a multidisciplinary artist, activist, and proud member of the Palm Springs Leather Order of the Desert. With a 20-year legacy of performance excellence, Honey blends the discipline of a Leather Leader with a profound commitment to self expression. From DJing to Rupaul\u2019s Drag Race, Honey leverages their visibility to champion radical inclusion. Dedicated to amplifying marginalized voices, they lead through action\u2014proving that our community\u2019s true strength lies in unity, sophistication, and the exhilarating pursuit of queer joy.", "fileId": "1awvol_VgT8-VMEOHPzbl8yV5I4w6TkH3", "country": ""}, {"name": "Atlas", "title": "Mr. Michigan Leather 2026", "bio": "From the rugged Intermountain West of Idaho to the Great Lakes State of Michigan, Atlas' leather journey has been uniquely theirs. Following a life-changing weight-loss journey, Atlas has let their philosophy of \"Imperfection as Perfection\" guide not only who they are, but how they lead folx taking their first steps into the community they seek belonging in. Atlas brings the social butterfly energy to their interactions, and not just because of a love for Celcius! Chat with them about Eurovision, Cooking, or a nerdy game night, and you wont be dissapointed. Flag some red for some extra FFun!", "fileId": "1ejwYRi9HffTOc1em5WD4g7WEC2B2S1OQ", "country": ""}, {"name": "Dat Ashe", "title": "Mr. Texas Leather 2025", "bio": "Dat Ashe, Mr. Texas Leather 2025, is a trans leatherman with a long history of sex work and erotic art. He feels his best embodying his role as a Monster, proudly flagging maroon to his left at all times. He finds joy and fulfillment in kink spaces, where he can embrace his sexuality, identity, neurodivergence, and disability without fear or shame. Part of this joy also comes from combining his other interests with the lifestyle, such as cosplay or ballroom dancesport. He is a proud cosplayer of 15 years and loves finding new ways to marry it with kink.", "fileId": "1C3gI5r_UUTOxfD0spXAuZQvV0WkWZjVy", "country": ""}, {"name": "Champ", "title": "Mr Eagle NYC 2026", "bio": "Originally hailing from Asheville, NC, Champ has been in NYC since 2007 and started going to The Eagle in 2012 with a borrowed harness and leather boots and pants from a thrift store. In 2023 he co-launched INTO? (a leather and fetishwear gear night at the Eagle) which quickly turned into a movement that pushed the boundaries of what is possible at The Eagle, advocating for a more resilient and inclusive space for us to gather and play and fight fascism as a community. Volunteer/fundraising: Team Eagle, Mr. S Leather Crew at MAL and CLAW, and SAGE NYC.", "fileId": "1uIxU4_k3J0I5mhzKLW80cH3drjOfTMK7", "country": ""}, {"name": "Sir Don", "title": "Mr Virginia Leather 2025", "bio": "Currently Mr Virginia Leather. Board member for Richmond Triangle Player, the longest running queer Theatrr on the East Coast. Supporter of side by Side an organization supporting queer youth.", "fileId": "1i6MGBIvqm_7WuOgIxMM66aNaejIwKVlr", "country": ""}, {"name": "Gray Gibson", "title": "Mr. SF Eagle Leather 2026", "bio": "Born in Mississippi, baked in New Orleans, this San Franciscan with a heart of gold leads the way with cleverness and integrity. Neurodivergent with Tourette Syndrome, his hobbies include reading, writing, board games,, woodworking, baking his feelings to give away for free compliments, and his 35 year hobby, video games, (to keep up his hand eye coordination.). Lifestyle (kinks) include Leather, fisting, and erotic hypnosis. When not fundraising for the world\u2019s only Leather & LGBTQ Cultural District, Gray supports his home bar, the SF Eagle.", "fileId": "1rNnzrzB-h9RsmUQYKKz2SzdmaUGGeFmK", "country": ""}, {"name": "Andreas", "title": "Bavarian Mister Fetish 2025", "bio": "Coming from a small Bavarian village, I know that visibility is a roar, not a whisper. As the first Bavarian Mister Fetish, I am redefining our legacy by building bridges where walls once stood. My mission is twofold: bringing Pride to the rural heartlands and ensuring our community is accessible to all - which is why I'm dedicated in learning German Sign Language (DGS). I don't just wear the gear, I use it as a tool to educate, to include many fetish identities, and to prove that no matter where you are from, you have a place in our global...", "fileId": "1vNPOs6bKL7vxxlcjPfDJT-7GGFzh8V3P", "country": ""}, {"name": "Erick Fletes", "title": "Mr. Toolshed Palm Springs 2026", "bio": "I am the current Mr. Toolshed of Palm Springs, California. Born and raised in Los Angeles, I\u2019ve dedicated the last decade to uplifting the LGBTQ+ community. As a mental health therapist at the Los Angeles LGBT Center, I provide compassionate care, supporting queer individuals through health challenges and recovery journeys.", "fileId": "1_BNMUvGzgM_AGdpTY72IDvQJ6x-W8IVT", "country": ""}, {"name": "James Phillips / Daddy Boot Bear", "title": "Mr Fireside Daddy 2025", "bio": "Mr Fireside Daddy 2025, Mobile AL (Birthplace of America\u2019s Mardi Gras) Daddy Boot Bear's a farm/swamp boy from S Alabama who built a career in New Orleans, lives in Biloxi MS. Self-employed nurseryman, internationally recognized plant breeder (orchids). Resident bootblack Crescent City Leathermen/Phoenix NOLA 1st shoes were corner kicker boots. Doc Martens & Wesco boots are now my go-tos. Sponsor: FlipSide Lounge The title is extra special. Fireside was the name of the bar when I protested Anita Bryant out front at age 17. Raised to fight for social justice & civil rights through actions.", "fileId": "17Ok9gzIrqZMjhp63m_o29wmpYvHpxjIo", "country": ""}, {"name": "Jesse Nicholson", "title": "Mr. Ramrod 2026 (Ft Lauderdale)", "bio": "I\u2019m Jesse Nicholson. I\u2019m based in Fort Lauderdale, and I\u2019m deeply rooted in the leather community here. I recently received a PhD and founded the Leather Heritage Project (LHP). I believe our stories need to be preserved and shared\u2014and our future deserves to be welcoming. LHP is how I work to make sure those things happen. I care about intergenerational connection, storytelling, and honoring the people who built this culture while helping new folks feel like they belong. Most days you\u2019ll find me behind the bar at Ramrod, the place my universe happily revolves around.", "fileId": "1NHGAINHgGhY9y0GGBYAU53E0TM-E3rW9", "country": ""}, {"name": "Eric the Red", "title": "Mr New England Leather 2026", "bio": "Eric is a cowboy, bootman, and smoke fetishist who enjoys emulating classic archetypes in heavy gear. After spending several years immersing himself in Boston and London's leather scenes\u2014and assistant managing Soho's gay fetish shop Prowler RED\u2014he moved to Providence, Rhode Island, quickly becoming the local Eagle's resident Marlboro Man. Eric aims to strengthen ties and improve visibility across New England this year by amplifying existing organizations, developing an online fetish calendar, and touring an event through the region. He is passionate about connecting folks, and eventually hopes to open a community space serving kinksters and queers.", "fileId": "1gxAJRHzavQPcMP_RHAbgGPgAOg-7X3aC", "country": ""}, {"name": "Bear", "title": "Mr. Bolt Leather 2026", "bio": "Bear is an LGBTQ civil rights attorney fighting for the rights of California workers. He is proud to be both a poly leatherman and a committed husband to Davey Baker for 30 years. Bear spends his free time adding to his body art, gaming (Cyberpunk is his favorite), and hosting kink-positive events raising money for the Gender Health Center, a Sacramento charity supporting our trans brothers, sisters, and others. Bear gets his therapy in the gym, posting on Facebook, Instagram, and BlueSky (NSFW only @bearjocks), and playing with his canine companions.", "fileId": "1Y0J_lZDS855y78wueB-QK_Q5DIkuDroU", "country": ""}, {"name": "Master Adam", "title": "Mr Nu Towne Phoenix 2025", "bio": "Master Adam is Mr Nu Towne 2025 and a member of the Arizona Men of Leather and BLUF. He was born and raised in Los Angeles, California and now lives in Phoenix, Arizona. He is a former Board Member of Threshold (2014) and former Executive Committee Member of the Arizona Power Exchange (2023). He began his Leather journey in 1988 and is Sir and Handler of Pup Bandito, Southwest Pet 2026.", "fileId": "1xmT550WtKiniabrVcAyybC0OFkuo1IaW", "country": ""}, {"name": "Larry Foster", "title": "Mr. Buckwood Leather 2025", "bio": "Larry Foster is a devoted husband, father, and community leader who believes that strength is rooted in vulnerability and service. Professionally, he leads in education, mentoring future professionals and building cultures of accountability and care. In leather, he has found a space where authenticity is celebrated and brotherhood runs deep. His IML journey is about growth\u2014pushing past comfort, building new connections, and representing with pride. Larry competes to honor the resilience, unity, and power of a community that has shaped him.", "fileId": "1sjJrn9mwJlBwdTlfrBoaC1GshWUYuBja", "country": ""}, {"name": "Daddy Keith", "title": "Mr Leather Vallarta 2025", "bio": "Daddy Keith is a veteran activist and the inaugural Mr. Leather Vallarta (2025), boasting over 40 years of LGBTQ+ advocacy and three decades in the leather scene. From co-founding ACT UP and Queer Nation in San Diego during the 90s to hosting the Tacoma Leather Social more recently, his commitment to community-building is lifelong. Now a resident of Mexico, Keith hosts the Banderas Leather Social, where he is actively shaping the future of Puerto Vallarta\u2019s kink and leather community.", "fileId": "1B1G4Cz9dqDo4KWh1WOdfmckySdp2swjo", "country": ""}, {"name": "Kevin", "title": "Mr. Missouri Leather 2025", "bio": ". I am Kevin , representing Mr Missouri Leather 2025 , I am 38 years old, love to outdoors as much possible.Love to volunteer and do charity work", "fileId": "1Xi6nZ5-r--YsNSOK-wlOKr7r1w4L4VFi", "country": ""}, {"name": "Atlas Rose", "title": "Route 66 Bootblack 2025", "bio": "Atlas (he/him) is a dominant, leatherboy, Daddy, and Route 66 Bootblack 2025. He\u2019s adopted from China, ethnically Vietnamese and Dai, raised in Chicagoland, polyamorous, queer, transmasc, and 100 pounds of pure muscle. He has a black belt in Shotokan karate; a B.A. in playwriting; and a minor in Women, Gender, and Sexuality Studies. Aside from bootblacking, he practices flogging, whips, rope, pet, little, knife, and needle play. He\u2019s the TNG liaison for the Leather Solidarity Collective, an organizer of the Second City Bootblack Collective, and house bootblack for Women and Trans/Non-Binary Leather Bar Night.", "fileId": "1UoC4Di2LxbLRye4DdszfrZaNaZJhlQfU", "country": ""}];
+
+function buildContestants(raw) {
+  return raw.map(c => ({
+    ...c,
+    photoUrl:      c.fileId ? drivePhoto(c.fileId)      : null,
+    photoFallback: c.fileId ? driveThumb(c.fileId)      : null,
+    flag:          getFlag(c.country),
+  })).filter(c => c.name);
+}
+
+async function init() {
+  /* Always render immediately from embedded data */
+  const contestants = buildContestants(EMBEDDED);
+  renderGrid(contestants);
+  renderProfiles(contestants);
+
+  /* Then attempt a live refresh in the background */
+  try {
+    const res = await fetch(SHEET_CSV);
+    if (!res.ok) return;
+    const rows = parseCSV(await res.text());
+    if (rows.length < 2) return;
+    const live = rows.slice(1)
+      .filter(r => {
+        const status = (r[25] || '').trim();
+        return status !== 'Denied' && status !== 'Withdrawn';
+      })
+      .map(r => ({
+        name:          (r[2]  || '').trim(),
+        title:         (r[3]  || '').trim(),
+        bio:           truncate((r[4] || '').trim(), 100),
+        photoUrl:      drivePhoto((r[5] || '').trim()),
+        photoFallback: driveThumb((r[5] || '').trim()),
+        country:       (r[23] || '').trim(),
+        flag:          getFlag((r[23] || '').trim()),
+      }))
+      .filter(c => c.name);
+    if (live.length !== contestants.length) {
+      renderGrid(live);
+      renderProfiles(live);
+    }
+  } catch (_) { /* live refresh failed silently, embedded data stays */ }
+}
+
+/* ── Photo grid (page 15) ── */
+function renderGrid(list) {
+  const grid = document.getElementById('photo-grid');
+  grid.innerHTML = '';
+
+  list.forEach((c, idx) => {
+    const cell = document.createElement('div');
+    cell.className = 'grid-cell';
+    cell.title = c.name;
+
+    if (c.photoUrl) {
+      const img = document.createElement('img');
+      img.alt = c.name;
+      img.loading = 'eager';
+      img.crossOrigin = 'anonymous';
+      img.src = c.photoUrl;
+      /* Try fallback then placeholder on error */
+      let triedFallback = false;
+      img.addEventListener('error', () => {
+        if (!triedFallback && c.photoFallback) {
+          triedFallback = true;
+          img.src = c.photoFallback;
+        } else {
+          img.replaceWith(Object.assign(document.createElement('div'),
+            { className: 'grid-placeholder', textContent: '🏅' }));
+        }
+      });
+      cell.appendChild(img);
+    } else {
+      cell.innerHTML = `<div class="grid-placeholder">🏅</div>`;
+    }
+
+    const label = document.createElement('div');
+    label.className = 'grid-name-always';
+    label.textContent = c.name + (c.flag ? ' ' + c.flag : '');
+    cell.appendChild(label);
+
+    /* Click scrolls to profile */
+    cell.addEventListener('click', () => {
+      const el = document.getElementById(`c-${idx}`);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    grid.appendChild(cell);
+  });
+}
+
+/* ── Contestant profile pages (pages 16+, 3 per block) ── */
+function renderProfiles(list) {
+  const container = document.getElementById('contestants-container');
+  container.innerHTML = '';
+
+  chunk(list, 3).forEach((trio, pi) => {
+    const block = document.createElement('div');
+    block.className = 'page-block';
+
+    const header = document.createElement('div');
+    header.className = 'page-block-header';
+    header.textContent = `YOUR CLASS OF ${IML_YEAR}`;
+    block.appendChild(header);
+
+    const trioWrap = document.createElement('div');
+    trioWrap.className = 'contestant-trio';
+
+    trio.forEach((c, li) => {
+      const idx = pi * 3 + li;
+      const entry = document.createElement('div');
+      entry.className = 'contestant-entry';
+      entry.id = `c-${idx}`;
+
+      /* ── Photo ── */
+      const photoWrap = document.createElement('div');
+      photoWrap.className = 'c-photo-wrap';
+
+      const placeholder = document.createElement('div');
+      placeholder.className = 'c-photo-placeholder';
+      placeholder.textContent = '🏅';
+
+      if (c.photoUrl) {
+        const img = document.createElement('img');
+        img.alt = c.name;
+        img.loading = 'eager';
+        img.crossOrigin = 'anonymous';
+        img.src = c.photoUrl;
+        placeholder.classList.add('hidden'); // hide until needed
+
+        let triedFallback = false;
+        img.addEventListener('error', () => {
+          if (!triedFallback && c.photoFallback) {
+            triedFallback = true;
+            img.src = c.photoFallback;
+          } else {
+            img.style.display = 'none';
+            placeholder.classList.remove('hidden');
+          }
+        });
+        img.addEventListener('load', () => {
+          placeholder.classList.add('hidden');
+        });
+        photoWrap.appendChild(img);
+        photoWrap.appendChild(placeholder);
+      } else {
+        photoWrap.appendChild(placeholder);
+      }
+
+      /* ── Text ── */
+      const text = document.createElement('div');
+      text.className = 'c-text';
+
+      const nameRow = document.createElement('div');
+      nameRow.className = 'c-name-row';
+
+      const nameEl = document.createElement('h2');
+      nameEl.className = 'c-name';
+      nameEl.textContent = c.name;
+      nameRow.appendChild(nameEl);
+
+      if (c.flag) {
+        const flagEl = document.createElement('span');
+        flagEl.className = 'c-flag';
+        flagEl.textContent = c.flag;
+        nameRow.appendChild(flagEl);
+      }
+
+      text.appendChild(nameRow);
+
+      if (c.title) {
+        const titleTag = document.createElement('p');
+        titleTag.className = 'c-title-tag';
+        titleTag.textContent = c.title;
+        text.appendChild(titleTag);
+      }
+
+      if (c.bio) {
+        const bioEl = document.createElement('p');
+        bioEl.className = 'c-bio';
+        bioEl.textContent = c.bio;
+        text.appendChild(bioEl);
+      }
+
+      entry.appendChild(photoWrap);
+      entry.appendChild(text);
+      trioWrap.appendChild(entry);
+    });
+
+    block.appendChild(trioWrap);
+    container.appendChild(block);
+  });
+}
+
+/* ── Force-load all images before printing ── */
+window.addEventListener('beforeprint', () => {
+  document.querySelectorAll('img').forEach(img => {
+    img.loading = 'eager';
+    if (img.dataset.src) { img.src = img.dataset.src; }
+    if (img.complete && img.naturalWidth === 0 && img.src) {
+      const s = img.src; img.src = ''; img.src = s;
+    }
+  });
+});
+
+/* ── Back to top ── */
+window.addEventListener('scroll', () => {
+  document.getElementById('back-top').classList.toggle('show', window.scrollY > 600);
+}, { passive: true });
+
+
+/* ══════════════════════════════════════════
+   IML TEAM  (data from config.js → TEAM_MEMBERS / TEAM_SHEET_ID)
+══════════════════════════════════════════ */
+
+function parseTeamCSV(csv) {
+  const rows = parseCSV(csv);
+  if (!rows || rows.length < 2) return null;
+  // Form Responses 1 columns:
+  // 0=Timestamp, 1=Display Name, 2=Dinner, 3=TShirt, 4=Hotel, 5=WedReg, 6=Bio, 7=Photo URL, 8=Underwear
+  // Role is not in the form — merge with TEAM_EMBEDDED by name match
+  const roleMap = {};
+  TEAM_EMBEDDED.forEach(m => { roleMap[m.name.trim().toLowerCase()] = m.role; });
+
+  const data = [];
+  for (let i = 1; i < rows.length; i++) {
+    const r = rows[i];
+    const name    = (r[1] || '').trim();
+    const bio     = (r[6] || '').trim();
+    const photoRaw = (r[7] || '').trim();
+    if (!name) continue;
+    const fileId = extractDriveId(photoRaw);
+    const role   = roleMap[name.toLowerCase()] || 'Contestant Handler';
+    data.push({ name, role, bio, fileId: fileId || '' });
+  }
+  return data.length ? data : null;
+}
+
+function buildTeamMembers(raw) {
+  return raw
+    .filter(m => m.name)
+    .map(m => ({
+      ...m,
+      name: m.name.trim(),
+      role: m.role.trim(),
+      photoUrl:      m.fileId ? drivePhoto(m.fileId)  : null,
+      photoFallback: m.fileId ? driveThumb(m.fileId)  : null,
+    }));
+}
+
+function renderTeam(members) {
+  const container = document.getElementById('team-container');
+  if (!container) return;
+  container.innerHTML = '';
+
+  // Group by role
+  const groups = {};
+  members.forEach(m => {
+    const g = m.role || 'Team';
+    if (!groups[g]) groups[g] = [];
+    groups[g].push(m);
+  });
+
+  const roleOrder = ['Den Daddy','Handler Coach','Team Shine','Contestant Handler','Handler','ONYX','Den Doggies','Spanish Interpreter','French Interpreter'];
+  const sortedRoles = Object.keys(groups).sort((a,b) => {
+    const ia = roleOrder.indexOf(a), ib = roleOrder.indexOf(b);
+    if (ia === -1 && ib === -1) return a.localeCompare(b);
+    if (ia === -1) return 1; if (ib === -1) return -1;
+    return ia - ib;
+  });
+
+  sortedRoles.forEach(role => {
+    const group = groups[role];
+    const hasAnyPhoto = group.some(m => m.fileId);
+
+    const groupDiv = document.createElement('div');
+    groupDiv.className = 'tm-group';
+
+    const heading = document.createElement('p');
+    heading.className = 'tm-group-heading';
+    heading.textContent = role;
+    groupDiv.appendChild(heading);
+
+    if (hasAnyPhoto) {
+      // Full profile layout
+      group.forEach(m => {
+        const entry = document.createElement('div');
+        entry.className = 'tm-profile';
+
+        // Photo
+        const photoWrap = document.createElement('div');
+        photoWrap.className = 'tm-photo-wrap';
+        const placeholder = document.createElement('div');
+        placeholder.className = 'tm-photo-placeholder';
+        placeholder.textContent = '🤵';
+
+        if (m.fileId) {
+          const img = document.createElement('img');
+          img.alt = m.name;
+          img.loading = 'eager';
+          img.crossOrigin = 'anonymous';
+          img.src = m.photoUrl;
+          placeholder.classList.add('hidden');
+          let triedFallback = false;
+          img.addEventListener('error', () => {
+            if (!triedFallback && m.photoFallback) {
+              triedFallback = true; img.src = m.photoFallback;
+            } else { img.style.display='none'; placeholder.classList.remove('hidden'); }
+          });
+          img.addEventListener('load', () => placeholder.classList.add('hidden'));
+          photoWrap.appendChild(img);
+        }
+        photoWrap.appendChild(placeholder);
+
+        // Text
+        const body = document.createElement('div');
+        body.className = 'tm-body';
+
+        const roleTag = document.createElement('p');
+        roleTag.className = 'tm-role-tag';
+        roleTag.textContent = m.role;
+        body.appendChild(roleTag);
+
+        const nameEl = document.createElement('h3');
+        nameEl.className = 'tm-name';
+        nameEl.textContent = m.name;
+        body.appendChild(nameEl);
+
+        if (m.bio) {
+          const bioEl = document.createElement('p');
+          bioEl.className = 'tm-bio';
+          bioEl.textContent = m.bio;
+          body.appendChild(bioEl);
+        }
+
+        entry.appendChild(photoWrap);
+        entry.appendChild(body);
+        groupDiv.appendChild(entry);
+      });
+    } else {
+      // Compact card grid
+      const grid = document.createElement('div');
+      grid.className = 'tm-compact-grid';
+      group.forEach(m => {
+        const card = document.createElement('div');
+        card.className = 'tm-compact-card';
+        card.innerHTML = `<p class="tm-compact-role">${esc(m.role)}</p>
+                          <p class="tm-compact-name">${esc(m.name)}</p>`;
+        grid.appendChild(card);
+      });
+      groupDiv.appendChild(grid);
+    }
+
+    container.appendChild(groupDiv);
+  });
+}
+
+async function initTeam() {
+  const members = buildTeamMembers(TEAM_EMBEDDED);
+  renderTeam(members);
+  try {
+    const res = await fetch(TEAM_SHEET_CSV);
+    if (res.ok) {
+      const csv = await res.text();
+      const live = parseTeamCSV(csv);
+      if (live) renderTeam(buildTeamMembers(live));
+    }
+  } catch(_) {}
+}
+
+/* ── Go ── */
+init();
+initTeam();
+</script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "name": "iml-contestant-handbook",
+  "version": "2026.1.0",
+  "description": "IML Contestant Handbook — config-driven, annually updatable",
+  "private": true,
+  "scripts": {
+    "start":    "python serve.py",
+    "build":    "python build.py",
+    "validate": "python validate.py",
+    "release":  "python validate.py && python build.py",
+    "clean":    "rm -rf dist/"
+  },
+  "engines": {
+    "python": ">=3.8"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YOUR_ORG/iml-handbook.git"
+  },
+  "license": "UNLICENSED"
+}
