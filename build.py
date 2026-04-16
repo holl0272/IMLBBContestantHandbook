@@ -140,6 +140,12 @@ def validate_data():
             err(f'{name} not found or empty in data/sheets.js')
 
     # ── Array length checks ────────────────────────────────────────
+    letter_count = count_array_items('LETTERS', combined)
+    if letter_count == 0:
+        err('LETTERS array is empty in data/letters.js — add at least one letter.')
+    else:
+        info(f'  LETTERS = {letter_count}')
+
     event_count = count_array_items('EVENTS', combined)
     if event_count != 13:
         err(f'EVENTS must have exactly 13 entries (found {event_count}). Each event = one PDF page.')

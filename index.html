@@ -1397,7 +1397,7 @@
 <nav>
   <a href="#cover" class="nav-brand" id="nav-brand">IML</a>
   <ul class="nav-links">
-    <li><a href="#welcome">Welcome</a></li>
+    <li><a href="#letter-iml">Welcome</a></li>
     <li><a href="#toc">Contents</a></li>
     <li><a href="#venue">Venue</a></li>
     <li><a href="#class-grid" id="nav-class-label">Class</a></li>
@@ -1437,13 +1437,10 @@
 </section>
 
 
-<!-- ── PAGE 3: WELCOME LETTER (rendered from config.js) ── -->
-<section id="welcome" class="letter-page">
-  <div class="letter-page-inner">
-    <p class="letter-eyebrow" id="welcome-eyebrow"></p>
-    <div class="letter-body" id="welcome-body"></div>
-  </div>
-</section>
+<!-- ── WELCOME LETTERS (one page per entry in LETTERS array in letters.js) ── -->
+<div id="letters-container">
+  <!-- rendered by renderLetters() — edit data/letters.js to add/change/remove letters -->
+</div>
 
 <!-- ── PAGE 5: HISTORY ── -->
 <section id="history">
@@ -1554,7 +1551,7 @@
   </div>
   <ul class="toc-list">
     <li>
-      <a href="#welcome">
+      <a href="#letter-iml">
         <span class="toc-num">1</span>
         <span class="toc-item-title">Welcome to IML</span>
         <span class="toc-arrow">&#x2192;</span>
@@ -2841,11 +2838,8 @@ function applyConfig() {
   if (coverMeta) coverMeta.innerHTML =
     `${edition} &nbsp;&middot;&nbsp; ${year}<br>${VENUE.name}<br>${VENUE.city}, ${VENUE.state}`;
 
-  const eyebrow = document.getElementById('welcome-eyebrow');
-  const body    = document.getElementById('welcome-body');
-  if (eyebrow) eyebrow.textContent = WELCOME_LETTER.eyebrow;
-  if (body) body.innerHTML = WELCOME_LETTER.paragraphs.map(p=>`<p>${p}</p>`).join('') +
-    `<p class="letter-sign">${WELCOME_LETTER.signature}</p>`;
+  /* Render welcome letters from data/letters.js */
+  renderLetters();
 
   const venueBody    = document.getElementById('venue-body');
   const venueSidebar = document.getElementById('venue-sidebar');
@@ -3293,6 +3287,29 @@ function renderEventBlocks() {
       </div>
     </div>`;
   }).join('\n');
+}
+
+/* ══════════════════════════════════════════════════════════════
+   renderLetters()
+   Reads LETTERS from data/letters.js and builds one .letter-page
+   section per entry.  To add/edit/remove letters, edit
+   data/letters.js only — no HTML changes needed.
+══════════════════════════════════════════════════════════════ */
+function renderLetters() {
+  const container = document.getElementById('letters-container');
+  if (!container || typeof LETTERS === 'undefined') return;
+
+  container.innerHTML = LETTERS.map(letter => `
+    <section id="${esc(letter.id)}" class="letter-page">
+      <div class="letter-page-inner">
+        <p class="letter-eyebrow">${esc(letter.eyebrow)}</p>
+        <div class="letter-body">
+          ${letter.paragraphs.map(p => `<p>${esc(p)}</p>`).join('')}
+          <p class="letter-sign">${esc(letter.signature)}</p>
+        </div>
+      </div>
+    </section>
+  `).join('');
 }
 
 /* ── Force-load all images before printing ── */
