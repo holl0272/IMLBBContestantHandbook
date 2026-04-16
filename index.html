@@ -204,6 +204,21 @@
       text-transform:uppercase; margin-top:6px; text-decoration:none; }
     .judge-link:hover { color:var(--white); }
 
+    /* ── TEAM PHOTO GRID (screen) ── */
+    #team-grid { padding-bottom:48px; border-top:1px solid var(--border); }
+    #team-photo-grid {
+      display:grid;
+      grid-template-columns:repeat(5, 1fr);
+      gap:2px; padding:0 2px;
+    }
+    .grid-member-role {
+      display:block; font-size:7.5px; color:var(--blue-light);
+      letter-spacing:.5px; font-weight:400; text-transform:uppercase;
+      margin-top:2px;
+    }
+    @media(max-width:860px){ #team-photo-grid { grid-template-columns:repeat(4,1fr); } }
+    @media(max-width:560px){ #team-photo-grid { grid-template-columns:repeat(3,1fr); } }
+
     /* ── IML TEAM ── */
     #iml-team { padding:0 5vw 100px; border-top:1px solid var(--border); }
 
@@ -218,6 +233,7 @@
       position:relative; aspect-ratio:2/3; overflow:hidden;
       background:var(--blue); flex-shrink:0;
     }
+    .tm-photo-wrap > div { width:100%; height:100%; }
     .tm-photo-wrap img { width:100%; height:100%; object-fit:cover;
       object-position:top center; display:block; }
     .tm-photo-placeholder {
@@ -616,6 +632,50 @@
         line-height: 1.1 !important;
       }
       .grid-placeholder { font-size: 20pt !important; }
+
+      /* ══════════════════════════════
+         TEAM PHOTO GRID — one exact page
+         Page: 8.5 × 11in  |  Perimeter margin: 0.18in
+         Header zone: 0.52in title + 0.12in gap = 0.64in
+         Grid area: 11in − 0.18in − 0.64in − 0.18in = 10.0in tall
+                    8.5in − 0.18in × 2 = 8.14in wide
+         5 cols: 8.14 / 5 = 1.628in each
+         4 rows: 10.0 / 4 = 2.500in each  (all 20 members visible)
+      ══════════════════════════════ */
+      #team-grid {
+        width: 8.5in !important;
+        height: 11in !important;
+        overflow: hidden !important;
+        padding: 0.18in !important;
+        box-sizing: border-box !important;
+        display: block !important;
+        page-break-before: always !important;
+        break-before: page !important;
+        page-break-after: always !important;
+        break-after: page !important;
+        border-top: none !important;
+      }
+      #team-grid .s-header {
+        height: 0.52in !important;
+        padding: 0 !important;
+        margin-bottom: 0.12in !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+      }
+      #team-photo-grid {
+        height: 10.0in !important;
+        width: 100% !important;
+        display: grid !important;
+        grid-template-columns: repeat(5, 1fr) !important;
+        grid-template-rows: repeat(4, 1fr) !important;
+        gap: 2px !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+      }
+      .grid-member-role { font-size: 4pt !important; letter-spacing: 0 !important; }
 
       /* ══════════════════════════════
          CONTESTANT PROFILES
@@ -1344,7 +1404,7 @@
     <li><a href="#contestants">Contestants</a></li>
     <li><a href="#judges">Judges</a></li>
     <li><a href="#tallymasters">Tallymasters</a></li>
-    <li><a href="#iml-team">IML Team</a></li>
+    <li><a href="#team-grid">Team</a></li>
     <li><a href="#experience">Experience</a></li>
     <li><a href="#events">Events</a></li>
     <li><a href="#code-of-conduct">Conduct</a></li>
@@ -1515,15 +1575,15 @@
       </a>
     </li>
     <li>
-      <a href="#iml-team">
-        <span class="toc-num">4</span>
-        <span class="toc-item-title">Your IML Team</span>
+      <a href="#team-grid">
+        <span class="toc-num">5</span>
+        <span class="toc-item-title">Your IMLBB Team</span>
         <span class="toc-arrow">&#x2192;</span>
       </a>
     </li>
     <li>
       <a href="#experience">
-        <span class="toc-num">5</span>
+        <span class="toc-num">6</span>
         <span class="toc-item-title">Your IML Experience</span>
         <span class="toc-arrow">&#x2192;</span>
       </a>
@@ -1749,11 +1809,24 @@
   </div>
 </section>
 
-<!-- ── IML TEAM (page 35) ── -->
+<!-- ── TEAM PHOTO GRID ── -->
+<section id="team-grid">
+  <div class="s-header">
+    <span class="s-num">Section 5</span>
+    <h2 class="s-title">Your IMLBB Team</h2>
+  </div>
+  <div id="team-photo-grid">
+    <div style="grid-column:1/-1;text-align:center;padding:80px;font-size:13px;letter-spacing:3px;color:var(--muted)">
+      Loading team&hellip;
+    </div>
+  </div>
+</section>
+
+<!-- ── IML TEAM BIOS ── -->
 <section id="iml-team">
   <div class="s-header">
     <span class="s-num">Section 5</span>
-    <h2 class="s-title">Your IML Team</h2>
+    <h2 class="s-title">Handler &amp; Team Shine Profiles</h2>
   </div>
   <div id="team-container">
     <div style="text-align:center;padding:60px;font-size:13px;letter-spacing:3px;color:var(--muted)">
@@ -1862,7 +1935,12 @@
     <span class="s-num">Section 7</span>
     <h2 class="s-title">Events in Detail</h2>
   </div>
+  <div id="events-container"><!-- rendered by renderEventBlocks() --></div>
 
+  <!-- LEGACY STATIC BLOCKS BELOW — kept as fallback if JS is disabled.
+       When JS runs, renderEventBlocks() replaces #events-container and
+       these blocks are hidden via CSS (display:none added by JS).
+       To add a new event: edit data/events.js only — do NOT add HTML here. -->
   <div class="event-block" id="event-1">
     <div class="event-header">
       <div class="event-num-badge">01</div>
@@ -2435,6 +2513,7 @@
       </div>
     </div>
   </div>
+  <!-- END LEGACY STATIC BLOCKS -->
 
 </section>
 
@@ -2872,6 +2951,9 @@ function applyConfig() {
   if (footerCopy) footerCopy.innerHTML = `&copy; ${year} International Mr. Leather Inc.`;
   if (footerNote) footerNote.innerHTML =
     `Contestant data synced live from the IML ${year} registration database. Judges sourced from <a href="https://www.internationalmrleather.com/judges" target="_blank" style="color:var(--blue-light)">internationalmrleather.com/judges</a>.`;
+
+  /* Render event blocks from data/events.js */
+  renderEventBlocks();
 }
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', applyConfig);
@@ -3004,7 +3086,6 @@ function renderGrid(list) {
       const img = document.createElement('img');
       img.alt = c.name;
       img.loading = 'eager';
-      img.crossOrigin = 'anonymous';
       img.src = c.photoUrl;
       /* Try fallback then placeholder on error */
       let triedFallback = false;
@@ -3072,7 +3153,6 @@ function renderProfiles(list) {
         const img = document.createElement('img');
         img.alt = c.name;
         img.loading = 'eager';
-        img.crossOrigin = 'anonymous';
         img.src = c.photoUrl;
         placeholder.classList.add('hidden'); // hide until needed
 
@@ -3140,6 +3220,81 @@ function renderProfiles(list) {
   });
 }
 
+/* ══════════════════════════════════════════════════════════════
+   renderEventBlocks()
+   Reads EVENTS from data/events.js and builds all event-block
+   elements dynamically.  To add/edit events, edit data/events.js
+   only — no HTML changes needed.
+══════════════════════════════════════════════════════════════ */
+function renderEventSection(sec) {
+  if (!sec) return '';
+  switch (sec.type) {
+    case 'qa':
+      if (!sec.q) {
+        // label-less textarea continuation
+        return `<textarea class="prep-textarea" placeholder="${esc(sec.placeholder || '')}" rows="${sec.rows || 3}"></textarea>`;
+      }
+      return `<div class="event-qa">
+        <p class="event-q">${esc(sec.q)}</p>
+        <p class="event-a">${esc(sec.a || '')}</p>
+      </div>`;
+    case 'checklist':
+      return `<div class="event-qa">
+        <p class="event-q">${esc(sec.q)}</p>
+        <ul class="event-checklist">${(sec.items || []).map(i => `<li>${esc(i)}</li>`).join('')}</ul>
+        ${sec.note ? `<p class="event-a" style="margin-top:10px">${esc(sec.note)}</p>` : ''}
+      </div>`;
+    case 'callout':
+      return `<div class="callout-box">
+        <p class="callout-label">${esc(sec.label)}</p>
+        <p class="callout-text">${esc(sec.text)}</p>
+      </div>`;
+    case 'tip':
+      return `<div class="callout-box tip">
+        <p class="callout-label">Top Tip</p>
+        <p class="callout-text">${esc(sec.text)}</p>
+      </div>`;
+    case 'textarea':
+      return `<div class="event-qa">
+        ${sec.q ? `<p class="event-q">${esc(sec.q)}</p>` : ''}
+        <textarea class="prep-textarea" placeholder="${esc(sec.placeholder || 'Add personal notes here\u2026')}" rows="${sec.rows || 3}"></textarea>
+      </div>`;
+    default:
+      return '';
+  }
+}
+
+function renderEventBlocks() {
+  const container = document.getElementById('events-container');
+  if (!container || typeof EVENTS === 'undefined') return;
+
+  // Hide the legacy static blocks so they don't double-render
+  document.querySelectorAll('#events .event-block').forEach(el => {
+    el.style.display = 'none';
+  });
+
+  container.innerHTML = EVENTS.map(ev => {
+    const badgeClass = ev.badge === 'MANDATORY' ? 'mandatory' : 'optional';
+    const badgeLabel = ev.badge === 'MANDATORY' ? 'Mandatory' : 'Optional';
+    const leftHtml  = (ev.leftCol  || []).map(renderEventSection).join('\n');
+    const rightHtml = (ev.rightCol || []).map(renderEventSection).join('\n');
+    return `<div class="event-block" id="${esc(ev.id)}">
+      <div class="event-header">
+        <div class="event-num-badge">${esc(ev.number)}</div>
+        <div class="event-header-body">
+          <h3 class="event-title">${esc(ev.title)}</h3>
+          <p class="event-sub">${esc(ev.day)}${ev.time ? ' &middot; ' + esc(ev.time) : ''}</p>
+          <div class="badge-row"><span class="badge ${badgeClass}">${badgeLabel}</span></div>
+        </div>
+      </div>
+      <div class="event-body">
+        <div class="event-col">${leftHtml}</div>
+        <div class="event-col">${rightHtml}</div>
+      </div>
+    </div>`;
+  }).join('\n');
+}
+
 /* ── Force-load all images before printing ── */
 window.addEventListener('beforeprint', () => {
   document.querySelectorAll('img').forEach(img => {
@@ -3196,6 +3351,90 @@ function buildTeamMembers(raw) {
     }));
 }
 
+/* ── Shared helper: build a photo img element with fallback + optional rotation ── */
+function buildPhotoImg(photoUrl, photoFallback, altText, rotateDeg, placeholderChar) {
+  const wrap = document.createElement('div');
+  wrap.style.cssText = 'position:absolute;inset:0;overflow:hidden;';
+
+  const img = document.createElement('img');
+  img.alt = altText;
+  img.loading = 'eager';
+  img.src = photoUrl;
+
+  if (rotateDeg && rotateDeg % 360 !== 0) {
+    /* For 90/270° rotations the image's natural width becomes its rendered height.
+       We scale it up so the shorter rotated dimension fills the container,
+       then let object-fit:cover handle the rest. */
+    const is90or270 = Math.abs(rotateDeg % 180) === 90;
+    img.style.cssText = [
+      'position:absolute',
+      'top:50%', 'left:50%',
+      `transform:translate(-50%,-50%) rotate(${rotateDeg}deg)`,
+      'width:100%', 'height:100%',
+      'object-fit:cover',
+      /* swap dimensions so image fills correctly when rotated 90/270° */
+      is90or270 ? 'max-width:none;width:100%;height:100%;' : '',
+    ].join(';');
+
+    /* After load, set actual swap dimensions based on rendered cell size */
+    img.addEventListener('load', () => {
+      const w = wrap.offsetWidth  || 150;
+      const h = wrap.offsetHeight || 200;
+      if (is90or270) {
+        /* rotated 90°: the image's height must equal container width,
+           and image's width must equal container height */
+        const scale = Math.max(w / h, h / w);
+        img.style.width  = (h * scale) + 'px';
+        img.style.height = (w * scale) + 'px';
+      }
+    });
+  } else {
+    img.style.cssText = 'width:100%;height:100%;object-fit:cover;object-position:top center;display:block;';
+  }
+
+  let triedFallback = false;
+  img.addEventListener('error', () => {
+    if (!triedFallback && photoFallback) {
+      triedFallback = true;
+      img.src = photoFallback;
+    } else {
+      wrap.innerHTML = `<div class="grid-placeholder">${placeholderChar}</div>`;
+    }
+  });
+
+  wrap.appendChild(img);
+  return wrap;
+}
+
+/* ── Team photo grid (one page, mirrors class-grid) ── */
+function renderTeamGrid(members) {
+  const grid = document.getElementById('team-photo-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+
+  members.forEach(m => {
+    const cell = document.createElement('div');
+    cell.className = 'grid-cell';
+    cell.title = m.name;
+    /* grid-cell needs position:relative for the absolute-positioned photo wrap */
+    cell.style.position = 'relative';
+
+    if (m.photoUrl) {
+      cell.appendChild(buildPhotoImg(m.photoUrl, m.photoFallback, m.name, m.rotate || 0, '\uD83E\uDD35'));
+    } else {
+      cell.innerHTML = `<div class="grid-placeholder">\uD83E\uDD35</div>`;
+    }
+
+    const roleShort = m.role === 'Contestant Handler' ? 'Handler' : m.role;
+    const label = document.createElement('div');
+    label.className = 'grid-name-always';
+    label.innerHTML = `${esc(m.name)}<span class="grid-member-role">${esc(roleShort)}</span>`;
+    cell.appendChild(label);
+
+    grid.appendChild(cell);
+  });
+}
+
 function renderTeam(members) {
   const container = document.getElementById('team-container');
   if (!container) return;
@@ -3243,20 +3482,14 @@ function renderTeam(members) {
         placeholder.textContent = '🤵';
 
         if (m.fileId) {
-          const img = document.createElement('img');
-          img.alt = m.name;
-          img.loading = 'eager';
-          img.crossOrigin = 'anonymous';
-          img.src = m.photoUrl;
           placeholder.classList.add('hidden');
-          let triedFallback = false;
-          img.addEventListener('error', () => {
-            if (!triedFallback && m.photoFallback) {
-              triedFallback = true; img.src = m.photoFallback;
-            } else { img.style.display='none'; placeholder.classList.remove('hidden'); }
+          /* tm-photo-wrap is already position:relative via CSS */
+          const photoEl = buildPhotoImg(m.photoUrl, m.photoFallback, m.name, m.rotate || 0, '🤵');
+          /* on error show placeholder */
+          photoEl.querySelector('img').addEventListener('error', () => {
+            placeholder.classList.remove('hidden');
           });
-          img.addEventListener('load', () => placeholder.classList.add('hidden'));
-          photoWrap.appendChild(img);
+          photoWrap.appendChild(photoEl);
         }
         photoWrap.appendChild(placeholder);
 
@@ -3305,13 +3538,18 @@ function renderTeam(members) {
 
 async function initTeam() {
   const members = buildTeamMembers(TEAM_EMBEDDED);
+  renderTeamGrid(members);
   renderTeam(members);
   try {
     const res = await fetch(TEAM_SHEET_CSV);
     if (res.ok) {
       const csv = await res.text();
       const live = parseTeamCSV(csv);
-      if (live) renderTeam(buildTeamMembers(live));
+      if (live) {
+        const builtLive = buildTeamMembers(live);
+        renderTeamGrid(builtLive);
+        renderTeam(builtLive);
+      }
     }
   } catch(_) {}
 }

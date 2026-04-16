@@ -96,6 +96,7 @@ const TEAM_MEMBERS = [
     role: 'Team Shine',
     bio: 'Bootblack since 2014 and Team Shine since 2017. You focus on making yourself shine \u2014 we\u2019ve got the rest!',
     fileId: '1Qrj_unB5uCb3vI8OCANmaQpSZaNYw2p_',
+    rotate: 90,   // degrees clockwise — photo was uploaded sideways
   },
   {
     name: 'Boi Debney',
