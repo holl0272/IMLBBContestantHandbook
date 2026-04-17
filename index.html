@@ -62,12 +62,20 @@
       letter-spacing: 2px; text-transform: uppercase; transition: color .2s; }
     .nav-links a:hover { color: var(--white); }
 
-    /* ── COVER LOGO ── */
+    /* ── COVER LOGOS ── */
+    .cover-logos {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(24px, 4vw, 56px);
+      margin: 0 auto 36px;
+    }
     .cover-logo {
       width: clamp(140px, 20vw, 260px);
-      height: auto;
+      height: clamp(140px, 20vw, 260px);
+      object-fit: contain;
       display: block;
-      margin: 0 auto 36px;
     }
 
     /* ── COVER ── */
@@ -558,7 +566,8 @@
         background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(27,79,168,.4) 0%, transparent 70%), #080808 !important;
       }
       .cover-inner { padding: 0 0.6in !important; }
-      .cover-logo { width: 1.8in !important; margin: 0 auto 0.3in !important; }
+      .cover-logos { gap: 0.35in !important; margin: 0 auto 0.3in !important; }
+      .cover-logo  { width: 1.8in !important; height: 1.8in !important; }
       .cover-eyebrow { font-size: 8pt !important; letter-spacing: 4pt !important; }
       .cover-title {
         font-size: 72pt !important;
@@ -846,6 +855,9 @@
       /* Hide the standalone section header — the section label lives
          inside the first event block via ::before instead */
       #events > .s-header { display: none !important; }
+      /* events-container uses display:contents so its children are direct
+         children of #events for CSS selectors and page-break purposes */
+      #events-container { display: contents !important; }
       .event-block {
         width: 8.5in !important;
         min-height: 11in !important;
@@ -1422,7 +1434,10 @@
 <!-- ── COVER ── -->
 <section id="cover">
   <div class="cover-inner">
-    <img src="IMLLogo.jpg" alt="International Mr. Leather" class="cover-logo">
+    <div class="cover-logos">
+      <img src="IMLLogo.jpg"        alt="International Mr. Leather"   class="cover-logo">
+      <img src="IMBBLogo_white.jpg" alt="International Mr. Bootblack" class="cover-logo">
+    </div>
     <p class="cover-eyebrow">Official Contestant Handbook</p>
     <h1 class="cover-title">CONTESTANT<br><em>HANDBOOK</em></h1>
     <div class="cover-divider"></div>
@@ -1844,85 +1859,8 @@
     the crowning night. Some are mandatory; others are optional but unforgettable.
     Click any card to jump straight to the full details and prep notes.
   </p>
-  <div class="exp-grid">
-    <a class="exp-card" href="#event-1">
-      <div class="exp-num">01</div>
-      <div class="exp-label">Registration</div>
-      <div class="exp-meta">Wednesday 7–10pm &middot; Congress Plaza Hotel</div>
-      <span class="exp-badge optional">Optional</span>
-    </a>
-        <a class="exp-card" href="#event-2">
-      <div class="exp-num">02</div>
-      <div class="exp-label">Contestant Orientation &amp; Check-In</div>
-      <div class="exp-meta">Thursday &middot; Congress Plaza Hotel</div>
-      <span class="exp-badge mandatory">Mandatory</span>
-    </a>
-    <a class="exp-card" href="#event-3">
-      <div class="exp-num">03</div>
-      <div class="exp-label">Welcome Cocktail Reception</div>
-      <div class="exp-meta">Thursday &middot; Congress Plaza Hotel</div>
-      <span class="exp-badge mandatory">Mandatory</span>
-    </a>
-    <a class="exp-card" href="#event-4">
-      <div class="exp-num">04</div>
-      <div class="exp-label">Contestant Judging &mdash; Leather</div>
-      <div class="exp-meta">Friday &middot; Main Stage</div>
-      <span class="exp-badge mandatory">Mandatory</span>
-    </a>
-    <a class="exp-card" href="#event-5">
-      <div class="exp-num">05</div>
-      <div class="exp-label">IML Vendor Fair</div>
-      <div class="exp-meta">Friday &middot; Exhibition Hall</div>
-      <span class="exp-badge optional">Optional</span>
-    </a>
-    <a class="exp-card" href="#event-6">
-      <div class="exp-num">06</div>
-      <div class="exp-label">Contestant Interview</div>
-      <div class="exp-meta">Friday&ndash;Saturday &middot; Private Rooms</div>
-      <span class="exp-badge mandatory">Mandatory</span>
-    </a>
-    <a class="exp-card" href="#event-7">
-      <div class="exp-num">07</div>
-      <div class="exp-label">Community Service Project</div>
-      <div class="exp-meta">Saturday Morning</div>
-      <span class="exp-badge optional">Optional</span>
-    </a>
-    <a class="exp-card" href="#event-8">
-      <div class="exp-num">08</div>
-      <div class="exp-label">Contestant Judging &mdash; Uniform / Fantasy</div>
-      <div class="exp-meta">Saturday &middot; Main Stage</div>
-      <span class="exp-badge mandatory">Mandatory</span>
-    </a>
-    <a class="exp-card" href="#event-9">
-      <div class="exp-num">09</div>
-      <div class="exp-label">First Wives&#39; Club Brunch</div>
-      <div class="exp-meta">Saturday Morning</div>
-      <span class="exp-badge optional">Optional</span>
-    </a>
-    <a class="exp-card" href="#event-10">
-      <div class="exp-num">10</div>
-      <div class="exp-label">Play Spaces &amp; Social Events</div>
-      <div class="exp-meta">Thursday&ndash;Saturday &middot; Various</div>
-      <span class="exp-badge optional">Optional</span>
-    </a>
-    <a class="exp-card" href="#event-11">
-      <div class="exp-num">11</div>
-      <div class="exp-label">Contestant Dinner</div>
-      <div class="exp-meta">Saturday Evening</div>
-      <span class="exp-badge mandatory">Mandatory</span>
-    </a>
-    <a class="exp-card" href="#event-12">
-      <div class="exp-num">12</div>
-      <div class="exp-label">Finals &amp; Crowning Ceremony</div>
-      <div class="exp-meta">Sunday &middot; Main Stage</div>
-      <span class="exp-badge mandatory">Mandatory</span>
-    </a>
-    <a class="exp-card" href="#event-13">
-      <div class="exp-num">13</div>
-      <div class="exp-label">Post-Contest Celebration</div>
-      <div class="exp-meta">Sunday Night</div>
-      <span class="exp-badge optional">Optional</span>
-    </a>
+  <div class="exp-grid" id="exp-grid-container">
+    <!-- rendered by renderExpGrid() — edit data/events.js to add/change/remove cards -->
   </div>
 </section>
 
@@ -1932,585 +1870,7 @@
     <span class="s-num">Section 7</span>
     <h2 class="s-title">Events in Detail</h2>
   </div>
-  <div id="events-container"><!-- rendered by renderEventBlocks() --></div>
-
-  <!-- LEGACY STATIC BLOCKS BELOW — kept as fallback if JS is disabled.
-       When JS runs, renderEventBlocks() replaces #events-container and
-       these blocks are hidden via CSS (display:none added by JS).
-       To add a new event: edit data/events.js only — do NOT add HTML here. -->
-  <div class="event-block" id="event-1">
-    <div class="event-header">
-      <div class="event-num-badge">01</div>
-      <div class="event-header-body">
-        <h3 class="event-title">Registration</h3>
-        <p class="event-sub">Wednesday 7&ndash;10pm &middot; Congress Plaza Hotel</p>
-        <div class="badge-row"><span class="badge optional">Optional</span></div>
-      </div>
-    </div>
-    <div class="event-body">
-      <div class="event-col">
-        <div class="event-qa">
-          <p class="event-q">What is it?</p>
-          <p class="event-a">By attending this event, you can confirm registration and technical details,
-          complete all of the necessary paperwork and schedule your official IML photo shoot prior to
-          Thursday&rsquo;s Orientation. Upon arrival, a Contestant Handler will assist you in confirming
-          your application information used in making your contestant badge, the contest program insert,
-          and contestant address list.</p>
-        </div>
-        <div class="event-qa">
-          <p class="event-q">What&rsquo;s it like?</p>
-          <p class="event-a">This gives you your first taste of IML in a casual and relaxed atmosphere.
-          You can meet the IML team, other contestants and your handler for the competition. It also
-          ensures you are all set for the coming days.</p>
-        </div>
-        <div class="event-qa">
-          <p class="event-q">Is it judged?</p>
-          <p class="event-a">This event isn&rsquo;t judged. However, please note you must be fully
-          registered by 12:00 noon the following day if you do not attend this event.</p>
-        </div>
-      </div>
-      <div class="event-col">
-        <div class="event-qa">
-          <p class="event-q">What should I wear or bring?</p>
-          <ul class="event-checklist">
-            <li>At least one piece of legal photo ID (driver&rsquo;s licence, passport)</li>
-            <li>Any information needed for changes to your application</li>
-            <li>Your Chicago contact details &mdash; hotel name and room number</li>
-          </ul>
-          <p class="event-a" style="margin-top:10px;">Feel free to dress casually for this event.</p>
-        </div>
-        <div class="event-qa">
-          <p class="event-q">How long will it be?</p>
-          <p class="event-a">Confirming your details should take no more than a few minutes &mdash;
-          come in anytime from 7&ndash;10pm.</p>
-        </div>
-        <div class="event-qa">
-          <p class="event-q">Can my partner attend?</p>
-          <p class="event-a">Yes!</p>
-        </div>
-        <div class="callout-box">
-          <p class="callout-label">Good to know</p>
-          <p class="callout-text">If you can&rsquo;t attend this event, you will have the option to
-          confirm your details at the start of Orientation the following day.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-    <div class="event-block" id="event-2">
-    <div class="event-header">
-      <div class="event-num-badge">02</div>
-      <div class="event-header-body">
-        <h3 class="event-title">Contestant Orientation &amp; Check-In</h3>
-        <p class="event-sub">Thursday &middot; Congress Plaza Hotel, Gold Room</p>
-        <div class="badge-row"><span class="badge mandatory">Mandatory</span></div>
-      </div>
-    </div>
-    <div class="event-body">
-      <div class="event-col">
-        <div class="event-qa">
-          <p class="event-q">What happens here?</p>
-          <p class="event-a">You meet your handler, collect your contestant badge and materials, get
-          your photo taken for official records, and receive your room assignment and schedule for the
-          full weekend. IML staff will walk you through the weekend timeline and answer any last-minute
-          questions.</p>
-        </div>
-        <div class="event-qa">
-          <p class="event-q">What to bring</p>
-          <ul class="event-checklist">
-            <li>Government-issued photo ID</li>
-            <li>Completed contestant forms (if not already submitted)</li>
-            <li>Your leather gear (clean, polished, ready)</li>
-            <li>Any medical information your team should know</li>
-          </ul>
-        </div>
-        <div class="callout-box">
-          <p class="callout-label">Remember</p>
-          <p class="callout-text">This is your first impression on the IML team and on your fellow
-          contestants. Arrive on time, be present, and introduce yourself warmly.</p>
-        </div>
-      </div>
-      <div class="event-col">
-        <div class="event-qa">
-          <p class="event-q">Your prep notes</p>
-          <textarea class="prep-textarea" placeholder="Add personal notes here&hellip;" rows="4"></textarea>
-        </div>
-        <div class="callout-box tip">
-          <p class="callout-label">Top Tip</p>
-          <p class="callout-text">Learn your handler&rsquo;s name and cell number immediately.
-          They are your lifeline for the entire weekend.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="event-block" id="event-3">
-    <div class="event-header">
-      <div class="event-num-badge">03</div>
-      <div class="event-header-body">
-        <h3 class="event-title">Welcome Cocktail Reception</h3>
-        <p class="event-sub">Thursday Evening &middot; Congress Plaza Hotel</p>
-        <div class="badge-row"><span class="badge mandatory">Mandatory</span></div>
-      </div>
-    </div>
-    <div class="event-body">
-      <div class="event-col">
-        <div class="event-qa">
-          <p class="event-q">What happens here?</p>
-          <p class="event-a">An evening mixer where you meet your fellow contestants, judges, tallymasters,
-          and the wider IML community. Informal &mdash; conversation, drinks, and community.
-          Dress in leather or uniform.</p>
-        </div>
-        <div class="event-qa">
-          <p class="event-q">What to wear</p>
-          <ul class="event-checklist">
-            <li>Leather or uniform gear &mdash; this is a leather event</li>
-            <li>Contestant badge / sash if provided</li>
-            <li>Comfortable footwear (you&rsquo;ll be on your feet)</li>
-          </ul>
-        </div>
-        <div class="callout-box">
-          <p class="callout-label">Remember</p>
-          <p class="callout-text">Judges are observing from the moment they see you. Be genuine,
-          gracious, and present.</p>
-        </div>
-      </div>
-      <div class="event-col">
-        <div class="event-qa">
-          <p class="event-q">Talking points to prepare</p>
-          <ul class="event-checklist">
-            <li>Your title and home community</li>
-            <li>Why IML matters to you personally</li>
-            <li>One thing you hope to learn this weekend</li>
-          </ul>
-        </div>
-        <div class="event-qa">
-          <p class="event-q">Your prep notes</p>
-          <textarea class="prep-textarea" placeholder="Add personal notes here&hellip;" rows="3"></textarea>
-        </div>
-        <div class="callout-box tip">
-          <p class="callout-label">Top Tip</p>
-          <p class="callout-text">Learn two or three other contestants&rsquo; names before the night is over.
-          The camaraderie you build here lasts a lifetime.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="event-block" id="event-4">
-    <div class="event-header">
-      <div class="event-num-badge">04</div>
-      <div class="event-header-body">
-        <h3 class="event-title">Contestant Judging &mdash; Leather</h3>
-        <p class="event-sub">Friday &middot; Main Stage, Congress Plaza Hotel</p>
-        <div class="badge-row"><span class="badge mandatory">Mandatory</span></div>
-      </div>
-    </div>
-    <div class="event-body">
-      <div class="event-col">
-        <div class="event-qa">
-          <p class="event-q">What happens here?</p>
-          <p class="event-a">All contestants parade across the main stage in their leather gear. Judges
-          score on presentation, confidence, leather craft, and how you carry yourself. This is
-          the iconic IML moment &mdash; the stage is yours.</p>
-        </div>
-        <div class="event-qa">
-          <p class="event-q">Scoring criteria</p>
-          <ul class="event-checklist">
-            <li>Quality and condition of leather gear</li>
-            <li>Stage presence and confidence</li>
-            <li>Overall presentation and grooming</li>
-            <li>How authentically you embody the leather aesthetic</li>
-          </ul>
-        </div>
-        <div class="callout-box">
-          <p class="callout-label">Remember</p>
-          <p class="callout-text">The judges want to see <em>you</em> &mdash; your authentic leather self.
-          Don&rsquo;t perform; inhabit.</p>
-        </div>
-      </div>
-      <div class="event-col">
-        <div class="event-qa">
-          <p class="event-q">Gear checklist</p>
-          <ul class="event-checklist">
-            <li>Leather polished and conditioned</li>
-            <li>All hardware shined</li>
-            <li>Boots &mdash; spit-polished or mirror-finish</li>
-            <li>Sash / title badge secured</li>
-            <li>Backup boot laces / snap repair kit</li>
-          </ul>
-        </div>
-        <div class="event-qa">
-          <p class="event-q">Your prep notes</p>
-          <textarea class="prep-textarea" placeholder="Add personal notes here&hellip;" rows="3"></textarea>
-        </div>
-        <div class="callout-box tip">
-          <p class="callout-label">Top Tip</p>
-          <p class="callout-text">Practice your walk. Find your pace. Slow is confident. Rushed is nervous.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="event-block" id="event-5">
-    <div class="event-header">
-      <div class="event-num-badge">05</div>
-      <div class="event-header-body">
-        <h3 class="event-title">IML Vendor Fair</h3>
-        <p class="event-sub">Friday &middot; Exhibition Hall</p>
-        <div class="badge-row"><span class="badge optional">Optional</span></div>
-      </div>
-    </div>
-    <div class="event-body">
-      <div class="event-col">
-        <div class="event-qa">
-          <p class="event-q">What happens here?</p>
-          <p class="event-a">One of the world&rsquo;s largest leather and fetish vendor fairs. Hundreds of
-          vendors from across the globe selling leather gear, toys, art, books, and more. A great place
-          to meet community members and support the broader leather ecosystem.</p>
-        </div>
-        <div class="callout-box">
-          <p class="callout-label">Remember</p>
-          <p class="callout-text">You are a contestant all weekend. How you carry yourself at the Vendor
-          Fair &mdash; especially with fans and community members &mdash; is part of your IML presence.</p>
-        </div>
-      </div>
-      <div class="event-col">
-        <div class="event-qa">
-          <p class="event-q">Your prep notes</p>
-          <textarea class="prep-textarea" placeholder="Add personal notes here&hellip;" rows="3"></textarea>
-        </div>
-        <div class="callout-box tip">
-          <p class="callout-label">Top Tip</p>
-          <p class="callout-text">Visit vendors who support your local leather community.
-          Personal connections here often outlast the weekend.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="event-block" id="event-6">
-    <div class="event-header">
-      <div class="event-num-badge">06</div>
-      <div class="event-header-body">
-        <h3 class="event-title">Contestant Interview</h3>
-        <p class="event-sub">Friday&ndash;Saturday &middot; Private Interview Rooms</p>
-        <div class="badge-row"><span class="badge mandatory">Mandatory</span></div>
-      </div>
-    </div>
-    <div class="event-body">
-      <div class="event-col">
-        <div class="event-qa">
-          <p class="event-q">What happens here?</p>
-          <p class="event-a">A private 20-minute interview with the full judging panel. You&rsquo;ll be asked
-          about your background in leather, your community work, your vision for the IML title, and
-          your knowledge of leather history and culture. This is the highest-weighted component of
-          your score.</p>
-        </div>
-        <div class="event-qa">
-          <p class="event-q">Common interview themes</p>
-          <ul class="event-checklist">
-            <li>Your leather journey &mdash; how you got here</li>
-            <li>Community service and advocacy</li>
-            <li>What IML means to the global leather community</li>
-            <li>How you would use the title to make an impact</li>
-            <li>Leather history, culture, and its future</li>
-          </ul>
-        </div>
-        <div class="callout-box">
-          <p class="callout-label">Remember</p>
-          <p class="callout-text">The judges are not looking for perfect answers. They want to know who
-          you are. Be honest, be specific, be yourself.</p>
-        </div>
-      </div>
-      <div class="event-col">
-        <div class="event-qa">
-          <p class="event-q">Practice questions &mdash; your answers</p>
-          <textarea class="prep-textarea" placeholder="What does holding the IML title mean to you?" rows="3"></textarea>
-          <textarea class="prep-textarea" placeholder="Describe a time your community work made a tangible difference." rows="3"></textarea>
-          <textarea class="prep-textarea" placeholder="Where do you see leather culture in 20 years?" rows="3"></textarea>
-        </div>
-        <div class="callout-box tip">
-          <p class="callout-label">Top Tip</p>
-          <p class="callout-text">Know your bio cold &mdash; and be ready to say something true about yourself
-          that isn&rsquo;t in your bio. Judges appreciate depth beyond the paper.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="event-block" id="event-7">
-    <div class="event-header">
-      <div class="event-num-badge">07</div>
-      <div class="event-header-body">
-        <h3 class="event-title">Community Service Project</h3>
-        <p class="event-sub">Saturday Morning</p>
-        <div class="badge-row"><span class="badge optional">Optional</span></div>
-      </div>
-    </div>
-    <div class="event-body">
-      <div class="event-col">
-        <div class="event-qa">
-          <p class="event-q">What happens here?</p>
-          <p class="event-a">Contestants who choose to participate join a coordinated community service
-          activity &mdash; typically benefiting a Chicago-area LGBTQ+ or leather organisation.
-          Details are announced at orientation. Participation is not scored but is strongly encouraged
-          as an expression of leather values.</p>
-        </div>
-        <div class="callout-box">
-          <p class="callout-label">Remember</p>
-          <p class="callout-text">The leather community is built on service. Showing up here speaks
-          louder than any interview answer.</p>
-        </div>
-      </div>
-      <div class="event-col">
-        <div class="event-qa">
-          <p class="event-q">Your prep notes</p>
-          <textarea class="prep-textarea" placeholder="Add personal notes here&hellip;" rows="3"></textarea>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="event-block" id="event-8">
-    <div class="event-header">
-      <div class="event-num-badge">08</div>
-      <div class="event-header-body">
-        <h3 class="event-title">Contestant Judging &mdash; Uniform / Fantasy</h3>
-        <p class="event-sub">Saturday &middot; Main Stage, Congress Plaza Hotel</p>
-        <div class="badge-row"><span class="badge mandatory">Mandatory</span></div>
-      </div>
-    </div>
-    <div class="event-body">
-      <div class="event-col">
-        <div class="event-qa">
-          <p class="event-q">What happens here?</p>
-          <p class="event-a">The second stage judging event. You may appear in uniform (military,
-          police, fire, or other), fetish gear, or fantasy leather. This category celebrates the full
-          breadth of leather and kink expression. You have more creative freedom here &mdash; use it.</p>
-        </div>
-        <div class="event-qa">
-          <p class="event-q">Outfit checklist</p>
-          <ul class="event-checklist">
-            <li>Outfit chosen and fitted in advance</li>
-            <li>All pieces clean and pressed / polished</li>
-            <li>Footwear appropriate and secured</li>
-            <li>Any props or accessories tested</li>
-          </ul>
-        </div>
-        <div class="callout-box">
-          <p class="callout-label">Remember</p>
-          <p class="callout-text">Fantasy does not mean costume. Whatever you wear, commit to it with
-          full conviction. Authenticity reads from the back row.</p>
-        </div>
-      </div>
-      <div class="event-col">
-        <div class="event-qa">
-          <p class="event-q">Your prep notes</p>
-          <textarea class="prep-textarea" placeholder="Describe your outfit concept&hellip;" rows="3"></textarea>
-        </div>
-        <div class="callout-box tip">
-          <p class="callout-label">Top Tip</p>
-          <p class="callout-text">Rehearse how you&rsquo;ll walk in this outfit specifically.
-          Uniform boots walk differently than leather boots. Know your gear.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="event-block" id="event-9">
-    <div class="event-header">
-      <div class="event-num-badge">09</div>
-      <div class="event-header-body">
-        <h3 class="event-title">First Wives&#39; Club Brunch</h3>
-        <p class="event-sub">Saturday Morning &middot; Congress Plaza Hotel</p>
-        <div class="badge-row"><span class="badge optional">Optional</span></div>
-      </div>
-    </div>
-    <div class="event-body">
-      <div class="event-col">
-        <div class="event-qa">
-          <p class="event-q">What happens here?</p>
-          <p class="event-a">A beloved IML tradition &mdash; a brunch gathering for the partners, spouses,
-          and significant others of contestants. A space for support, laughter, and community
-          away from the competition floor. See the dedicated section of this handbook for full details.</p>
-        </div>
-        <div class="callout-box">
-          <p class="callout-label">Remember</p>
-          <p class="callout-text">Your support network matters. The people who travel with you are part
-          of your IML story. Make sure they feel included in the weekend.</p>
-        </div>
-      </div>
-      <div class="event-col">
-        <div class="event-qa">
-          <p class="event-q">Your prep notes</p>
-          <textarea class="prep-textarea" placeholder="Notes for your partner / support person&hellip;" rows="3"></textarea>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="event-block" id="event-10">
-    <div class="event-header">
-      <div class="event-num-badge">10</div>
-      <div class="event-header-body">
-        <h3 class="event-title">Play Spaces &amp; Social Events</h3>
-        <p class="event-sub">Thursday&ndash;Saturday Evening &middot; Various Locations</p>
-        <div class="badge-row"><span class="badge optional">Optional</span></div>
-      </div>
-    </div>
-    <div class="event-body">
-      <div class="event-col">
-        <div class="event-qa">
-          <p class="event-q">What happens here?</p>
-          <p class="event-a">IML weekend hosts a variety of evening social events and play spaces.
-          These are consensual adult spaces governed by explicit community agreements. Attendance is
-          entirely optional and personal. Your participation &mdash; or non-participation &mdash; is not evaluated.</p>
-        </div>
-        <div class="callout-box">
-          <p class="callout-label">Remember</p>
-          <p class="callout-text">You are always a contestant in public spaces. The Code of Conduct
-          applies at all times. Consent, respect, and community care are non-negotiable.</p>
-        </div>
-      </div>
-      <div class="event-col">
-        <div class="callout-box tip">
-          <p class="callout-label">Top Tip</p>
-          <p class="callout-text">Know your limits and honour them. IML weekend is a marathon. Rest
-          when you need to. A well-rested contestant performs better on stage and in interview.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="event-block" id="event-11">
-    <div class="event-header">
-      <div class="event-num-badge">11</div>
-      <div class="event-header-body">
-        <h3 class="event-title">Contestant Dinner</h3>
-        <p class="event-sub">Saturday Evening &middot; Congress Plaza Hotel, Grand Ballroom</p>
-        <div class="badge-row"><span class="badge mandatory">Mandatory</span></div>
-      </div>
-    </div>
-    <div class="event-body">
-      <div class="event-col">
-        <div class="event-qa">
-          <p class="event-q">What happens here?</p>
-          <p class="event-a">A formal dinner for all contestants, handlers, judges, tallymasters, and
-          the IML team. Dress: leather or formal. A moment of celebration and reflection before
-          the Finals. Speeches, recognition of community milestones, and shared community time.</p>
-        </div>
-        <div class="callout-box">
-          <p class="callout-label">Remember</p>
-          <p class="callout-text">By Saturday evening, you have already earned your place here. Relax,
-          be present, and soak in the experience &mdash; regardless of what tomorrow holds.</p>
-        </div>
-      </div>
-      <div class="event-col">
-        <div class="event-qa">
-          <p class="event-q">Your prep notes</p>
-          <textarea class="prep-textarea" placeholder="Add personal notes here&hellip;" rows="3"></textarea>
-        </div>
-        <div class="callout-box tip">
-          <p class="callout-label">Top Tip</p>
-          <p class="callout-text">Use dinner to thank your handler and your support team.
-          Gratitude is a leather value too.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="event-block" id="event-12">
-    <div class="event-header">
-      <div class="event-num-badge">12</div>
-      <div class="event-header-body">
-        <h3 class="event-title">Finals &amp; Crowning Ceremony</h3>
-        <p class="event-sub">Sunday &middot; Main Stage, Congress Plaza Hotel</p>
-        <div class="badge-row"><span class="badge mandatory">Mandatory</span></div>
-      </div>
-    </div>
-    <div class="event-body">
-      <div class="event-col">
-        <div class="event-qa">
-          <p class="event-q">What happens here?</p>
-          <p class="event-a">The culminating event of IML weekend. Top finalists are announced; the new
-          International Mr. Leather is crowned before a packed audience. All contestants participate
-          in the opening parade regardless of whether they advance to finals. This is the moment the
-          community gathers for.</p>
-        </div>
-        <div class="event-qa">
-          <p class="event-q">Finals day checklist</p>
-          <ul class="event-checklist">
-            <li>All leather gear polished and ready</li>
-            <li>Sash / title badge secure</li>
-            <li>Hydrated and rested</li>
-            <li>Handler briefed on your needs</li>
-            <li>Emergency repair kit backstage</li>
-          </ul>
-        </div>
-        <div class="callout-box">
-          <p class="callout-label">Remember</p>
-          <p class="callout-text">Whether you&rsquo;re called as a finalist or not &mdash; walk that stage like
-          you mean every step. The community is watching, and they are proud of you.</p>
-        </div>
-      </div>
-      <div class="event-col">
-        <div class="event-qa">
-          <p class="event-q">If you are called as a finalist</p>
-          <ul class="event-checklist">
-            <li>Stage question may be asked &mdash; prepare a 45-second answer</li>
-            <li>Stay composed regardless of the question</li>
-            <li>Speak to the back of the room</li>
-            <li>Breathe. Pause. Then answer.</li>
-          </ul>
-        </div>
-        <div class="event-qa">
-          <p class="event-q">Your prep notes</p>
-          <textarea class="prep-textarea" placeholder="Stage question themes to prepare&hellip;" rows="3"></textarea>
-        </div>
-        <div class="callout-box tip">
-          <p class="callout-label">Top Tip</p>
-          <p class="callout-text">There is no wrong answer to a stage question &mdash; only an uninhabited
-          one. Whatever you say, say it like you mean it.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="event-block" id="event-13">
-    <div class="event-header">
-      <div class="event-num-badge">13</div>
-      <div class="event-header-body">
-        <h3 class="event-title">Post-Contest Celebration</h3>
-        <p class="event-sub">Sunday Night &middot; Various Venues</p>
-        <div class="badge-row"><span class="badge optional">Optional</span></div>
-      </div>
-    </div>
-    <div class="event-body">
-      <div class="event-col">
-        <div class="event-qa">
-          <p class="event-q">What happens here?</p>
-          <p class="event-a">After the crowning, Chicago&rsquo;s leather venues host celebratory events
-          across the weekend&rsquo;s closing night. Time to decompress, celebrate with your fellow
-          contestants, and enjoy the community you&rsquo;ve spent the weekend building.
-          Details are shared at the Finals.</p>
-        </div>
-        <div class="callout-box">
-          <p class="callout-label">Remember</p>
-          <p class="callout-text">You came. You competed. You represented your community on one of
-          leather&rsquo;s greatest stages. That is worth celebrating &mdash; full stop.</p>
-        </div>
-      </div>
-      <div class="event-col">
-        <div class="callout-box tip">
-          <p class="callout-label">Top Tip</p>
-          <p class="callout-text">Exchange contacts with the contestants you&rsquo;ve connected with.
-          Your IML class is your family now &mdash; stay in touch.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- END LEGACY STATIC BLOCKS -->
+  <div id="events-container"><!-- rendered by renderEventBlocks() from data/events.js --></div>
 
 </section>
 
@@ -2946,7 +2306,8 @@ function applyConfig() {
   if (footerNote) footerNote.innerHTML =
     `Contestant data synced live from the IML ${year} registration database. Judges sourced from <a href="https://www.internationalmrleather.com/judges" target="_blank" style="color:var(--blue-light)">internationalmrleather.com/judges</a>.`;
 
-  /* Render event blocks from data/events.js */
+  /* Render experience overview grid + event detail pages from data/events.js */
+  renderExpGrid();
   renderEventBlocks();
 }
 if (document.readyState === 'loading') {
@@ -3262,11 +2623,6 @@ function renderEventBlocks() {
   const container = document.getElementById('events-container');
   if (!container || typeof EVENTS === 'undefined') return;
 
-  // Hide the legacy static blocks so they don't double-render
-  document.querySelectorAll('#events .event-block').forEach(el => {
-    el.style.display = 'none';
-  });
-
   container.innerHTML = EVENTS.map(ev => {
     const badgeClass = ev.badge === 'MANDATORY' ? 'mandatory' : 'optional';
     const badgeLabel = ev.badge === 'MANDATORY' ? 'Mandatory' : 'Optional';
@@ -3295,6 +2651,27 @@ function renderEventBlocks() {
    section per entry.  To add/edit/remove letters, edit
    data/letters.js only — no HTML changes needed.
 ══════════════════════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════════════════════
+   renderExpGrid()
+   Reads EVENTS from data/events.js and builds the experience
+   overview card grid (Section 6).  Edit data/events.js only.
+══════════════════════════════════════════════════════════════ */
+function renderExpGrid() {
+  const grid = document.getElementById('exp-grid-container');
+  if (!grid || typeof EVENTS === 'undefined') return;
+
+  grid.innerHTML = EVENTS.map(ev => {
+    const badgeClass = ev.badge === 'MANDATORY' ? 'mandatory' : 'optional';
+    const badgeLabel = ev.badge === 'MANDATORY' ? 'Mandatory' : 'Optional';
+    return `<a class="exp-card" href="#${esc(ev.id)}">
+      <div class="exp-num">${esc(ev.number)}</div>
+      <div class="exp-label">${esc(ev.title)}</div>
+      <div class="exp-meta">${esc(ev.cardMeta || ev.day)}</div>
+      <span class="exp-badge ${badgeClass}">${badgeLabel}</span>
+    </a>`;
+  }).join('');
+}
+
 function renderLetters() {
   const container = document.getElementById('letters-container');
   if (!container || typeof LETTERS === 'undefined') return;
@@ -3357,15 +2734,33 @@ function parseTeamCSV(csv) {
 }
 
 function buildTeamMembers(raw) {
+  /* Build a lookup from team.js embedded data so that fileId, rotate, and role
+     are always taken from team.js, even when raw comes from the live CSV
+     (which doesn't carry those fields). */
+  const embedMap = {};
+  TEAM_EMBEDDED.forEach(m => {
+    if (m.name) embedMap[m.name.trim().toLowerCase()] = m;
+  });
+
   return raw
     .filter(m => m.name)
-    .map(m => ({
-      ...m,
-      name: m.name.trim(),
-      role: m.role.trim(),
-      photoUrl:      m.fileId ? drivePhoto(m.fileId)  : null,
-      photoFallback: m.fileId ? driveThumb(m.fileId)  : null,
-    }));
+    .map(m => {
+      const key    = m.name.trim().toLowerCase();
+      const base   = embedMap[key] || {};
+      /* Prefer team.js fileId over any CSV-supplied one — team.js is curated */
+      const fileId = base.fileId || m.fileId || '';
+      return {
+        ...base,
+        ...m,
+        name:          m.name.trim(),
+        role:          (base.role || m.role || '').trim(),
+        bio:           m.bio   || base.bio || '',
+        fileId,
+        rotate:        base.rotate || 0,
+        photoUrl:      fileId ? drivePhoto(fileId) : null,
+        photoFallback: fileId ? driveThumb(fileId) : null,
+      };
+    });
 }
 
 /* ── Shared helper: build a photo img element with fallback + optional rotation ── */
@@ -3428,6 +2823,26 @@ function renderTeamGrid(members) {
   const grid = document.getElementById('team-photo-grid');
   if (!grid) return;
   grid.innerHTML = '';
+
+  /* Inject / update print CSS so the grid always fills exactly one page,
+     regardless of how many members are in team.js this year.
+     TEAM_GRID_COLS comes from data/team.js; rows are computed automatically. */
+  const cols = (typeof TEAM_GRID_COLS !== 'undefined' && TEAM_GRID_COLS > 0) ? TEAM_GRID_COLS : 5;
+  const rows = Math.ceil(members.length / cols);
+  let dynStyle = document.getElementById('team-grid-print-style');
+  if (!dynStyle) {
+    dynStyle = document.createElement('style');
+    dynStyle.id = 'team-grid-print-style';
+    document.head.appendChild(dynStyle);
+  }
+  dynStyle.textContent = [
+    '@media print {',
+    `  #team-photo-grid {`,
+    `    grid-template-columns: repeat(${cols}, 1fr) !important;`,
+    `    grid-template-rows:    repeat(${rows}, 1fr) !important;`,
+    `  }`,
+    '}',
+  ].join('\n');
 
   members.forEach(m => {
     const cell = document.createElement('div');

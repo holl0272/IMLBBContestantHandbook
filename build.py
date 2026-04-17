@@ -34,7 +34,7 @@ BASE      = Path(__file__).parent
 DIST      = BASE / 'dist'
 SRC       = BASE / 'index.html'
 DATA_DIR  = BASE / 'data'
-LOGO_EXTS = ['IMLLogo.jpg', 'IMLLogo.avif', 'IMLLogo.png']
+LOGO_EXTS = ['IMLLogo.jpg', 'IMLLogo.avif', 'IMLLogo.png', 'IMBBLogo_white.jpg']
 
 # Ordered load sequence — must match the order <script> tags appear in index.html
 DATA_FILES = [
@@ -147,16 +147,25 @@ def validate_data():
         info(f'  LETTERS = {letter_count}')
 
     event_count = count_array_items('EVENTS', combined)
-    if event_count != 13:
-        err(f'EVENTS must have exactly 13 entries (found {event_count}). Each event = one PDF page.')
+    if event_count == 0:
+        err('EVENTS array is empty in data/events.js — add at least one event.')
     else:
-        info(f'  EVENTS = {event_count} OK')
+        info(f'  EVENTS = {event_count}')
 
     team_count = count_array_items('TEAM_MEMBERS', combined)
     if team_count == 0:
         err('TEAM_MEMBERS is empty in data/team.js')
     else:
         info(f'  TEAM_MEMBERS = {team_count}')
+
+    grid_cols = extract_scalar('TEAM_GRID_COLS', combined)
+    if grid_cols is None:
+        err('TEAM_GRID_COLS not found in data/team.js — add: const TEAM_GRID_COLS = 5;')
+    elif not isinstance(grid_cols, int) or grid_cols < 1:
+        err(f'TEAM_GRID_COLS must be a positive integer (got {grid_cols!r}) in data/team.js')
+    else:
+        rows = -(-team_count // grid_cols)  # ceiling division
+        info(f'  TEAM_GRID_COLS = {grid_cols}  ->  grid will be {grid_cols} x {rows} ({grid_cols * rows} cells for {team_count} members)')
 
     nearby_count = count_array_items('NEARBY_SPOTS', combined)
     if nearby_count == 0:

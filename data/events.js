@@ -5,61 +5,54 @@
  * ║  Update:  Every year — dates, times, venues change           ║
  * ╚══════════════════════════════════════════════════════════════╝
  *
- *  REQUIRED: exactly 13 events (one per PDF page).
- *  Each event must have all required fields.
+ *  Each entry produces:
+ *    • One card in the Section 6 experience overview grid
+ *    • One full-page detail block in the Section 7 events section
  *
+ *  To add an event: copy any entry, give it a new id, fill all
+ *  fields, add to the array.  No HTML changes needed.
+ *
+ *  To remove an event: delete its entry from the array.
+ *
+ *  To reorder events: move entries within the array.
+ *
+ *  After any change: python validate.py && python build.py
+ *
+ *  ─────────────────────────────────────────────────────────────
  *  TOP-LEVEL FIELDS
  *  ─────────────────────────────────────────────────────────────
- *  id          String  Unique anchor id used for scroll links.
- *                      Must match href in the experience overview.
- *                      Use "event-1" … "event-13" (no leading zero).
- *  number      String  Display number, zero-padded: "01" … "13"
- *  title       String  Short event name shown in header and overview
- *  day         String  Day / period, e.g. "Thursday Evening"
- *  time        String  Time range or location line, e.g. "7:00 PM – 10:00 PM"
- *  venue       String  Venue / room name shown under the title
- *  badge       String  "OPTIONAL" or "MANDATORY"
+ *  id          Unique anchor id ("event-1" … "event-N").
+ *              Used as href in nav, TOC, and overview cards.
+ *  number      Zero-padded display number: "01" … "13"
+ *  title       Short event name shown in the card and page header
+ *  cardMeta    One-line summary shown in the overview card
+ *              (e.g. "Friday · Main Stage")
+ *  day         Day / period shown in the detail page header
+ *  time        Time range shown in the detail page header
+ *  venue       Venue / room shown in the detail page header
+ *  badge       "OPTIONAL" or "MANDATORY"
  *
- *  COLUMN CONTENT
  *  ─────────────────────────────────────────────────────────────
- *  leftCol     Array   Sections rendered in the left column
- *  rightCol    Array   Sections rendered in the right column
- *
- *  Each section is an object with a "type" field plus type-specific fields:
+ *  COLUMN CONTENT  (leftCol / rightCol)
+ *  ─────────────────────────────────────────────────────────────
+ *  Each column is an array of section objects.  Available types:
  *
  *  { type: 'qa', q: 'Question?', a: 'Answer text.' }
- *    → A bold question label followed by a paragraph answer.
  *
- *  { type: 'checklist', q: 'Question?', items: ['item 1', 'item 2'], note: 'Optional note.' }
- *    → A bold question label, a bullet list, and an optional italic note.
- *    → Omit `note` (or set to '') if not needed.
+ *  { type: 'checklist', q: 'Question?',
+ *    items: ['item 1', 'item 2'], note: 'Optional note after list.' }
  *
- *  { type: 'callout', label: 'Remember', text: 'Tip text.' }
- *    → A dark callout box. Use label "Remember" or "Good to know".
+ *  { type: 'callout', label: 'Remember', text: 'Reminder text.' }
+ *    label can also be 'Good to know'
  *
- *  { type: 'tip', text: 'Tip text.' }
- *    → A blue "Top Tip" callout box.
+ *  { type: 'tip', text: 'Top tip text.' }
+ *    Renders as a blue "Top Tip" callout box.
  *
- *  { type: 'textarea', q: 'Your prep notes', placeholder: 'Hint text…', rows: 3 }
- *    → A labelled textarea for contestant notes.
- *    → `rows` is optional; defaults to 3.
+ *  { type: 'textarea', q: 'Your prep notes',
+ *    placeholder: 'Hint text…', rows: 3 }
+ *    Leave q: '' to omit the label.
  *
- *  ADDING A NEW EVENT
- *  ─────────────────────────────────────────────────────────────
- *  1. Copy an existing event object below as a template.
- *  2. Assign the next id ("event-14"), number ("14"), and fill all fields.
- *  3. Add a matching card to the experience overview in index.html:
- *       <a class="exp-card" href="#event-14">
- *         <div class="exp-num">14</div>
- *         <div class="exp-label">Your Event Title</div>
- *         <div class="exp-meta">Day · Venue</div>
- *         <span class="exp-badge optional">Optional</span>
- *       </a>
- *  4. Update the REQUIRED count below if the total is no longer 13.
- *  5. Run: python validate.py   — to confirm everything passes.
- *
- *  NOTE: The build system enforces exactly 13 events. If you add or
- *  remove events, update the count check in build.py (line ~144).
+ *  Use \u2014 for em-dash (—) and \u2019 for right single quote (').
  */
 
 const EVENTS = [
@@ -69,9 +62,10 @@ const EVENTS = [
     id: 'event-1',
     number: '01',
     title: 'Registration',
+    cardMeta: 'Wednesday · Florentine Room',
     day: 'Wednesday',
     time: '7:00 PM \u2013 10:00 PM',
-    venue: 'Congress Plaza Hotel - Florentine Room',
+    venue: 'Congress Plaza Hotel \u2014 Florentine Room',
     badge: 'OPTIONAL',
     leftCol: [
       {
@@ -124,6 +118,7 @@ const EVENTS = [
     id: 'event-2',
     number: '02',
     title: 'Contestant Orientation',
+    cardMeta: 'Thursday · Florentine Room',
     day: 'Thursday',
     time: '11:30 AM \u2013 3:00 PM',
     venue: 'Congress Plaza Hotel \u2014 Florentine Room',
@@ -170,6 +165,7 @@ const EVENTS = [
     id: 'event-3',
     number: '03',
     title: 'Welcome Cocktail Reception',
+    cardMeta: 'Thursday Evening · Congress Plaza Hotel',
     day: 'Thursday Evening',
     time: 'Congress Plaza Hotel',
     venue: 'Congress Plaza Hotel',
@@ -225,6 +221,7 @@ const EVENTS = [
     id: 'event-4',
     number: '04',
     title: 'Contestant Judging \u2014 Leather',
+    cardMeta: 'Friday · Main Stage',
     day: 'Friday',
     time: 'Main Stage',
     venue: 'Main Stage, Congress Plaza Hotel',
@@ -283,6 +280,7 @@ const EVENTS = [
     id: 'event-5',
     number: '05',
     title: 'IML Vendor Fair',
+    cardMeta: 'Friday · Exhibition Hall',
     day: 'Friday',
     time: 'Exhibition Hall',
     venue: 'Exhibition Hall',
@@ -318,6 +316,7 @@ const EVENTS = [
     id: 'event-6',
     number: '06',
     title: 'Contestant Interview',
+    cardMeta: 'Friday\u2013Saturday · Private Rooms',
     day: 'Friday\u2013Saturday',
     time: 'Private Interview Rooms',
     venue: 'Private Interview Rooms',
@@ -377,6 +376,7 @@ const EVENTS = [
     id: 'event-7',
     number: '07',
     title: 'Community Service Project',
+    cardMeta: 'Saturday Morning',
     day: 'Saturday Morning',
     time: 'Various',
     venue: 'Various',
@@ -408,6 +408,7 @@ const EVENTS = [
     id: 'event-8',
     number: '08',
     title: 'Contestant Judging \u2014 Uniform / Fantasy',
+    cardMeta: 'Saturday · Main Stage',
     day: 'Saturday',
     time: 'Main Stage',
     venue: 'Main Stage, Congress Plaza Hotel',
@@ -454,6 +455,7 @@ const EVENTS = [
     id: 'event-9',
     number: '09',
     title: 'First Wives\u2019 Club Brunch',
+    cardMeta: 'Saturday Morning',
     day: 'Saturday Morning',
     time: 'Congress Plaza Hotel',
     venue: 'Congress Plaza Hotel',
@@ -485,6 +487,7 @@ const EVENTS = [
     id: 'event-10',
     number: '10',
     title: 'Play Spaces & Social Events',
+    cardMeta: 'Thursday\u2013Saturday \u00b7 Various',
     day: 'Thursday\u2013Saturday Evening',
     time: 'Various',
     venue: 'Various Locations',
@@ -514,6 +517,7 @@ const EVENTS = [
     id: 'event-11',
     number: '11',
     title: 'Contestant Dinner',
+    cardMeta: 'Saturday Evening',
     day: 'Saturday Evening',
     time: 'Congress Plaza Hotel, Grand Ballroom',
     venue: 'Congress Plaza Hotel \u2014 Grand Ballroom',
@@ -549,6 +553,7 @@ const EVENTS = [
     id: 'event-12',
     number: '12',
     title: 'Finals & Crowning Ceremony',
+    cardMeta: 'Sunday · Main Stage',
     day: 'Sunday',
     time: 'Main Stage',
     venue: 'Main Stage, Congress Plaza Hotel',
@@ -607,6 +612,7 @@ const EVENTS = [
     id: 'event-13',
     number: '13',
     title: 'Post-Contest Celebration',
+    cardMeta: 'Sunday Night',
     day: 'Sunday Night',
     time: 'Various',
     venue: 'Various Venues',
