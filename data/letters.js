@@ -47,13 +47,7 @@ const LETTERS = [
     paragraphs: [
       'To the IML 2026 Class,',
 
-      'Welcome to International Mr. Leather. I know first-hand what it takes to get here \u2014 the work, the courage, the community that had to believe in you before you fully believed in yourself. You have earned your place in this room.',
-
-      'This weekend will move fast. It will be exhilarating and exhausting and, at times, overwhelming. My advice: stay in the moment. Every handshake, every conversation on the floor, every second on that stage is something you will carry for the rest of your life. Do not spend it in your head.',
-
-      'You are not competing against your classmates. You are going through something with them. When this weekend ends, the medallion goes to one of you \u2014 but the class belongs to all of you, forever.',
-
-      'Represent your community with pride. Hold each other up. And enjoy every second of it.',
+      'Message from Rene will go here',
     ],
     signature: '\u2014 Rene Hebert, International Mr. Leather 2025',
   },
@@ -63,7 +57,7 @@ const LETTERS = [
     id: 'letter-den-daddy',
     eyebrow: 'A message from your Den Daddy',
     paragraphs: [
-      'To the IML 2026 Class,',
+      'To the IMLBB 2026 Class,',
 
       'Welcome to International Mr Leather! You made it! You are here because you deserve to be here. You are about to embark on an experience that has shaped my life in ways I couldn\u2019t possibly imagine when I went through it 10 years ago. Let go of your insecurities, your fears, and embrace the experience fully. Represent yourself unapologetically, showcase your wonderful community, support each other.',
 
@@ -81,15 +75,9 @@ const LETTERS = [
     id: 'letter-imlbb-ed',
     eyebrow: 'A message from the IMLBB Executive Director',
     paragraphs: [
-      'To the IML 2026 Class,',
+      'To the IMLBB 2026 Class,',
 
-      'On behalf of the International Mr. Leather/International Mr. Bear Board (IMLBB), welcome. This organisation has been the steward of this contest for over four decades, and every year we are reminded of why this work matters \u2014 when a new class of remarkable human beings walks through those doors.',
-
-      'You represent leather communities from across the country and around the world. You carry the stories of your clubs, your cities, and the people who sent you here. That is a responsibility we do not take lightly, and neither should you.',
-
-      'We have built this weekend to support you \u2014 from the moment you register to the moment the music plays on Finals night. Our team, our handlers, and our volunteers are here because they love this community and believe in what you are doing.',
-
-      'Whatever happens this weekend, know that the leather community is better because you showed up. That is not a small thing.',
+      'A message from David will go here',
     ],
     signature: '\u2014 IMLBB Executive Director',
   },
@@ -101,13 +89,7 @@ const LETTERS = [
     paragraphs: [
       'To the IML 2026 Class,',
 
-      'Welcome from International Mr. Bootblack. Our community and yours have been intertwined since the beginning of this contest, and we are proud to stand beside you again this year.',
-
-      'Bootblacking is more than a craft \u2014 it is an act of service, connection, and care. The bootblacks who work this weekend bring that spirit to every chair, every brush, every shine they give. Let them take care of you. Let yourself be taken care of.',
-
-      'As you move through this weekend, remember that the leather community is not only what happens on stage. It is the conversations in the hallway, the friendships formed over a polish rag, the quiet moments of solidarity in a room full of people who understand exactly who you are.',
-
-      'We are proud of each of you. Good luck, and shine on.',
+      'A message from Becky will go here.',
     ],
     signature: '\u2014 IMBB Executive Director',
   },
@@ -121,18 +103,18 @@ const LETTERS = [
    Shown in the dedicated First Wives' Club section.
    ───────────────────────────────────────────────────────────── */
 const FIRST_WIVES_LETTER = {
-  intro: 'A letter to the partners, spouses, and significant others of IML 2026 contestants \u2014',
+  intro: 'A letter to the partners, spouses, and significant others of IMLBB 2026 contestants \u2014',
 
   paragraphs: [
     'Welcome. You are here because someone you love is brave enough to stand on one of leather\u2019s biggest stages and say \u201cThis is who I am.\u201d This takes the kind of courage that is only possible with the right people behind it. That means you.',
 
-    'IML weekend can feel overwhelming from the outside. Your person will be busy, distracted, stretched thin, and running on adrenaline. There will be moments where you feel like a spectator in an event that revolves entirely around someone else. That feeling is real, and it is valid \u2014 and it is also temporary.',
+    'IMLBB weekend can feel overwhelming from the outside. Your person will be busy, distracted, stretched thin, and running on adrenaline. There will be moments where you feel like a spectator in an event that revolves entirely around someone else. That feeling is real, and it is valid \u2014 and it is also temporary.',
 
     'The First Wives\u2019 Club exists because we know the weekend is only possible because of the people who show up for the contestants. So enjoy morning brunch in your space \u2014 a room full of people who understand exactly where you are sitting right now.',
 
     'Thank you for being here. Thank you for making this possible. The leather community honours your sacrifice, your support, and your love.',
 
-    '\u2014 The IML Team',
+    '\u2014 The IMLBB Team',
   ],
 
   questions: [
@@ -150,7 +132,7 @@ const FIRST_WIVES_LETTER = {
    ───────────────────────────────────────────────────────────── */
 const CLOSING_QUOTE = {
   text:        'Leather is not what you wear. It is how you love \u2014 boldly, honestly, and without apology.',
-  attribution: '\u2014 IML Community',
+  attribution: '\u2014 IMLBB Community',
 };
 
 
