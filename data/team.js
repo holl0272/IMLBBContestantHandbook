@@ -1,7 +1,7 @@
 /**
  * ╔══════════════════════════════════════════════════════════════╗
- * ║  SECTION: IML TEAM MEMBERS (Handlers & Team Shine)          ║
- * ║  Owner:   IML Operations / Handlers coordinator             ║
+ * ║  SECTION: IMLBB TEAM MEMBERS (Handlers & Team Shine)          ║
+ * ║  Owner:   IMLBB Operations / Handlers coordinator             ║
  * ║  Update:  Every year — team roster changes annually         ║
  * ╚══════════════════════════════════════════════════════════════╝
  *
@@ -86,19 +86,19 @@ const TEAM_MEMBERS = [
   {
     name: 'Dave Barnett',
     role: 'Contestant Handler',
-    bio: 'With experience as both an IML contestant and a handler, I bring a grounded, people-first approach to supporting competitors. I understand the pressure of the stage and use that insight to mentor with clarity, calm, and respect.',
+    bio: 'With experience as both an IMLBB contestant and a handler, I bring a grounded, people-first approach to supporting competitors. I understand the pressure of the stage and use that insight to mentor with clarity, calm, and respect.',
     fileId: '1jxE9yMGXgvFQzwBSp1tIK-1z4GMN74Yi',
   },
   {
     name: 'Robert Johnson',
     role: 'Contestant Handler',
-    bio: 'Bob is Mr Los Angeles Leather 2006, a founding member of the Los Angeles Band of Brothers, founding member and first President of the Michigan Band of Brothers and a founder of The Mavericks Leather Social Club in Detroit. He\u2019s been an emcee for over 50 contests and has been a proud member of the IML Handling family since 2014.',
+    bio: 'Bob is Mr Los Angeles Leather 2006, a founding member of the Los Angeles Band of Brothers, founding member and first President of the Michigan Band of Brothers and a founder of The Mavericks Leather Social Club in Detroit. He\u2019s been an emcee for over 50 contests and has been a proud member of the IMLBB Handling family since 2014.',
     fileId: '1QXVgZ4tBw0rFiBWGsbGFvOiyHQyaqYng',
   },
   {
     name: 'Jawn Marques',
     role: 'Contestant Handler',
-    bio: 'I\u2019m the 1st Runner-Up at IML 42, and this is my fifth year serving as a Handler. I love this role because it allows me to support competitors who show up for our community with purpose, heart, and courage.',
+    bio: 'I\u2019m the 1st Runner-Up at IMLBB 42, and this is my fifth year serving as a Handler. I love this role because it allows me to support competitors who show up for our community with purpose, heart, and courage.',
     fileId: '1-aeP37GuuF3hACqYsjw45dpNU75MM-mm',
   },
   {
@@ -110,13 +110,13 @@ const TEAM_MEMBERS = [
   {
     name: 'Richard Hubley',
     role: 'Contestant Handler',
-    bio: 'Richard Hubley, Class of IML30, is Mr Leather Ottawa 2008, from Ottawa, Ontario, Canada. He has volunteered at IML every year since and has been a contestant handler for 10 years.',
+    bio: 'Richard Hubley, Class of IMLBB30, is Mr Leather Ottawa 2008, from Ottawa, Ontario, Canada. He has volunteered at IMLBB every year since and has been a contestant handler for 10 years.',
     fileId: '14GPThvwxwgiXIhNgxjzrzDsJ3U4I6Eba',
   },
   {
     name: 'Thomas Seggie',
     role: 'Contestant Handler',
-    bio: 'G\u2019day IML 2026 Class, Seggie here \u2014 an Aussie kinkster from Sydney currently living in London. Part of the IML 44 class, returning for a second year as a handler.',
+    bio: 'G\u2019day IMLBB 2026 Class, Seggie here \u2014 an Aussie kinkster from Sydney currently living in London. Part of the IMLBB 44 class, returning for a second year as a handler.',
     fileId: '1D8UBmBFl0U4xUZf8KfXrjkTCP0HJKhoN',
   },
   {
@@ -134,13 +134,13 @@ const TEAM_MEMBERS = [
   {
     name: 'Freddie Rasheed',
     role: 'Contestant Handler',
-    bio: 'Freddie Rasheed is a former Mr. Olympus Leather 2005 and Mr. Chicago Leather 2008. He has been involved in the leather community for over 25 years and has volunteered for the last 22 years at IML as a contestant handler.',
+    bio: 'Freddie Rasheed is a former Mr. Olympus Leather 2005 and Mr. Chicago Leather 2008. He has been involved in the leather community for over 25 years and has volunteered for the last 22 years at IMLBB as a contestant handler.',
     fileId: '1dpa0gTh9mFKnpN_pDEw-m-kqg6JILBQI',
   },
   {
     name: 'Josh Fortuna',
     role: 'Contestant Handler',
-    bio: 'Josh Fortuna, Mr Michigan Leather 2015, has been an IML Contestant Handler since 2016. His best advice: be your TRUE, AUTHENTIC and RAW self.',
+    bio: 'Josh Fortuna, Mr Michigan Leather 2015, has been an IMLBB Contestant Handler since 2016. His best advice: be your TRUE, AUTHENTIC and RAW self.',
     fileId: '1DkzkSVxi_LI24a7mv6hzk_aRpFGWOTzz',
   },
   {
@@ -152,7 +152,7 @@ const TEAM_MEMBERS = [
   {
     name: 'Keron Woodrow',
     role: 'Contestant Handler',
-    bio: 'Keron (Mr. Mayhem Leather 2023\u20132024) is a scientist-manager by day and a kinkster Switch by night. Part of IML Class 46, this is his first year on the Handlers Team.',
+    bio: 'Keron (Mr. Mayhem Leather 2023\u20132024) is a scientist-manager by day and a kinkster Switch by night. Part of IMLBB Class 46, this is his first year on the Handlers Team.',
     fileId: '1YRIfbjm6VjlxQODX8WquW64xdmmrv0oa',
   },
 
@@ -167,7 +167,7 @@ const TEAM_MEMBERS = [
   {
     name: 'Briar Wood',
     role: 'Team Shine',
-    bio: 'Briar (She/They/Captain) has been part of the IML universe since 2015 and joined Leslie\u2019s Team Shine in 2019. Now in her 6th year, she serves on Team Shine alongside Handlers who return year after year.',
+    bio: 'Briar (She/They/Captain) has been part of the IMLBB universe since 2015 and joined Leslie\u2019s Team Shine in 2019. Now in her 6th year, she serves on Team Shine alongside Handlers who return year after year.',
     fileId: '1rZMvAhGrjk0Q5RTKRYTky0dOXuIuea0-',
   },
   {

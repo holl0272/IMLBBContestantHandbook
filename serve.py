@@ -1,5 +1,5 @@
 """
-Dev server for IML Handbook.
+Dev server for IMLBB Handbook.
 Reads PORT from environment (set by Claude Code preview runner).
 Usage: python serve.py
 """

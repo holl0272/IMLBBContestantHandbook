@@ -1,7 +1,7 @@
 /**
  * ╔══════════════════════════════════════════════════════════╗
  * ║  SECTION: VENUE & NEARBY SPOTS                           ║
- * ║  Owner:   IML Operations / Venue team                   ║
+ * ║  Owner:   IMLBB Operations / Venue team                   ║
  * ║  Update:  When the host hotel or city changes            ║
  * ╚══════════════════════════════════════════════════════════╝
  *

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-IML Handbook — Standalone Validator
+IMLBB Handbook — Standalone Validator
 =====================================
 Usage:
     python validate.py

@@ -6,7 +6,7 @@
  * ╚══════════════════════════════════════════════════════════╝
  */
 
-const IML_NUMBER = 48;    // e.g. 48 → "IML #48"
-const IML_YEAR   = 2026;  // 4-digit year
+const IMLBB_NUMBER = 48;    // e.g. 48 → "IMLBB #48"
+const IMLBB_YEAR   = 2026;  // 4-digit year
 
-if (typeof module !== 'undefined') module.exports = { IML_NUMBER, IML_YEAR };
+if (typeof module !== 'undefined') module.exports = { IMLBB_NUMBER, IMLBB_YEAR };

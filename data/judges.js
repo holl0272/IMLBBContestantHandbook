@@ -1,4 +1,4 @@
-/* ── Section 3: IML Judges ─────────────────────────────────────────────────
+/* ── Section 3: IMLBB Judges ─────────────────────────────────────────────────
    Edit this file each year to update judge names, titles, bios and photos.
    photo  — direct image URL (Wix fill URLs work well at w_400,h_600)
    url    — full profile page on internationalmrleather.com (shown on screen)
@@ -14,7 +14,7 @@ const JUDGES = [
     flag:     '🇨🇦',
     title:    'International Mr. Leather 2025',
     location: 'Montreal, Quebec, Canada',
-    bio:      'Your Friendly Neighborhood Bootblack and International Mr. Leather 2025. Rene is a versatile switch who prioritizes connected experiences in play. An accomplished bootblack and kink educator with over 14 years at the stand — the first bootblack to win the IML title. When not bootblacking he can be found nerding out over card and video games, telling bad jokes, and singing along with showtunes in his car.',
+    bio:      'Your Friendly Neighborhood Bootblack and International Mr. Leather 2025. Rene is a versatile switch who prioritizes connected experiences in play. An accomplished bootblack and kink educator with over 14 years at the stand — the first bootblack to win the IMLBB title. When not bootblacking he can be found nerding out over card and video games, telling bad jokes, and singing along with showtunes in his car.',
     photo:    'https://static.wixstatic.com/media/dc9023_481133f2631248febc20c634d632096b~mv2.png/v1/fill/w_400,h_600,al_c,q_85/Rene_Hebert.png',
     url:      'https://www.internationalmrleather.com/judges/rene-hebert',
   },
@@ -32,7 +32,7 @@ const JUDGES = [
     flag:     '',
     title:    'Judge',
     location: '',
-    bio:      'Visit the full profile on the IML website for Master Dart\'s complete biography and background.',
+    bio:      'Visit the full profile on the IMLBB website for Master Dart\'s complete biography and background.',
     photo:    'https://static.wixstatic.com/media/dc9023_de44bc254730498e8e2a0715cfb02455~mv2.png/v1/fill/w_400,h_600,al_c,q_85/MasterDart.png',
     url:      'https://www.internationalmrleather.com/judges/master-dart',
   },
@@ -41,7 +41,7 @@ const JUDGES = [
     flag:     '',
     title:    'Judge',
     location: '',
-    bio:      'Issa Arden has been in leather and rubber for over 25 years. She serves on the Executive Committee and as head of Education for MIR. They curated exhibitions for the Leather Archives & Museum and were on ABW\'s board after serving as Contestant Coordinator, on IML\'s social media team, on staff for the Leather Hall of Fame, and held two Louisiana leather titles.',
+    bio:      'Issa Arden has been in leather and rubber for over 25 years. She serves on the Executive Committee and as head of Education for MIR. They curated exhibitions for the Leather Archives & Museum and were on ABW\'s board after serving as Contestant Coordinator, on IMLBB\'s social media team, on staff for the Leather Hall of Fame, and held two Louisiana leather titles.',
     photo:    'https://static.wixstatic.com/media/dc9023_4e52d22fdb14446d8a1c93cb61bf68ce~mv2.jpg/v1/fill/w_400,h_600,al_c,q_85/Issa_Arden.jpg',
     url:      'https://www.internationalmrleather.com/judges/issa-arden',
   },
@@ -59,7 +59,7 @@ const JUDGES = [
     flag:     '',
     title:    'Judge',
     location: '',
-    bio:      'Visit the full profile on the IML website for Jody Anderson\'s complete biography and background.',
+    bio:      'Visit the full profile on the IMLBB website for Jody Anderson\'s complete biography and background.',
     photo:    'https://static.wixstatic.com/media/dc9023_18ab3b73264943048425302f73bc6008~mv2.png/v1/fill/w_400,h_600,al_c,q_85/Jody_Anderson.png',
     url:      'https://www.internationalmrleather.com/judges/jody-anderson',
   },
@@ -77,7 +77,7 @@ const JUDGES = [
     flag:     '🇮🇪',
     title:    'Mr. Dublin Leather 2001',
     location: 'Dublin, Ireland',
-    bio:      'A Queer activist for over 30 years, co-founder of L.U.B.E. Ireland (Leather Uniform Bear Encounter), co-producer of Dublin Leather Weekend and Den Daddy Mr. Dublin Leather. Michael competed at IML as Mr. Dublin Leather 2001 and has traveled to numerous Queer events worldwide to support a new generation of Leathermen.',
+    bio:      'A Queer activist for over 30 years, co-founder of L.U.B.E. Ireland (Leather Uniform Bear Encounter), co-producer of Dublin Leather Weekend and Den Daddy Mr. Dublin Leather. Michael competed at IMLBB as Mr. Dublin Leather 2001 and has traveled to numerous Queer events worldwide to support a new generation of Leathermen.',
     photo:    'https://static.wixstatic.com/media/dc9023_a14309277be94b56bb016ef6927eed67~mv2.jpg/v1/fill/w_400,h_600,al_c,q_85/Michael_Byrne.jpg',
     url:      'https://www.internationalmrleather.com/judges/michael-byrne',
   },

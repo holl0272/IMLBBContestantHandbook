@@ -1,7 +1,7 @@
 /**
  * ╔══════════════════════════════════════════════════════════════╗
  * ║  SECTION: LETTERS, PARTNER LETTER & CLOSING QUOTE           ║
- * ║  Owner:   IML Communications team                           ║
+ * ║  Owner:   IMLBB Communications team                           ║
  * ║  Update:  Every year — new titleholder, new leadership       ║
  * ╚══════════════════════════════════════════════════════════════╝
  *
@@ -12,8 +12,8 @@
  *
  *  Fields:
  *    id         — unique string, used as the HTML section id
- *                 (e.g. "letter-iml"). Used for anchor links —
- *                 update href="#letter-iml" in nav/TOC if you
+ *                 (e.g. "letter-imlbb"). Used for anchor links —
+ *                 update href="#letter-imlbb" in nav/TOC if you
  *                 change the first entry's id.
  *    eyebrow    — small uppercase label above the letter
  *                 (e.g. "A message from your International Mr. Leather 2025")
@@ -42,10 +42,10 @@ const LETTERS = [
 
   /* ─── 1. Letter from the current International Mr. Leather ─── */
   {
-    id: 'letter-iml',
+    id: 'letter-imlbb',
     eyebrow: 'A message from your International Mr. Leather 2025',
     paragraphs: [
-      'To the IML 2026 Class,',
+      'To the IMLBB 2026 Class,',
 
       'Message from Rene will go here',
     ],
@@ -63,9 +63,9 @@ const LETTERS = [
 
       'We often say to not look at this as you\u2019re competing against your classmates, but you are going through this experience together. Only one of you will have the golden medallion around your neck, but the relationships and connections you will make with your classmates is the real prize.',
 
-      'You as the IML 2026 class have a unique opportunity to show the world that we can support each other, that we can be each other\u2019s cheerleaders without taking anyone or anything down, that we can be celebrated in all shapes and sizes, that we respect and value our bootblacks, and bring this positive energy back into your communities. Change is long and hard, but the hardest part is to begin, and you\u2019ve done that already.',
+      'You as the IMLBB 2026 class have a unique opportunity to show the world that we can support each other, that we can be each other\u2019s cheerleaders without taking anyone or anything down, that we can be celebrated in all shapes and sizes, that we respect and value our bootblacks, and bring this positive energy back into your communities. Change is long and hard, but the hardest part is to begin, and you\u2019ve done that already.',
 
-      'I\u2019m immensely humbled and honored to have this class as my very first class as the IML Den Daddy. Myself and my team of incredible handlers and Team Shine know what you are experiencing, and will be there to support you at every step. I want each and every one of you to have an incredibly fulfilling experience regardless of your placement, and I will do everything I can to make that happen. I hope that I make you proud.',
+      'I\u2019m immensely humbled and honored to have this class as my very first class as the IMLBB Den Daddy. Myself and my team of incredible handlers and Team Shine know what you are experiencing, and will be there to support you at every step. I want each and every one of you to have an incredibly fulfilling experience regardless of your placement, and I will do everything I can to make that happen. I hope that I make you proud.',
     ],
     signature: '\u2014 Your Den Daddy Miguel',
   },

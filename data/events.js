@@ -1,7 +1,7 @@
 /**
  * ╔══════════════════════════════════════════════════════════════╗
  * ║  SECTION: EVENTS                                             ║
- * ║  Owner:   IML Events / Logistics team                        ║
+ * ║  Owner:   IMLBB Events / Logistics team                        ║
  * ║  Update:  Every year — dates, times, venues change           ║
  * ╚══════════════════════════════════════════════════════════════╝
  *
@@ -90,12 +90,12 @@ const EVENTS = [
       {
         type: 'qa',
         q: 'What is it?',
-        a: 'By attending this event, you can confirm registration and technical details, complete all of the necessary paperwork and schedule your official IML photo shoot prior to Thursday\u2019s Orientation. Upon arrival, a Contestant Handler will assist you in confirming your application information used in making your contestant badge, the contest program insert, and contestant address list.',
+        a: 'By attending this event, you can confirm registration and technical details, complete all of the necessary paperwork and schedule your official IMLBB photo shoot prior to Thursday\u2019s Orientation. Upon arrival, a Contestant Handler will assist you in confirming your application information used in making your contestant badge, the contest program insert, and contestant address list.',
       },
       {
         type: 'qa',
         q: 'What\u2019s it like?',
-        a: 'This gives you your first taste of IML in a casual and relaxed atmosphere. You can meet the IML team, other contestants and your handler for the competition. It also ensures you are all set for the coming days.',
+        a: 'This gives you your first taste of IMLBB in a casual and relaxed atmosphere. You can meet the IMLBB team, other contestants and your handler for the competition. It also ensures you are all set for the coming days.',
       },
       {
         type: 'qa',
@@ -146,7 +146,7 @@ const EVENTS = [
       {
         type: 'qa',
         q: 'What happens here?',
-        a: 'You meet your handler, collect your contestant badge and materials, get your photo taken for official records, and receive your room assignment and schedule for the full weekend. IML staff will walk you through the weekend timeline and answer any last-minute questions.',
+        a: 'You meet your handler, collect your contestant badge and materials, get your photo taken for official records, and receive your room assignment and schedule for the full weekend. IMLBB staff will walk you through the weekend timeline and answer any last-minute questions.',
       },
       {
         type: 'checklist',
@@ -193,7 +193,7 @@ const EVENTS = [
       {
         type: 'qa',
         q: 'What happens here?',
-        a: 'An evening mixer where you meet your fellow contestants, judges, tallymasters, and the wider IML community. Informal \u2014 conversation, drinks, and community. Dress in leather or uniform.',
+        a: 'An evening mixer where you meet your fellow contestants, judges, tallymasters, and the wider IMLBB community. Informal \u2014 conversation, drinks, and community. Dress in leather or uniform.',
       },
       {
         type: 'checklist',
@@ -217,7 +217,7 @@ const EVENTS = [
         q: 'Talking points to prepare',
         items: [
           'Your title and home community',
-          'Why IML matters to you personally',
+          'Why IMLBB matters to you personally',
           'One thing you hope to learn this weekend',
         ],
         note: '',
@@ -249,7 +249,7 @@ const EVENTS = [
       {
         type: 'qa',
         q: 'What happens here?',
-        a: 'All contestants parade across the main stage in their leather gear. Judges score on presentation, confidence, leather craft, and how you carry yourself. This is the iconic IML moment \u2014 the stage is yours.',
+        a: 'All contestants parade across the main stage in their leather gear. Judges score on presentation, confidence, leather craft, and how you carry yourself. This is the iconic IMLBB moment \u2014 the stage is yours.',
       },
       {
         type: 'checklist',
@@ -298,7 +298,7 @@ const EVENTS = [
   {
     id: 'event-5',
     number: '05',
-    title: 'IML Vendor Fair',
+    title: 'IMLBB Vendor Fair',
     cardMeta: 'Friday · Exhibition Hall',
     day: 'Friday',
     time: 'Exhibition Hall',
@@ -313,7 +313,7 @@ const EVENTS = [
       {
         type: 'callout',
         label: 'Remember',
-        text: 'You are a contestant all weekend. How you carry yourself at the Vendor Fair \u2014 especially with fans and community members \u2014 is part of your IML presence.',
+        text: 'You are a contestant all weekend. How you carry yourself at the Vendor Fair \u2014 especially with fans and community members \u2014 is part of your IMLBB presence.',
       },
     ],
     rightCol: [
@@ -344,7 +344,7 @@ const EVENTS = [
       {
         type: 'qa',
         q: 'What happens here?',
-        a: 'A private 20-minute interview with the full judging panel. You\u2019ll be asked about your background in leather, your community work, your vision for the IML title, and your knowledge of leather history and culture. This is the highest-weighted component of your score.',
+        a: 'A private 20-minute interview with the full judging panel. You\u2019ll be asked about your background in leather, your community work, your vision for the IMLBB title, and your knowledge of leather history and culture. This is the highest-weighted component of your score.',
       },
       {
         type: 'checklist',
@@ -352,7 +352,7 @@ const EVENTS = [
         items: [
           'Your leather journey \u2014 how you got here',
           'Community service and advocacy',
-          'What IML means to the global leather community',
+          'What IMLBB means to the global leather community',
           'How you would use the title to make an impact',
           'Leather history, culture, and its future',
         ],
@@ -368,7 +368,7 @@ const EVENTS = [
       {
         type: 'textarea',
         q: 'Practice questions \u2014 your answers',
-        placeholder: 'What does holding the IML title mean to you?',
+        placeholder: 'What does holding the IMLBB title mean to you?',
         rows: 3,
       },
       {
@@ -483,12 +483,12 @@ const EVENTS = [
       {
         type: 'qa',
         q: 'What happens here?',
-        a: 'A beloved IML tradition \u2014 a brunch gathering for the partners, spouses, and significant others of contestants. A space for support, laughter, and community away from the competition floor. See the dedicated section of this handbook for full details.',
+        a: 'A beloved IMLBB tradition \u2014 a brunch gathering for the partners, spouses, and significant others of contestants. A space for support, laughter, and community away from the competition floor. See the dedicated section of this handbook for full details.',
       },
       {
         type: 'callout',
         label: 'Remember',
-        text: 'Your support network matters. The people who travel with you are part of your IML story. Make sure they feel included in the weekend.',
+        text: 'Your support network matters. The people who travel with you are part of your IMLBB story. Make sure they feel included in the weekend.',
       },
     ],
     rightCol: [
@@ -515,7 +515,7 @@ const EVENTS = [
       {
         type: 'qa',
         q: 'What happens here?',
-        a: 'IML weekend hosts a variety of evening social events and play spaces. These are consensual spaces governed by explicit community agreements. Attendance is entirely optional and personal. Your participation \u2014 or non-participation \u2014 is not evaluated.',
+        a: 'IMLBB weekend hosts a variety of evening social events and play spaces. These are consensual spaces governed by explicit community agreements. Attendance is entirely optional and personal. Your participation \u2014 or non-participation \u2014 is not evaluated.',
       },
       {
         type: 'callout',
@@ -526,7 +526,7 @@ const EVENTS = [
     rightCol: [
       {
         type: 'tip',
-        text: 'Know your limits and honour them. IML weekend is a marathon. Rest when you need to. A well-rested contestant performs better on stage and in interview.',
+        text: 'Know your limits and honour them. IMLBB weekend is a marathon. Rest when you need to. A well-rested contestant performs better on stage and in interview.',
       },
     ],
   },
@@ -545,7 +545,7 @@ const EVENTS = [
       {
         type: 'qa',
         q: 'What happens here?',
-        a: 'A formal dinner for all contestants, handlers, judges, tallymasters, and the IML team. Dress: leather or formal. A moment of celebration and reflection before the Finals. Speeches, recognition of community milestones, and shared community time.',
+        a: 'A formal dinner for all contestants, handlers, judges, tallymasters, and the IMLBB team. Dress: leather or formal. A moment of celebration and reflection before the Finals. Speeches, recognition of community milestones, and shared community time.',
       },
       {
         type: 'callout',
@@ -581,7 +581,7 @@ const EVENTS = [
       {
         type: 'qa',
         q: 'What happens here?',
-        a: 'The culminating event of IML weekend. Top finalists are announced; the new International Mr. Leather is crowned before a packed audience. All contestants participate in the opening parade regardless of whether they advance to finals. This is the moment the community gathers for.',
+        a: 'The culminating event of IMLBB weekend. Top finalists are announced; the new International Mr. Leather is crowned before a packed audience. All contestants participate in the opening parade regardless of whether they advance to finals. This is the moment the community gathers for.',
       },
       {
         type: 'checklist',
@@ -651,7 +651,7 @@ const EVENTS = [
     rightCol: [
       {
         type: 'tip',
-        text: 'Exchange contacts with the contestants you\u2019ve connected with. Your IML class is your family now \u2014 stay in touch.',
+        text: 'Exchange contacts with the contestants you\u2019ve connected with. Your IMLBB class is your family now \u2014 stay in touch.',
       },
     ],
   },

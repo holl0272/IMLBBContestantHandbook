@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-IML Contestant Handbook — Build Script
+IMLBB Contestant Handbook — Build Script
 =======================================
 Usage:
     python build.py              # build to dist/
@@ -14,7 +14,7 @@ What it does:
   5. Runs a print-page audit to catch overflow/underflow issues
 
 Section file owners (who edits what each year):
-  data/meta.js     — IML_NUMBER, IML_YEAR
+  data/meta.js     — IMLBB_NUMBER, IMLBB_YEAR
   data/sheets.js   — Google Sheet IDs
   data/venue.js    — Hotel, map, nearby spots
   data/welcome.js  — Welcome letter
@@ -34,7 +34,7 @@ BASE      = Path(__file__).parent
 DIST      = BASE / 'dist'
 SRC       = BASE / 'index.html'
 DATA_DIR  = BASE / 'data'
-LOGO_EXTS = ['IMLLogo.jpg', 'IMLLogo.avif', 'IMLLogo.png', 'IMBBLogo_white.jpg']
+LOGO_EXTS = ['IMLBBLogo.jpg', 'IMLBBLogo.avif', 'IMLBBLogo.png', 'IMBBLogo_white.jpg']
 
 # Ordered load sequence — must match the order <script> tags appear in index.html
 DATA_FILES = [
@@ -129,7 +129,7 @@ def validate_data():
         return combined  # report errors below
 
     # ── Scalar checks ──────────────────────────────────────────────
-    for name in ('IML_NUMBER', 'IML_YEAR'):
+    for name in ('IMLBB_NUMBER', 'IMLBB_YEAR'):
         v = extract_scalar(name, combined)
         if v is None:
             err(f'{name} not found in data/meta.js')
@@ -224,7 +224,7 @@ def audit_print_pages(html):
         '#first-wives', '#closing', '#experience',
         '.letter-page', '.coc-sub',
     ]
-    ALLOWED_FLEX = ['#judges', '#tallymasters', '#iml-team', '#venue', '#nearby']
+    ALLOWED_FLEX = ['#judges', '#tallymasters', '#imlbb-team', '#venue', '#nearby']
 
     for sel in REQUIRED_EXACT:
         # Collect all rule bodies for this selector (it may appear more than once)
@@ -286,11 +286,11 @@ def build(combined_data, html):
         die('Could not find the main <script> block in index.html to inject data')
 
     # Update <title>
-    iml_number = extract_scalar('IML_NUMBER', combined_data)
-    iml_year   = extract_scalar('IML_YEAR',   combined_data)
+    imlbb_number = extract_scalar('IMLBB_NUMBER', combined_data)
+    imlbb_year   = extract_scalar('IMLBB_YEAR',   combined_data)
     html = re.sub(
         r'<title>.*?</title>',
-        f'<title>IML #{iml_number} // {iml_year} Contestant Handbook</title>',
+        f'<title>IMLBB #{imlbb_number} // {imlbb_year} Contestant Handbook</title>',
         html
     )
 
@@ -338,7 +338,7 @@ if validate_only:
 
 out_path = build(combined, html_source)
 
-print(f'\n[BUILD]   IML #{extract_scalar("IML_NUMBER", combined)} // '
-      f'{extract_scalar("IML_YEAR", combined)} built successfully')
+print(f'\n[BUILD]   IMLBB #{extract_scalar("IMLBB_NUMBER", combined)} // '
+      f'{extract_scalar("IMLBB_YEAR", combined)} built successfully')
 print(f'[BUILD]   Deployable file: {out_path}')
 print('[BUILD]   Open dist/index.html in Chrome, then File > Print > Save as PDF')

@@ -4,9 +4,9 @@ from PIL import Image
 import fitz
 import os
 
-pdf_path = 'C:/IML Handbook project/2026 IMLBB Handbook.pdf'
+pdf_path = 'C:/IMLBB Handbook project/2026 IMLBB Handbook.pdf'
 doc = fitz.open(pdf_path)
-img_path = 'C:/IML Handbook project/temp_page.png'
+img_path = 'C:/IMLBB Handbook project/temp_page.png'
 
 for page_idx in range(33, 55):  # pages 34-55 (0-indexed)
     page_num = page_idx + 1
