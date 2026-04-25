@@ -1474,6 +1474,74 @@
       color: var(--blue-light); margin-bottom: 8px;
     }
     .nearby-name { font-size: 15px; font-weight: 700; }
+    .nearby-url { display: block; font-size: 11px; margin-top: 6px; color: var(--blue-light); opacity: .75; text-decoration: none; word-break: break-all; }
+    .nearby-url:hover { opacity: 1; text-decoration: underline; }
+
+    /* ── LEATHER ARCHIVES & MUSEUM ── */
+    #lam { --lam-gold: #c8943a; }
+    .lam-s-num { color: var(--lam-gold) !important; border-color: rgba(200,148,58,.35) !important; }
+    .lam-tagline { font-size: 13px; letter-spacing: 5px; text-transform: uppercase;
+      color: var(--lam-gold); margin-top: 10px; opacity: .9; }
+    .lam-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+      padding: 0 5vw 36px; align-items: start; }
+    .lam-eyebrow { display: block; font-size: 10px; letter-spacing: 5px;
+      text-transform: uppercase; color: var(--lam-gold); margin-bottom: 14px; }
+    .lam-intro-text p { font-size: 15px; line-height: 1.72; margin-bottom: 14px;
+      color: var(--off-white); }
+    .lam-intro-text p:last-child { margin-bottom: 0; }
+    .lam-intro-photo img { width: 100%; height: 320px; object-fit: cover; display: block; }
+    .lam-photo-cap { font-size: 10px; color: var(--muted); margin-top: 7px; line-height: 1.4; }
+    .lam-photo-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px;
+      padding: 0 5vw; }
+    .lam-fig { margin: 0; }
+    .lam-fig img { width: 100%; height: 200px; object-fit: cover; display: block; }
+    .lam-fig figcaption { font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--muted); padding: 6px 0 0; text-align: center; }
+    /* LA&M page 2 — renovation */
+    .lam-reno-head { text-align: center; padding: 56px 5vw 28px;
+      border-top: 2px solid rgba(200,148,58,.2); }
+    .lam-reno-tag { display: inline-block; font-size: 10px; letter-spacing: 5px;
+      text-transform: uppercase; color: var(--lam-gold);
+      border: 1px solid rgba(200,148,58,.4); padding: 4px 12px; margin-bottom: 14px; }
+    .lam-reno-title { font-size: clamp(22px,3vw,38px); font-weight: 700;
+      letter-spacing: 4px; text-transform: uppercase; margin-bottom: 14px; }
+    .lam-reno-lead { font-size: 14px; line-height: 1.7; max-width: 660px;
+      margin: 0 auto; color: var(--off-white); }
+    .lam-reno-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
+      padding: 32px 5vw 60px; }
+    .lam-col-label { font-size: 9px; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--lam-gold); border-bottom: 1px solid rgba(200,148,58,.2);
+      padding-bottom: 7px; margin-bottom: 14px; }
+    .lam-build-list { list-style: none; padding: 0; margin: 0 0 20px;
+      display: flex; flex-direction: column; gap: 12px; }
+    .lam-build-list li { display: flex; gap: 12px; align-items: flex-start;
+      font-size: 13px; line-height: 1.55; color: var(--off-white); }
+    .lam-build-icon { font-size: 18px; flex-shrink: 0; line-height: 1.3; }
+    .lam-lobby-photo img { width: 100%; height: 170px; object-fit: cover; display: block; }
+    .lam-progress-block { margin-bottom: 18px; }
+    .lam-progress-track { height: 14px; background: rgba(255,255,255,.08);
+      border-radius: 7px; overflow: hidden; margin-bottom: 8px; }
+    .lam-progress-fill { height: 100%;
+      background: linear-gradient(90deg,#7a4e12 0%,#c8943a 65%,#e8b860 100%);
+      border-radius: 7px; display: flex; align-items: center;
+      justify-content: flex-end; padding-right: 7px; }
+    .lam-progress-pct { font-size: 9px; font-weight: 700; color: #fff; letter-spacing: 1px; }
+    .lam-progress-nums { display: flex; justify-content: space-between;
+      font-size: 11px; color: var(--muted); }
+    .lam-raised { font-weight: 700; color: var(--lam-gold); }
+    .lam-progress-cta { font-size: 12px; margin-top: 8px; line-height: 1.5;
+      color: var(--off-white); }
+    .lam-tiers { list-style: none; padding: 0; margin: 0 0 20px;
+      display: flex; flex-direction: column; gap: 7px; }
+    .lam-tiers li { display: flex; gap: 12px; align-items: flex-start;
+      font-size: 12px; line-height: 1.45; }
+    .lam-tier-amt { font-weight: 700; color: var(--lam-gold); font-size: 13px;
+      white-space: nowrap; min-width: 50px; flex-shrink: 0; padding-top: 1px; }
+    .lam-tier-desc { color: var(--muted); }
+    .lam-donate-box { background: rgba(200,148,58,.1);
+      border: 1px solid rgba(200,148,58,.32); padding: 15px 18px; }
+    .lam-donate-url { font-size: 15px; font-weight: 700; margin: 0 0 5px; letter-spacing: 1px; }
+    .lam-donate-note { font-size: 11px; color: var(--muted); margin: 0; }
 
     /* Print rules for intro pages */
     @media print {
@@ -1566,6 +1634,51 @@
       .nearby-card { padding: 8pt 10pt !important; }
       .nearby-type { font-size: 6pt !important; }
       .nearby-name { font-size: 12pt !important; }
+      .nearby-url  { display: none !important; }
+
+      /* ══════════════════════════════
+         LEATHER ARCHIVES & MUSEUM — 2 exact pages
+      ══════════════════════════════ */
+      #lam { padding: 0 !important; margin: 0 !important; }
+      .lam-page {
+        width: 8.5in !important; height: 11in !important;
+        overflow: hidden !important; padding: 0 !important;
+        box-sizing: border-box !important;
+        page-break-before: always !important; break-before: page !important;
+        page-break-after: always !important; break-after: page !important;
+      }
+      /* — Page 1 — */
+      .lam-page-1 .s-header { padding: 0.22in 0 0.14in !important; }
+      .lam-tagline { font-size: 7.5pt !important; letter-spacing: 3pt !important; margin-top: 5pt !important; }
+      .lam-intro { padding: 0 0.45in 0.2in !important; gap: 0.24in !important; }
+      .lam-eyebrow { font-size: 6pt !important; margin-bottom: 7pt !important; }
+      .lam-intro-text p { font-size: 10pt !important; line-height: 1.55 !important; margin-bottom: 7pt !important; }
+      .lam-intro-photo img { height: 3.0in !important; }
+      .lam-photo-cap { font-size: 6pt !important; margin-top: 4pt !important; }
+      .lam-photo-row { padding: 0 0.45in !important; gap: 2pt !important; }
+      .lam-fig img { height: 2.7in !important; }
+      .lam-fig figcaption { font-size: 6pt !important; padding-top: 3pt !important; }
+      /* — Page 2 — */
+      .lam-reno-head { padding: 0.22in 0.45in 0.16in !important; }
+      .lam-reno-tag { font-size: 6pt !important; padding: 2pt 8pt !important; margin-bottom: 7pt !important; }
+      .lam-reno-title { font-size: 18pt !important; letter-spacing: 2pt !important; margin-bottom: 8pt !important; }
+      .lam-reno-lead { font-size: 10pt !important; line-height: 1.52 !important; }
+      .lam-reno-cols { padding: 0.16in 0.45in 0.18in !important; gap: 0.3in !important; }
+      .lam-col-label { font-size: 6pt !important; margin-bottom: 8pt !important; padding-bottom: 4pt !important; }
+      .lam-build-list { gap: 8pt !important; margin-bottom: 12pt !important; }
+      .lam-build-list li { font-size: 9.5pt !important; gap: 7pt !important; }
+      .lam-build-icon { font-size: 12pt !important; }
+      .lam-lobby-photo img { height: 1.6in !important; }
+      .lam-progress-track { height: 11pt !important; margin-bottom: 5pt !important; }
+      .lam-progress-pct { font-size: 6.5pt !important; }
+      .lam-progress-nums { font-size: 7pt !important; }
+      .lam-progress-cta { font-size: 8.5pt !important; margin-top: 5pt !important; }
+      .lam-tiers { gap: 5pt !important; margin-bottom: 12pt !important; }
+      .lam-tiers li { font-size: 8.5pt !important; gap: 8pt !important; }
+      .lam-tier-amt { font-size: 9.5pt !important; min-width: 36pt !important; }
+      .lam-donate-box { padding: 10pt 14pt !important; }
+      .lam-donate-url { font-size: 12pt !important; margin-bottom: 3pt !important; letter-spacing: 0.5pt !important; }
+      .lam-donate-note { font-size: 7.5pt !important; }
     }
 
   </style>
@@ -1579,6 +1692,7 @@
     <li><a href="#letter-imlbb">Welcome</a></li>
     <li><a href="#toc">Contents</a></li>
     <li><a href="#venue">Venue</a></li>
+    <li><a href="#lam">LA&amp;M</a></li>
     <li><a href="#class-grid" id="nav-class-label">Class</a></li>
     <li><a href="#contestants">Contestants</a></li>
     <li><a href="#imbb-judges">IMBB Judges</a></li>
@@ -1746,6 +1860,13 @@
       </a>
     </li>
     <li>
+      <a href="#lam">
+        <span class="toc-num" style="color:#c8943a;border-color:rgba(200,148,58,.4)">&#x2605;</span>
+        <span class="toc-item-title">The Leather Archives &amp; Museum</span>
+        <span class="toc-arrow">&#x2192;</span>
+      </a>
+    </li>
+    <li>
       <a href="#class-grid">
         <span class="toc-num">2</span>
         <span class="toc-item-title">Your Class of <span class="imlbb-year-label"></span></span>
@@ -1825,6 +1946,136 @@
   </div>
   <div class="nearby-map-wrap" id="nearby-map"><!-- map rendered by JS --></div>
   <div class="nearby-grid" id="nearby-grid"><!-- rendered by JS --></div>
+</section>
+
+<!-- ── LEATHER ARCHIVES & MUSEUM ── -->
+<section id="lam">
+
+  <!-- ── Page 1: Mission & Story ── -->
+  <div class="lam-page lam-page-1">
+    <div class="s-header">
+      <span class="s-num lam-s-num">The Heart of IMLBB</span>
+      <h2 class="s-title">The Leather Archives<br>&amp; Museum</h2>
+      <p class="lam-tagline">Preserving Our Past &mdash; Building Our Future</p>
+    </div>
+
+    <div class="lam-intro">
+      <div class="lam-intro-text">
+        <span class="lam-eyebrow">Why We Compete</span>
+        <p>IMLBB is more than a contest &mdash; it is a fundraising engine for one of our community&rsquo;s most vital institutions. Every entry fee, every dollar raised through the IMLBB title, and every donation made at this weekend&rsquo;s events goes directly to support the <strong>Leather Archives &amp; Museum</strong>.</p>
+        <p>Founded in 1991, the LA&amp;M is the world&rsquo;s only institution dedicated to preserving the history and culture of leather, kink, fetish, and BDSM. Located in Chicago&rsquo;s Rogers Park neighbourhood, its collection spans over <strong>3,500 linear feet of archival materials</strong> and thousands of irreplaceable artefacts, photographs, oral histories, and artworks.</p>
+        <p>When you step on that stage this weekend, you are not just competing for a title. <strong>You are fighting to protect the memory of who we are.</strong></p>
+      </div>
+      <div class="lam-intro-photo">
+        <img src="https://leatherarchives.org/wp-content/uploads/2026/04/Picture1.jpg" alt="The Leather Archives &amp; Museum building exterior">
+        <p class="lam-photo-cap">6418 N. Greenview Ave., Chicago &mdash; home of the LA&amp;M since 2000</p>
+      </div>
+    </div>
+
+    <div class="lam-photo-row">
+      <figure class="lam-fig">
+        <img src="https://leatherarchives.org/wp-content/uploads/2026/04/Picture2.jpg" alt="Etienne Auditorium">
+        <figcaption>Etienne Auditorium</figcaption>
+      </figure>
+      <figure class="lam-fig">
+        <img src="https://leatherarchives.org/wp-content/uploads/2026/04/Picture4.jpg" alt="New Main Gallery">
+        <figcaption>New Main Gallery</figcaption>
+      </figure>
+      <figure class="lam-fig">
+        <img src="https://leatherarchives.org/wp-content/uploads/2026/04/Picture3.jpg" alt="Teri Rose Memorial Library">
+        <figcaption>Teri Rose Memorial Library</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <!-- ── Page 2: Renovation & Funding ── -->
+  <div class="lam-page lam-page-2">
+    <div class="lam-reno-head">
+      <span class="lam-reno-tag">2026 Renovation Campaign</span>
+      <h3 class="lam-reno-title">The Renovation Begins Now</h3>
+      <p class="lam-reno-lead">Construction begins <strong>June 2026</strong>. Collections return <strong>March 2027</strong>. Grand Reopening: <strong>May 2027</strong>.<br>The building at the heart of our history is getting the home it deserves &mdash; and we still need your support to get there.</p>
+    </div>
+
+    <div class="lam-reno-cols">
+
+      <div class="lam-reno-left">
+        <h4 class="lam-col-label">What&rsquo;s Being Built</h4>
+        <ul class="lam-build-list">
+          <li>
+            <span class="lam-build-icon">🌡</span>
+            <div><strong>Collections &amp; Climate Control</strong><br>Upgraded HVAC, humidity regulation, and archival-grade movable shelving to protect every item in the collection</div>
+          </li>
+          <li>
+            <span class="lam-build-icon">🖼</span>
+            <div><strong>Redesigned Galleries</strong><br>Expanded main-floor exhibit space with improved lighting and display connectivity</div>
+          </li>
+          <li>
+            <span class="lam-build-icon">♿</span>
+            <div><strong>Full Accessibility</strong><br>ADA-compliant entrances, restrooms, and a new elevator serving both floors</div>
+          </li>
+          <li>
+            <span class="lam-build-icon">📚</span>
+            <div><strong>Research &amp; Community Spaces</strong><br>Dedicated reading room, flexible event space, and a welcoming lobby open to all</div>
+          </li>
+          <li>
+            <span class="lam-build-icon">🔧</span>
+            <div><strong>Modern Building Systems</strong><br>Foundation seal, updated electrical, plumbing, and archival-grade fire detection throughout</div>
+          </li>
+        </ul>
+        <div class="lam-lobby-photo">
+          <img src="https://leatherarchives.org/wp-content/uploads/2026/04/Picture5.jpg" alt="LA&amp;M Lobby render">
+          <p class="lam-photo-cap">Rendered lobby &mdash; a welcoming entrance for every member of our community</p>
+        </div>
+      </div>
+
+      <div class="lam-reno-right">
+        <h4 class="lam-col-label">Fundraising Progress</h4>
+        <div class="lam-progress-block">
+          <div class="lam-progress-track">
+            <div class="lam-progress-fill" style="width:82%">
+              <span class="lam-progress-pct">82%</span>
+            </div>
+          </div>
+          <div class="lam-progress-nums">
+            <span class="lam-raised">$2,050,000 raised</span>
+            <span>of $2,500,000</span>
+          </div>
+          <p class="lam-progress-cta"><strong>$450,000 still needed.</strong> Your presence at IMLBB this weekend is a direct contribution to closing that gap.</p>
+        </div>
+
+        <h4 class="lam-col-label">Ways to Give</h4>
+        <ul class="lam-tiers">
+          <li>
+            <span class="lam-tier-amt">$100</span>
+            <div><strong>Fabulous Friend</strong><br><span class="lam-tier-desc">Funds two linear feet of archival shelving</span></div>
+          </li>
+          <li>
+            <span class="lam-tier-amt">$250</span>
+            <div><strong>Sylvester Supporter</strong><br><span class="lam-tier-desc">Rehouses fragile collections in acid-free enclosures</span></div>
+          </li>
+          <li>
+            <span class="lam-tier-amt">$500</span>
+            <div><strong>Kinky Krusader</strong><br><span class="lam-tier-desc">Preserves a historic photograph box for future generations</span></div>
+          </li>
+          <li>
+            <span class="lam-tier-amt">$1,500</span>
+            <div><strong>Leather Legacy</strong><br><span class="lam-tier-desc">Preserves a leather garment from deterioration</span></div>
+          </li>
+          <li>
+            <span class="lam-tier-amt">$5,000</span>
+            <div><strong>Dolly Parton Patron</strong><br><span class="lam-tier-desc">Names a shelf in the Teri Rose Memorial Library</span></div>
+          </li>
+        </ul>
+
+        <div class="lam-donate-box">
+          <p class="lam-donate-url">leatherarchives.org/renovation</p>
+          <p class="lam-donate-note">501(c)(3) nonprofit &nbsp;&bull;&nbsp; All donations are tax-deductible &nbsp;&bull;&nbsp; Questions: online@leatherarchives.org</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
 </section>
 
 <!-- ── CLASS PHOTO GRID (page 15) ── -->
@@ -2322,7 +2573,7 @@ function applyConfig() {
 
   const nearbyGrid = document.getElementById('nearby-grid');
   if (nearbyGrid && NEARBY_SPOTS) nearbyGrid.innerHTML = NEARBY_SPOTS.map(s =>
-    `<div class="nearby-card"><p class="nearby-type">${s.type}</p><p class="nearby-name">${s.name}</p></div>`).join('');
+    `<div class="nearby-card"><p class="nearby-type">${s.type}</p><p class="nearby-name">${s.name}</p>${s.url ? `<a class="nearby-url" href="${s.url}" target="_blank" rel="noopener">${s.url.replace(/^https?:\/\//, '')}</a>` : ''}</div>`).join('');
 
   const fwcLayout = document.getElementById('fwc-layout');
   if (fwcLayout && FIRST_WIVES_LETTER) {

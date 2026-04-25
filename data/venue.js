@@ -37,14 +37,16 @@ const VENUE = {
 // Nearby points of interest shown in the Nearby Spots section
 // Update if the venue moves to a different neighbourhood
 const NEARBY_SPOTS = [
-  { type: 'Museum',     name: 'Leather Archives & Museum' },
-  { type: 'Bar',        name: 'Touché' },
-  { type: 'Bar',        name: 'Jackhammer' },
-  { type: 'Park',       name: 'Millennium Park' },
-  { type: 'Museum',     name: 'Art Institute of Chicago' },
-  { type: 'Aquarium',   name: 'Shedd Aquarium' },
-  { type: 'Pier',       name: 'Navy Pier' },
-  { type: 'Coffee',     name: 'Intelligentsia Coffee' },
+  { type: 'Museum',       name: 'Leather Archives & Museum', url: 'https://leatherarchives.org/' },
+  { type: 'Bar',          name: 'Touché' },
+  { type: 'Bar',          name: 'Jackhammer' },
+  { type: 'Theater',      name: 'The Riviera Theater',        url: 'https://rivieratheatre.org/' },
+  { type: 'Music Venue',  name: 'House of Blues Chicago',     url: 'https://chicago.houseofblues.com/' },
+  { type: 'Park',         name: 'Millennium Park' },
+  { type: 'Museum',       name: 'Art Institute of Chicago' },
+  { type: 'Aquarium',     name: 'Shedd Aquarium' },
+  { type: 'Pier',         name: 'Navy Pier' },
+  { type: 'Coffee',       name: 'Intelligentsia Coffee' },
 ];
 
 if (typeof module !== 'undefined') module.exports = { VENUE, NEARBY_SPOTS };
