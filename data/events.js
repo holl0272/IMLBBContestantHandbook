@@ -107,7 +107,7 @@ const EVENTS = [
       {
         type: 'qa',
         q: 'What\u2019s it like?',
-        a: 'This gives you your first taste of IMLBB in a casual and relaxed atmosphere. You can meet the IMLBB team, other contestants and your handler for the competition. It also ensures you are all set for the coming days.',
+        a: 'This gives you your first taste of IMLBB in a casual and relaxed atmosphere. You can meet the IMLBB team, other contestants and your handlers for the competition. It also ensures you are all set for the coming days.',
       },
       {
         type: 'qa',
@@ -160,7 +160,7 @@ const EVENTS = [
       {
         type: 'qa',
         q: 'What happens here?',
-        a: 'You meet your handler, collect your contestant badge and materials, get your photo taken for official records, and receive your room assignment and schedule for the full weekend. IMLBB staff will walk you through the weekend timeline and answer any last-minute questions.',
+        a: 'This is the first time all contestants will officially gather along with the handlers, judges and the rest of the IML team. It is an incredibly important and powerful experience that will set you up for success for the rest of the week. You will be introduced to each judge and various IMLBB staff members and your Contestant Handlers. You will meet the IMLBB photographer and make a photo shoot appointment with him.',
       },
       {
         type: 'checklist',
