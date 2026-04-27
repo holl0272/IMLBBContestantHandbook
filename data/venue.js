@@ -40,6 +40,7 @@ const NEARBY_SPOTS = [
   { type: 'Museum',       name: 'Leather Archives & Museum', url: 'https://leatherarchives.org/' },
   { type: 'Bar',          name: 'Touché' },
   { type: 'Bar',          name: 'Jackhammer' },
+  { type: 'Bar',          name: 'Sidetrack',         url: 'https://www.sidetrackchicago.com/' },
   { type: 'Theater',      name: 'The Riviera Theater',        url: 'https://rivieratheatre.org/' },
   { type: 'Music Venue',  name: 'House of Blues Chicago',     url: 'https://chicago.houseofblues.com/' },
   { type: 'Park',         name: 'Millennium Park' },
