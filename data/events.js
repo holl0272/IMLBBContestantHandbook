@@ -285,7 +285,7 @@ const EVENTS = [
   {
     id: 'event-5',
     number: '05',
-    title: 'First Shine',
+    title: 'First Shine @ Spit Shine',
     cardMeta: 'Thursday Evening',
     day: 'Thursday Evening',
     time: '10:00 PM \u2013 11:00 PM',
@@ -831,6 +831,38 @@ const EVENTS = [
   {
     id: 'event-15',
     number: '15',
+    title: 'Geartunes',
+    cardMeta: 'Monday Night',
+    day: 'Monday Night',
+    time: '9:00 PM \u2013 2:00 AM',
+    callTime: 'NONE',
+    venue: 'Sidetrack Bar',
+    badge: 'OPTIONAL',
+    contest: 'BOTH',
+    leftCol: [
+      {
+        type: 'qa',
+        q: 'What happens here?',
+        a: 'Geartunes is a Monday night celebration bringing leather, showtunes, and community together to close out IMLBB weekend. A great way to unwind, connect with fellow contestants, and soak in the last hours of the weekend.',
+      },
+      {
+        type: 'callout',
+        label: 'Remember',
+        text: 'You came. You competed. You represented your community on one of leather\u2019s greatest stages. End the weekend the way it deserves \u2014 with your people.',
+      },
+    ],
+    rightCol: [
+      {
+        type: 'tip',
+        text: 'Sing and let go. The Weekend is over, the pressure is off, and this is your time to celebrate. Don\u2019t hold back.',
+      },
+    ],
+  },
+
+  /* ─── 16 · Monday Night ─── */
+  {
+    id: 'event-16',
+    number: '16',
     title: 'The Black and Blue Ball',
     cardMeta: 'Monday Night',
     day: 'Monday Night',

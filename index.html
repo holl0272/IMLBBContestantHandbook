@@ -532,6 +532,69 @@
       text-transform:uppercase; line-height:2.2; }
 
 
+    /* ══ SCHEDULE OVERVIEW PAGES ══ */
+    #iml-schedule, #imbb-schedule {
+      padding: 60px 0.6in 80px;
+    }
+    .sched-eyebrow {
+      display: inline-block;
+      font-size: 8px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--blue-light); border: 1px solid rgba(91,143,232,.35);
+      padding: 3px 10px; border-radius: 20px; margin-bottom: 10px;
+    }
+    .sched-title {
+      font-size: 34px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--white); margin-bottom: 6px; line-height: 1;
+    }
+    .sched-subtitle {
+      font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 40px;
+    }
+    .sched-days { display: flex; flex-direction: column; gap: 20px; }
+    .sched-day-label {
+      font-size: 8px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--blue-light);
+      border-bottom: 1px solid rgba(91,143,232,.2);
+      padding-bottom: 8px; margin-bottom: 4px;
+    }
+    .sched-row {
+      display: grid;
+      grid-template-columns: 175px 1fr 200px 84px;
+      align-items: center;
+      gap: 0 14px;
+      padding: 8px 12px;
+      border-radius: 4px;
+      margin-bottom: 2px;
+    }
+    .sched-row:nth-child(even) { background: rgba(255,255,255,.028); }
+    .sched-time {
+      font-size: 11px; color: var(--muted);
+      font-variant-numeric: tabular-nums; white-space: nowrap;
+    }
+    .sched-name {
+      font-size: 13px; font-weight: 600;
+      display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+    }
+    .sched-venue { font-size: 10px; color: var(--muted); }
+    .sched-badge {
+      font-size: 7px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      padding: 3px 7px; border-radius: 20px; text-align: center; white-space: nowrap;
+    }
+    .sched-badge.mandatory {
+      background: rgba(27,79,168,.25); color: var(--blue-light);
+      border: 1px solid rgba(27,79,168,.5);
+    }
+    .sched-badge.optional {
+      background: rgba(255,255,255,.06); color: var(--muted);
+      border: 1px solid rgba(255,255,255,.15);
+    }
+    .sched-contest-tag {
+      font-size: 7px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 1px 5px; border-radius: 3px;
+    }
+    .sched-contest-tag.imbb-tag { background: rgba(232,168,91,.15); color: #e8a85b; border: 1px solid rgba(232,168,91,.3); }
+    .sched-contest-tag.iml-tag  { background: rgba(91,143,232,.15); color: var(--blue-light); border: 1px solid rgba(91,143,232,.3); }
+
     /* ══════════════════════════════════════════
        PRINT / PDF EXPORT  —  zero-margin, full-bleed
        US Letter: 8.5 × 11 in  (612 × 792 pt)
@@ -1680,6 +1743,32 @@
       .lam-donate-box { padding: 10pt 14pt !important; }
       .lam-donate-url { font-size: 12pt !important; margin-bottom: 3pt !important; letter-spacing: 0.5pt !important; }
       .lam-donate-note { font-size: 7.5pt !important; }
+
+      /* ══ SCHEDULE OVERVIEW PAGES ══ */
+      #iml-schedule, #imbb-schedule {
+        width: 8.5in !important; height: 11in !important;
+        overflow: hidden !important;
+        padding: 0.38in 0.55in !important;
+        box-sizing: border-box !important;
+        page-break-before: always !important; break-before: page !important;
+        page-break-after: always !important; break-after: page !important;
+      }
+      .sched-eyebrow { font-size: 5.5pt !important; letter-spacing: 3pt !important; padding: 2pt 7pt !important; margin-bottom: 6pt !important; }
+      .sched-title { font-size: 22pt !important; letter-spacing: 2pt !important; margin-bottom: 2pt !important; }
+      .sched-subtitle { font-size: 7pt !important; letter-spacing: 1.5pt !important; margin-bottom: 18pt !important; }
+      .sched-days { gap: 9pt !important; }
+      .sched-day-label { font-size: 5.5pt !important; letter-spacing: 3pt !important; padding-bottom: 4pt !important; margin-bottom: 2pt !important; }
+      .sched-row {
+        grid-template-columns: 112pt 1fr 118pt 54pt !important;
+        padding: 4pt 6pt !important;
+        gap: 0 8pt !important;
+        margin-bottom: 1pt !important;
+      }
+      .sched-time  { font-size: 7.5pt !important; white-space: normal !important; }
+      .sched-name  { font-size: 8.5pt !important; gap: 4pt !important; }
+      .sched-venue { font-size: 6.5pt !important; }
+      .sched-badge { font-size: 5pt !important; padding: 2pt 5pt !important; }
+      .sched-contest-tag { font-size: 5pt !important; padding: 1pt 3pt !important; }
     }
 
   </style>
@@ -1701,6 +1790,8 @@
     <li><a href="#tallymasters">Tallymasters</a></li>
     <li><a href="#team-grid">Team</a></li>
     <li><a href="#experience">Experience</a></li>
+    <li><a href="#iml-schedule">IML Sched</a></li>
+    <li><a href="#imbb-schedule">IMBB Sched</a></li>
     <li><a href="#events">Events</a></li>
     <li><a href="#code-of-conduct">Conduct</a></li>
   </ul>
@@ -1892,6 +1983,20 @@
       <a href="#experience">
         <span class="toc-num">6</span>
         <span class="toc-item-title">Your IMLBB Experience</span>
+        <span class="toc-arrow">&#x2192;</span>
+      </a>
+    </li>
+    <li>
+      <a href="#iml-schedule">
+        <span class="toc-num">6</span>
+        <span class="toc-item-title">IML Schedule &mdash; At a Glance</span>
+        <span class="toc-arrow">&#x2192;</span>
+      </a>
+    </li>
+    <li>
+      <a href="#imbb-schedule">
+        <span class="toc-num">6</span>
+        <span class="toc-item-title">IMBB Schedule &mdash; At a Glance</span>
         <span class="toc-arrow">&#x2192;</span>
       </a>
     </li>
@@ -2159,6 +2264,16 @@
   <div class="exp-grid" id="exp-grid-container">
     <!-- rendered by renderExpGrid() — edit data/events.js to add/change/remove cards -->
   </div>
+</section>
+
+<!-- ++ IML SCHEDULE AT A GLANCE ++ -->
+<section id="iml-schedule">
+  <div id="iml-schedule-container"><!-- rendered by renderSchedulePages() --></div>
+</section>
+
+<!-- ++ IMBB SCHEDULE AT A GLANCE ++ -->
+<section id="imbb-schedule">
+  <div id="imbb-schedule-container"><!-- rendered by renderSchedulePages() --></div>
 </section>
 
 <!-- ++ EVENTS DETAIL ++ -->
@@ -2603,8 +2718,9 @@ function applyConfig() {
   if (footerNote) footerNote.innerHTML =
     `Contestant data synced live from the IMLBB ${year} registration database. Judges sourced from <a href="https://www.internationalmrleather.com/judges" target="_blank" style="color:var(--blue-light)">internationalmrleather.com/judges</a>.`;
 
-  /* Render experience overview grid + event detail pages from data/events.js */
+  /* Render experience overview grid + schedule pages + event detail pages from data/events.js */
   renderExpGrid();
+  renderSchedulePages();
   renderEventBlocks();
 }
 if (document.readyState === 'loading') {
@@ -3418,6 +3534,108 @@ function renderEventBlocks() {
    section per entry.  To add/edit/remove letters, edit
    data/letters.js only — no HTML changes needed.
 ══════════════════════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════════════════════
+   renderSchedulePages()
+   Builds the IML and IMBB at-a-glance schedule pages from
+   data/events.js.  Filters by contest field, groups by day,
+   renders into #iml-schedule-container and #imbb-schedule-container.
+══════════════════════════════════════════════════════════════ */
+function renderSchedulePages() {
+  if (typeof EVENTS === 'undefined') return;
+  const imlContainer  = document.getElementById('iml-schedule-container');
+  const imbbContainer = document.getElementById('imbb-schedule-container');
+  if (!imlContainer && !imbbContainer) return;
+
+  const edition     = typeof IMLBB_NUMBER !== 'undefined' ? 'IMLBB #' + IMLBB_NUMBER : 'IMLBB';
+  const year        = typeof IMLBB_YEAR   !== 'undefined' ? IMLBB_YEAR : '';
+  const city        = (typeof VENUE !== 'undefined' && VENUE.city) ? VENUE.city : 'Chicago';
+  const subtitleStr = edition + ' \u00b7 ' + city + ' \u00b7 ' + year;
+
+  // Canonical day-group labels (in display order)
+  const DAY_ORDER = [
+    'Wednesday', 'Thursday', 'Thursday & Friday',
+    'Friday & Saturday', 'Friday', 'Saturday', 'Sunday', 'Monday'
+  ];
+
+  function canonicalDay(ev) {
+    const d = (ev.day || '').toLowerCase();
+    // "All weekend" events are scheduled at Orientation — group under Thursday
+    if (d.includes('all weekend') || d.includes('ongoing')) return 'Thursday';
+    if (d.includes('wednesday'))                              return 'Wednesday';
+    if (d.includes('thursday') && d.includes('friday'))      return 'Thursday & Friday';
+    if (d.includes('thursday'))                              return 'Thursday';
+    if (d.includes('friday')   && d.includes('saturday'))   return 'Friday & Saturday';
+    if (d.includes('friday'))                                return 'Friday';
+    if (d.includes('saturday'))                              return 'Saturday';
+    if (d.includes('sunday'))                                return 'Sunday';
+    if (d.includes('monday'))                                return 'Monday';
+    return ev.day || '';
+  }
+
+  function displayTime(ev) {
+    const d = (ev.day || '').toLowerCase();
+    // Photoshoot / ongoing — scheduled at Orientation
+    if (d.includes('all weekend')) return 'Schedule at Orientation';
+    if (!ev.time) return 'TBD';
+    // Real time ranges contain ":"
+    if (ev.time.includes(':')) return ev.time;
+    // Fallback for non-time strings in the time field
+    return 'See schedule';
+  }
+
+  function shortVenue(ev) {
+    if (!ev.venue) return '';
+    // Strip the " — detail" suffix for brevity
+    return ev.venue.split('\u2014')[0].split('\u2013')[0].trim();
+  }
+
+  function buildPage(pageTitle, eyebrow, events) {
+    // Group events into canonical days, preserving EVENTS array order within each day
+    const grouped = {};
+    for (const ev of events) {
+      const grp = canonicalDay(ev);
+      if (!grouped[grp]) grouped[grp] = [];
+      grouped[grp].push(ev);
+    }
+
+    const daysHtml = DAY_ORDER
+      .filter(d => grouped[d])
+      .map(d => {
+        const rows = grouped[d].map(ev => {
+          const badgeCls  = ev.badge === 'MANDATORY' ? 'mandatory' : 'optional';
+          const badgeLbl  = ev.badge === 'MANDATORY' ? 'Mandatory' : 'Optional';
+          const imbbTag   = ev.contest === 'IMBB'
+            ? '<span class="sched-contest-tag imbb-tag">IMBB</span>' : '';
+          const imlTag    = ev.contest === 'IML'
+            ? '<span class="sched-contest-tag iml-tag">IML</span>' : '';
+          return `<div class="sched-row">
+            <div class="sched-time">${esc(displayTime(ev))}</div>
+            <div class="sched-name">${esc(ev.title)}${imbbTag}${imlTag}</div>
+            <div class="sched-venue">${esc(shortVenue(ev))}</div>
+            <span class="sched-badge ${badgeCls}">${badgeLbl}</span>
+          </div>`;
+        }).join('');
+        return `<div class="sched-day">
+          <div class="sched-day-label">${esc(d)}</div>
+          ${rows}
+        </div>`;
+      }).join('');
+
+    return `<span class="sched-eyebrow">${esc(eyebrow)}</span>
+      <h2 class="sched-title">${esc(pageTitle)}</h2>
+      <p class="sched-subtitle">${esc(subtitleStr)}</p>
+      <div class="sched-days">${daysHtml}</div>`;
+  }
+
+  const imlEvents  = EVENTS.filter(e => e.contest === 'IML'  || e.contest === 'BOTH');
+  const imbbEvents = EVENTS.filter(e => e.contest === 'IMBB' || e.contest === 'BOTH');
+
+  if (imlContainer)
+    imlContainer.innerHTML  = buildPage('IML \u00b7 At a Glance',  'Schedule Overview', imlEvents);
+  if (imbbContainer)
+    imbbContainer.innerHTML = buildPage('IMBB \u00b7 At a Glance', 'Schedule Overview', imbbEvents);
+}
+
 /* ══════════════════════════════════════════════════════════════
    renderExpGrid()
    Reads EVENTS from data/events.js and builds the experience
