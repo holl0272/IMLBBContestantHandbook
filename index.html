@@ -1307,9 +1307,43 @@
     .letter-page-inner {
       max-width: 680px; width: 100%;
     }
+    /* ── Letter header: fixed-size photo + title block ── */
+    .letter-header {
+      display: flex; align-items: flex-start; gap: 24px;
+      margin-bottom: 36px;
+    }
+    .letter-photo-wrap {
+      flex-shrink: 0;
+      width: 90px; height: 112px;
+    }
+    .letter-photo {
+      width: 90px; height: 112px;
+      object-fit: cover; object-position: center top;
+      display: block;
+      border: 1px solid rgba(255,255,255,0.14);
+    }
+    .letter-photo--placeholder {
+      width: 90px; height: 112px;
+      background: rgba(27,79,168,0.10);
+      border: 1px solid rgba(255,255,255,0.07);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .letter-photo--placeholder::after {
+      content: '';
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.12);
+    }
+    .letter-title-block {
+      display: flex; flex-direction: column; justify-content: center;
+      padding-top: 2px;
+    }
     .letter-eyebrow {
       font-size: 10px; letter-spacing: 5px; text-transform: uppercase;
-      color: var(--blue-light); margin-bottom: 32px;
+      color: var(--blue-light); margin-bottom: 10px;
+    }
+    .letter-author-title {
+      font-size: clamp(20px, 2.4vw, 26px); font-weight: 700;
+      color: var(--white); line-height: 1.2;
     }
     .letter-body {
       font-size: clamp(15px,1.5vw,18px); line-height: 1.88;
@@ -1653,10 +1687,15 @@
         page-break-after: always !important; break-after: page !important;
         justify-content: center !important;
       }
-      .letter-eyebrow { font-size: 7pt !important; margin-bottom: 18pt !important; }
-      .letter-body { font-size: 13pt !important; line-height: 1.75 !important; }
-      .letter-body p { margin-bottom: 12pt !important; }
-      .letter-sign { font-size: 12pt !important; margin-top: 18pt !important; }
+      .letter-header    { gap: 16pt !important; margin-bottom: 24pt !important; }
+      .letter-photo-wrap,
+      .letter-photo,
+      .letter-photo--placeholder { width: 0.85in !important; height: 1.05in !important; }
+      .letter-eyebrow   { font-size: 7pt !important; margin-bottom: 7pt !important; }
+      .letter-author-title { font-size: 17pt !important; }
+      .letter-body      { font-size: 13pt !important; line-height: 1.75 !important; }
+      .letter-body p    { margin-bottom: 12pt !important; }
+      .letter-sign      { font-size: 12pt !important; margin-top: 18pt !important; }
 
       #history {
         width: 8.5in !important; min-height: 11in !important;
@@ -3758,21 +3797,45 @@ function renderExpGrid() {
   }).join('');
 }
 
+function resolvePhotoUrl(photo) {
+  if (!photo) return '';
+  // Full URL → use as-is
+  if (/^https?:\/\//.test(photo)) return photo;
+  // Bare ID / filename → prepend PHOTOS_BASE_URL if defined
+  const base = (typeof PHOTOS_BASE_URL !== 'undefined' && PHOTOS_BASE_URL) ? PHOTOS_BASE_URL : '';
+  return base ? base + photo : '';
+}
+
 function renderLetters() {
   const container = document.getElementById('letters-container');
   if (!container || typeof LETTERS === 'undefined') return;
 
-  container.innerHTML = LETTERS.map(letter => `
+  container.innerHTML = LETTERS.map(letter => {
+    const resolvedPhoto = resolvePhotoUrl(letter.photo || '');
+    const photoHtml = resolvedPhoto
+      ? `<img class="letter-photo" src="${esc(resolvedPhoto)}" alt="${esc(letter.title || letter.eyebrow)}" loading="eager">`
+      : `<div class="letter-photo letter-photo--placeholder" aria-hidden="true"></div>`;
+
+    const titleHtml = letter.title
+      ? `<p class="letter-author-title">${esc(letter.title)}</p>` : '';
+
+    return `
     <section id="${esc(letter.id)}" class="letter-page">
       <div class="letter-page-inner">
-        <p class="letter-eyebrow">${esc(letter.eyebrow)}</p>
+        <div class="letter-header">
+          <div class="letter-photo-wrap">${photoHtml}</div>
+          <div class="letter-title-block">
+            <p class="letter-eyebrow">${esc(letter.eyebrow)}</p>
+            ${titleHtml}
+          </div>
+        </div>
         <div class="letter-body">
-          ${letter.paragraphs.map(p => `<p>${esc(p)}</p>`).join('')}
+          ${letter.paragraphs.map(p => `<p>${p}</p>`).join('')}
           <p class="letter-sign">${esc(letter.signature)}</p>
         </div>
       </div>
-    </section>
-  `).join('');
+    </section>`;
+  }).join('');
 }
 
 /* ── Force-load all images before printing ── */

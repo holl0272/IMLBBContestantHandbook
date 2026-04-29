@@ -15,10 +15,18 @@
  *                 (e.g. "letter-imlbb"). Used for anchor links —
  *                 update href="#letter-imlbb" in nav/TOC if you
  *                 change the first entry's id.
- *    eyebrow    — small uppercase label above the letter
+ *    photo      — Google Drive file ID of the author's portrait photo.
+ *                 Copy the ID from the share link: drive.google.com/file/d/FILE_ID/view
+ *                 PHOTOS_BASE_URL in data/meta.js is prepended automatically.
+ *                 Leave as '' to show a placeholder box (same fixed size).
+ *                 Full https:// URLs are also accepted and used as-is.
+ *    title      — Author's name or role shown large next to the photo.
+ *                 Leave as '' to show no title line (eyebrow only).
+ *    eyebrow    — small uppercase label shown above the title
  *                 (e.g. "A message from your International Mr. Leather 2025")
  *    paragraphs — array of strings; each becomes one <p> tag.
  *                 First paragraph is typically the salutation.
+ *                 HTML entities (&#39; &amp; etc.) are allowed.
  *    signature  — sign-off line shown in italic below the body
  *
  *  ADDING A LETTER
@@ -43,6 +51,8 @@ const LETTERS = [
   /* ─── 1. Letter from the current International Mr. Leather ─── */
   {
     id: 'letter-imlbb',
+    photo: '',
+    title: 'Rene Hebert',
     eyebrow: 'A message from your International Mr. Leather 2025',
     paragraphs: [
       'To the IMLBB class of 2026:',
@@ -55,6 +65,8 @@ const LETTERS = [
   /* ─── 2. Letter from the Den Daddy ─── */
   {
     id: 'letter-den-daddy',
+    photo: '',   // paste Google Drive file ID here once uploaded
+    title: 'Den Daddy Miguel',
     eyebrow: 'A message from your Den Daddy',
     paragraphs: [
       'To the IMLBB 2026 Class,',
@@ -73,6 +85,8 @@ const LETTERS = [
   /* ─── 3. Letter from the IMLBB Executive Director ─── */
   {
     id: 'letter-imlbb-ed',
+    photo: '',
+    title: 'David',
     eyebrow: 'A message from the IMLBB Executive Director',
     paragraphs: [
       'To the IMLBB 2026 Class,',
@@ -85,6 +99,8 @@ const LETTERS = [
   /* ─── 4. Letter from the IMBB Executive Director ─── */
   {
     id: 'letter-imbb-ed',
+    photo: '',
+    title: 'Becky',
     eyebrow: 'A message from the IMBB Executive Director',
     paragraphs: [
       'To the IMLBB 2026 Class,',
