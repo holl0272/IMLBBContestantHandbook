@@ -3269,11 +3269,18 @@ const _photoTracker = (() => {
 const _photoQueue = (() => {
   const CONCURRENCY = 6;   // at most 6 Drive requests in-flight at once
   let active = 0;
+  let generation = 0;      // incremented on drain() to invalidate in-flight slots
   const queue = [];
   function flush() {
     while (active < CONCURRENCY && queue.length) {
       active++;
-      queue.shift()(() => { active--; flush(); });
+      const myGen = generation;
+      queue.shift()(function releaseSlot() {
+        /* Only count against active if this slot belongs to the current generation.
+           After drain(), old in-flight slots may still fire — ignore them. */
+        if (generation === myGen) { active--; }
+        flush();
+      });
     }
   }
   return {
@@ -3284,9 +3291,16 @@ const _photoQueue = (() => {
      * (or immediately for cached images).  Retries happen outside the slot.
      */
     enqueue(fn) { queue.push(fn); flush(); },
-    /** Drain all pending (not-yet-started) items without executing them.
-     *  In-flight slots complete normally so active count stays consistent. */
-    drain() { queue.length = 0; },
+    /**
+     * drain()
+     * Clears all pending items and invalidates any in-flight slots so their
+     * eventual release callbacks don't interfere with the fresh render.
+     */
+    drain() {
+      queue.length = 0;
+      generation++;   // invalidate in-flight slots from previous render
+      active = 0;     // reset counter so the next flush() starts immediately
+    },
   };
 })();
 
@@ -3413,6 +3427,7 @@ async function init() {
        Reset queue + tracker first so EMBEDDED phantom registrations don't block live photos. */
     _photoQueue.drain();
     _photoTracker.reset();
+    renderLetters();
     renderGrid(live);
     renderProfiles(live);
     renderCountries(live);
