@@ -17,6 +17,8 @@
     ║  TO UPDATE FOR A NEW YEAR:  edit config.js only.            ║
     ╚══════════════════════════════════════════════════════════════╝
   -->
+  <!-- ── Flag icons (SVG flags — avoids Windows emoji rendering as two-letter codes) ── -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons@7/css/flag-icons.min.css" crossorigin="">
   <!-- ── Leaflet (interactive map with markers for Nearby Spots) ── -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
@@ -201,6 +203,8 @@
     .c-name { font-size:clamp(28px,3.5vw,52px); font-weight:700;
       line-height:1.0; letter-spacing:-1px; }
     .c-flag { font-size:clamp(24px,3vw,44px); flex-shrink:0; line-height:1; }
+    .c-flag .fi { display:inline-block; height:1em; width:1.35em; vertical-align:middle;
+      box-shadow:0 1px 4px rgba(0,0,0,.45); border-radius:2px; }
     /* ── Contest badges: reusable across IML and IMBB content ── */
     .contest-badge {
       display: inline-block; font-size: 8px; font-weight: 700;
@@ -563,7 +567,7 @@
     }
     .sched-row {
       display: grid;
-      grid-template-columns: 175px 1fr 200px 84px;
+      grid-template-columns: 160px 120px 1fr 180px 84px;
       align-items: center;
       gap: 0 14px;
       padding: 8px 12px;
@@ -574,6 +578,15 @@
     .sched-time {
       font-size: 11px; color: var(--muted);
       font-variant-numeric: tabular-nums; white-space: nowrap;
+    }
+    .sched-call-time {
+      font-size: 10px; color: rgba(255,255,255,.45);
+      font-variant-numeric: tabular-nums; white-space: nowrap;
+    }
+    .sched-call-time:not(:empty)::before {
+      content: 'Call\00a0';
+      font-size: 8px; letter-spacing: 1px; text-transform: uppercase;
+      color: rgba(255,255,255,.28);
     }
     .sched-name {
       font-size: 13px; font-weight: 600;
@@ -857,6 +870,7 @@
       }
       .c-name      { font-size: 20pt !important; line-height: 1.0 !important; letter-spacing: -0.5pt !important; }
       .c-flag      { font-size: 18pt !important; }
+      .c-flag .fi  { height: 1em !important; width: 1.35em !important; }
       .contest-badge { font-size: 6pt !important; letter-spacing: 2pt !important; padding: 1.5pt 6pt !important; margin-bottom: 4pt !important; display: inline-block !important; }
       .contest-iml  { background: rgba(27,79,168,.3) !important; color: #7baaf5 !important; }
       .contest-imbb { background: rgba(180,120,10,.3) !important; color: #e0a840 !important; }
@@ -1333,6 +1347,120 @@
       width: 36px; height: 36px; border-radius: 50%;
       border: 2px solid rgba(255,255,255,0.12);
     }
+
+    /* ── COUNTRIES PAGE ─────────────────────────────────────────────── */
+    #countries { background: var(--bg); border-top: 1px solid var(--border); }
+    .countries-hero {
+      padding: 80px 40px 0;
+      text-align: center;
+      background: radial-gradient(ellipse 110% 55% at 50% 0%,
+        rgba(27,79,168,.32) 0%, transparent 68%);
+    }
+    .countries-eyebrow {
+      font-size: 11px; letter-spacing: 6px; text-transform: uppercase;
+      color: var(--blue-light); margin-bottom: 24px;
+    }
+    .countries-title-row {
+      display: flex; align-items: center; justify-content: center;
+      gap: 28px; margin-bottom: 22px;
+    }
+    .countries-hero-logo {
+      height: 80px; width: auto; object-fit: contain; flex-shrink: 0;
+    }
+    .countries-headline {
+      font-size: clamp(40px, 5.5vw, 80px); font-weight: 900;
+      letter-spacing: -2px; line-height: 1; text-transform: uppercase;
+      white-space: nowrap; margin-bottom: 0;
+    }
+    .countries-headline-grad {
+      background: linear-gradient(135deg, #5b8fe8 0%, #a0c4ff 45%, #ffffff 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .countries-subline {
+      font-size: 15px; letter-spacing: 5px; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 56px;
+    }
+    .countries-stats {
+      display: flex; justify-content: center; gap: 0;
+      border-top: 1px solid var(--border);
+    }
+    .cstat {
+      flex: 1; max-width: 220px; text-align: center;
+      padding: 44px 20px;
+      border-right: 1px solid var(--border);
+    }
+    .cstat:last-child { border-right: none; }
+    .cstat-number {
+      font-size: clamp(44px, 6vw, 80px); font-weight: 900;
+      letter-spacing: -2px; line-height: 1; display: block;
+    }
+    .cstat-number.blue  { color: var(--blue-light); }
+    .cstat-number.gold  { color: #e0a840; }
+    .cstat-number.white { color: var(--white); }
+    .cstat-label {
+      font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--muted); margin-top: 8px; display: block;
+    }
+    .countries-body {
+      display: grid; grid-template-columns: 1fr 1fr;
+      border-top: 1px solid var(--border);
+    }
+    .countries-col {
+      padding: 48px 5vw 72px;
+    }
+    .countries-col + .countries-col { border-left: 1px solid var(--border); }
+    .ccol-header {
+      display: flex; align-items: baseline; gap: 14px;
+      padding-bottom: 18px; margin-bottom: 28px;
+      border-bottom: 2px solid;
+    }
+    .ccol-header-iml   { border-color: var(--blue-light); }
+    .ccol-header-imbb  { border-color: #e0a840; }
+    .ccol-title {
+      font-size: 12px; font-weight: 700; letter-spacing: 5px;
+      text-transform: uppercase; flex: 1;
+    }
+    .ccol-header-iml  .ccol-title { color: var(--blue-light); }
+    .ccol-header-imbb .ccol-title { color: #e0a840; }
+    .ccol-total {
+      font-size: 11px; letter-spacing: 2px; color: var(--muted);
+      text-transform: uppercase; flex-shrink: 0;
+    }
+    .country-row {
+      display: flex; align-items: center; gap: 16px;
+      padding: 13px 16px; margin-bottom: 8px;
+      border-radius: 12px;
+      background: rgba(255,255,255,.028);
+      border: 1px solid rgba(255,255,255,.055);
+      transition: background .18s, border-color .18s;
+    }
+    .country-row:hover {
+      background: rgba(27,79,168,.14);
+      border-color: rgba(91,143,232,.25);
+    }
+    .country-flag { flex-shrink: 0; line-height: 1; }
+    .country-flag .fi {
+      display: inline-block; height: 38px; width: 50px;
+      border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,.55);
+      vertical-align: middle;
+    }
+    .country-name {
+      font-size: 17px; font-weight: 700; letter-spacing: 0.3px; flex: 1;
+    }
+    .country-count-badge {
+      font-size: 12px; font-weight: 700; letter-spacing: 1px;
+      border-radius: 20px; padding: 3px 11px;
+      flex-shrink: 0; min-width: 32px; text-align: center;
+    }
+    .country-count-iml {
+      background: rgba(91,143,232,.18); color: var(--blue-light);
+      border: 1px solid rgba(91,143,232,.32);
+    }
+    .country-count-imbb {
+      background: rgba(224,168,64,.15); color: #e0a840;
+      border: 1px solid rgba(224,168,64,.32);
+    }
     .letter-title-block {
       display: flex; flex-direction: column; justify-content: center;
       padding-top: 2px;
@@ -1697,6 +1825,36 @@
       .letter-body p    { margin-bottom: 12pt !important; }
       .letter-sign      { font-size: 12pt !important; margin-top: 18pt !important; }
 
+      #countries {
+        width: 8.5in !important; min-height: 11in !important;
+        box-sizing: border-box !important;
+        page-break-before: always !important; break-before: page !important;
+        border-top: none !important;
+        display: flex !important; flex-direction: column !important;
+      }
+      .countries-hero {
+        padding: 0.35in 0.5in 0 !important;
+      }
+      .countries-hero-logo { height: 52pt !important; }
+      .countries-title-row { gap: 16pt !important; margin-bottom: 14pt !important; }
+      .countries-headline { font-size: 38pt !important; letter-spacing: -1pt !important; white-space: nowrap !important; }
+      .countries-subline  { font-size: 9pt !important; margin-bottom: 0.25in !important; }
+      .countries-eyebrow  { font-size: 7pt !important; margin-bottom: 14pt !important; }
+      .cstat-number { font-size: 32pt !important; }
+      .cstat-label  { font-size: 6.5pt !important; }
+      .cstat { padding: 18pt 12pt !important; }
+      .countries-body {
+        padding: 0 !important;
+        flex: 1 !important;
+      }
+      .countries-col { padding: 0.2in 0.3in !important; }
+      .ccol-title   { font-size: 7.5pt !important; letter-spacing: 3pt !important; }
+      .ccol-total   { font-size: 7pt !important; }
+      .country-flag { font-size: 20pt !important; }
+      .country-name { font-size: 10pt !important; }
+      .country-count-badge { font-size: 7.5pt !important; padding: 1.5pt 7pt !important; }
+      .country-row  { padding: 6pt 9pt !important; margin-bottom: 4pt !important; border-radius: 6pt !important; }
+
       #history {
         width: 8.5in !important; min-height: 11in !important;
         padding: 0.4in 0.6in !important; box-sizing: border-box !important;
@@ -1835,15 +1993,17 @@
       .sched-days { gap: 9pt !important; }
       .sched-day-label { font-size: 5.5pt !important; letter-spacing: 3pt !important; padding-bottom: 4pt !important; margin-bottom: 2pt !important; }
       .sched-row {
-        grid-template-columns: 112pt 1fr 118pt 54pt !important;
+        grid-template-columns: 95pt 72pt 1fr 100pt 50pt !important;
         padding: 4pt 6pt !important;
-        gap: 0 8pt !important;
+        gap: 0 7pt !important;
         margin-bottom: 1pt !important;
       }
-      .sched-time  { font-size: 7.5pt !important; white-space: normal !important; }
-      .sched-name  { font-size: 8.5pt !important; gap: 4pt !important; }
-      .sched-venue { font-size: 6.5pt !important; }
-      .sched-badge { font-size: 5pt !important; padding: 2pt 5pt !important; }
+      .sched-time      { font-size: 7.5pt !important; white-space: normal !important; }
+      .sched-call-time { font-size: 7pt !important; white-space: normal !important; }
+      .sched-call-time:not(:empty)::before { font-size: 5.5pt !important; }
+      .sched-name      { font-size: 8.5pt !important; gap: 4pt !important; }
+      .sched-venue     { font-size: 6.5pt !important; }
+      .sched-badge     { font-size: 5pt !important; padding: 2pt 5pt !important; }
       .sched-contest-tag { font-size: 5pt !important; padding: 1pt 3pt !important; }
     }
 
@@ -2266,6 +2426,13 @@
   </div>
 </section>
 
+<!-- ── COUNTRIES: WHERE WE COME FROM ── -->
+<section id="countries">
+  <div id="countries-container">
+    <!-- rendered by renderCountries() from contestants data -->
+  </div>
+</section>
+
 <!-- ── CONTESTANT PROFILES (pages 16+) ── -->
 <section id="contestants">
   <div id="contestants-container"></div>
@@ -2630,38 +2797,220 @@ const TEAM_SHEET_CSV =
 const TEAM_EMBEDDED = TEAM_MEMBERS; /* alias for backwards-compat */
 
 /* ── Country → Flag emoji ── */
-const FLAGS = {
-  'usa':'🇺🇸','united states':'🇺🇸','us':'🇺🇸',
-  'australia':'🇦🇺','au':'🇦🇺',
-  'spain':'🇪🇸','españa':'🇪🇸',
-  'brazil':'🇧🇷','brasil':'🇧🇷',
-  'italy':'🇮🇹','italia':'🇮🇹',
-  'colombia':'🇨🇴',
-  'ireland':'🇮🇪',
-  'norway':'🇳🇴',
-  'germany':'🇩🇪','deutschland':'🇩🇪',
-  'france':'🇫🇷',
-  'uk':'🇬🇧','united kingdom':'🇬🇧',
-  'netherlands':'🇳🇱','holland':'🇳🇱',
-  'sweden':'🇸🇪',
-  'mexico':'🇲🇽','méxico':'🇲🇽',
-  'canada':'🇨🇦',
-  'eu':'🇪🇺','europe':'🇪🇺',
-  'austria':'🇦🇹',
-  'portugal':'🇵🇹',
-  'argentina':'🇦🇷',
-  'new zealand':'🇳🇿',
-  'south africa':'🇿🇦',
-  'japan':'🇯🇵',
-  'belgium':'🇧🇪',
-  'switzerland':'🇨🇭',
-  'denmark':'🇩🇰',
-  'finland':'🇫🇮',
-  'canary islands':'🇮🇨','gran canaria':'🇮🇨',
-};
+const FLAGS = {};  /* Flag emoji kept for fallback; primary rendering uses flag-icons via COUNTRY_ISO */
 
 function getFlag(country) {
   return FLAGS[(country || '').toLowerCase().trim()] || '';
+}
+
+/* ── Country key → canonical display name ── */
+const COUNTRY_NAMES = {
+  'usa':'United States','united states':'United States','united states of america':'United States','us':'United States','u.s.':'United States','u.s.a.':'United States','america':'United States',
+  'australia':'Australia','au':'Australia',
+  'spain':'Spain','españa':'Spain','espana':'Spain',
+  'brazil':'Brazil','brasil':'Brazil',
+  'italy':'Italy','italia':'Italy',
+  'colombia':'Colombia',
+  'ireland':'Ireland','republic of ireland':'Ireland',
+  'norway':'Norway','norge':'Norway',
+  'germany':'Germany','deutschland':'Germany',
+  'france':'France',
+  'uk':'United Kingdom','united kingdom':'United Kingdom','great britain':'United Kingdom','england':'England','wales':'Wales','scotland':'Scotland','britain':'United Kingdom',
+  'netherlands':'Netherlands','the netherlands':'Netherlands','holland':'Netherlands',
+  'sweden':'Sweden','sverige':'Sweden',
+  'mexico':'Mexico','méxico':'Mexico',
+  'canada':'Canada',
+  'eu':'European Union','europe':'European Union',
+  'austria':'Austria','österreich':'Austria','osterreich':'Austria',
+  'portugal':'Portugal',
+  'argentina':'Argentina',
+  'new zealand':'New Zealand','nz':'New Zealand','aotearoa':'New Zealand',
+  'south africa':'South Africa',
+  'japan':'Japan',
+  'belgium':'Belgium','belgique':'Belgium','belgië':'Belgium',
+  'switzerland':'Switzerland','schweiz':'Switzerland','suisse':'Switzerland',
+  'denmark':'Denmark','danmark':'Denmark',
+  'finland':'Finland','suomi':'Finland',
+  'canary islands':'Canary Islands','gran canaria':'Gran Canaria','las palmas':'Canary Islands',
+  'chile':'Chile',
+  'peru':'Peru','perú':'Peru',
+  'venezuela':'Venezuela',
+  'costa rica':'Costa Rica',
+  'panama':'Panama','panamá':'Panama',
+  'ecuador':'Ecuador',
+  'uruguay':'Uruguay',
+  'paraguay':'Paraguay',
+  'bolivia':'Bolivia',
+  'cuba':'Cuba',
+  'puerto rico':'Puerto Rico',
+  'philippines':'Philippines','pilipinas':'Philippines',
+  'taiwan':'Taiwan',
+  'south korea':'South Korea','korea':'South Korea',
+  'china':'China',
+  'india':'India',
+  'indonesia':'Indonesia',
+  'thailand':'Thailand',
+  'malaysia':'Malaysia',
+  'singapore':'Singapore',
+  'israel':'Israel',
+  'turkey':'Turkey','türkiye':'Turkey',
+  'greece':'Greece',
+  'poland':'Poland',
+  'czech republic':'Czech Republic','czechia':'Czech Republic','czech':'Czech Republic',
+  'slovakia':'Slovakia',
+  'hungary':'Hungary',
+  'romania':'Romania',
+  'ukraine':'Ukraine',
+  'russia':'Russia',
+  'estonia':'Estonia',
+  'latvia':'Latvia',
+  'lithuania':'Lithuania',
+  'luxembourg':'Luxembourg',
+  'iceland':'Iceland',
+  'malta':'Malta',
+  'croatia':'Croatia',
+  'serbia':'Serbia',
+  'slovenia':'Slovenia',
+  'albania':'Albania',
+  'lebanon':'Lebanon',
+  'egypt':'Egypt',
+  'nigeria':'Nigeria',
+  'kenya':'Kenya',
+  'ghana':'Ghana',
+  'zimbabwe':'Zimbabwe',
+};
+
+function getCountryDisplayName(country) {
+  const key = (country || '').toLowerCase().trim();
+  if (COUNTRY_NAMES[key]) return COUNTRY_NAMES[key];
+  /* Fallback: title-case what was stored */
+  return country.replace(/\b\w/g, ch => ch.toUpperCase());
+}
+
+/* ── Country key → ISO 3166-1 alpha-2 code (for flag-icons library) ── */
+const COUNTRY_ISO = {
+  /* United States */
+  'usa':'us','united states':'us','united states of america':'us','us':'us','u.s.':'us','u.s.a.':'us','america':'us',
+  /* Australia */
+  'australia':'au','au':'au',
+  /* Spain */
+  'spain':'es','españa':'es','espana':'es',
+  /* Brazil */
+  'brazil':'br','brasil':'br',
+  /* Italy */
+  'italy':'it','italia':'it',
+  /* Colombia */
+  'colombia':'co',
+  /* Ireland */
+  'ireland':'ie','republic of ireland':'ie',
+  /* Norway */
+  'norway':'no','norge':'no',
+  /* Germany */
+  'germany':'de','deutschland':'de',
+  /* France */
+  'france':'fr',
+  /* United Kingdom */
+  'uk':'gb','united kingdom':'gb','great britain':'gb','england':'gb','wales':'gb','scotland':'gb','britain':'gb',
+  /* Netherlands */
+  'netherlands':'nl','the netherlands':'nl','holland':'nl',
+  /* Sweden */
+  'sweden':'se','sverige':'se',
+  /* Mexico */
+  'mexico':'mx','méxico':'mx',
+  /* Canada */
+  'canada':'ca',
+  /* European Union */
+  'eu':'eu','europe':'eu',
+  /* Austria */
+  'austria':'at','österreich':'at','osterreich':'at',
+  /* Portugal */
+  'portugal':'pt',
+  /* Argentina */
+  'argentina':'ar',
+  /* New Zealand */
+  'new zealand':'nz','nz':'nz','aotearoa':'nz',
+  /* South Africa */
+  'south africa':'za',
+  /* Japan */
+  'japan':'jp','日本':'jp',
+  /* Belgium */
+  'belgium':'be','belgique':'be','belgië':'be',
+  /* Switzerland */
+  'switzerland':'ch','schweiz':'ch','suisse':'ch',
+  /* Denmark */
+  'denmark':'dk','danmark':'dk',
+  /* Finland */
+  'finland':'fi','suomi':'fi',
+  /* Canary Islands */
+  'canary islands':'ic','gran canaria':'ic','las palmas':'ic',
+  /* Additional countries likely to appear */
+  'chile':'cl',
+  'peru':'pe','perú':'pe',
+  'venezuela':'ve',
+  'costa rica':'cr',
+  'panama':'pa','panamá':'pa',
+  'ecuador':'ec',
+  'uruguay':'uy',
+  'paraguay':'py',
+  'bolivia':'bo',
+  'cuba':'cu',
+  'puerto rico':'pr',
+  'philippines':'ph','pilipinas':'ph',
+  'taiwan':'tw',
+  'south korea':'kr','korea':'kr',
+  'china':'cn',
+  'india':'in',
+  'indonesia':'id',
+  'thailand':'th',
+  'malaysia':'my',
+  'singapore':'sg',
+  'israel':'il',
+  'turkey':'tr','türkiye':'tr',
+  'greece':'gr',
+  'poland':'pl',
+  'czech republic':'cz','czechia':'cz','czech':'cz',
+  'slovakia':'sk',
+  'hungary':'hu',
+  'romania':'ro',
+  'ukraine':'ua',
+  'russia':'ru',
+  'estonia':'ee',
+  'latvia':'lv',
+  'lithuania':'lt',
+  'luxembourg':'lu',
+  'iceland':'is',
+  'malta':'mt',
+  'croatia':'hr',
+  'serbia':'rs',
+  'slovenia':'si',
+  'albania':'al',
+  'lebanon':'lb',
+  'egypt':'eg',
+  'nigeria':'ng',
+  'kenya':'ke',
+  'ghana':'gh',
+  'zimbabwe':'zw',
+  /* ── ISO 3166-1 alpha-2 code aliases (e.g. column X contains "DK" instead of "Denmark") ── */
+  'dk':'dk','es':'es','br':'br','it':'it','co':'co','ie':'ie','no':'no','de':'de','fr':'fr',
+  'gb':'gb','nl':'nl','se':'se','mx':'mx','ca':'ca','at':'at','pt':'pt','ar':'ar','za':'za',
+  'jp':'jp','be':'be','ch':'ch','fi':'fi','cl':'cl','pe':'pe','ve':'ve','cr':'cr','pa':'pa',
+  'ec':'ec','uy':'uy','py':'py','bo':'bo','cu':'cu','pr':'pr','ph':'ph','tw':'tw','kr':'kr',
+  'cn':'cn','in':'in','id':'id','th':'th','my':'my','sg':'sg','il':'il','tr':'tr','gr':'gr',
+  'pl':'pl','cz':'cz','sk':'sk','hu':'hu','ro':'ro','ua':'ua','ru':'ru','ee':'ee','lv':'lv',
+  'lt':'lt','lu':'lu','is':'is','mt':'mt','hr':'hr','rs':'rs','si':'si','al':'al','lb':'lb',
+  'eg':'eg','ng':'ng','ke':'ke','gh':'gh','zw':'zw',
+};
+
+/**
+ * getFlagHtml(country)
+ * Returns a <span class="fi fi-xx"> element for the given country string.
+ * Falls back to an empty string if the country is unknown.
+ */
+function getFlagHtml(country) {
+  const key = (country || '').toLowerCase().trim();
+  const iso = COUNTRY_ISO[key];
+  if (!iso) return '';
+  return `<span class="fi fi-${iso}" title="${getCountryDisplayName(country)}"></span>`;
 }
 
 /* ══════════════════════════════════════════
@@ -2859,6 +3208,7 @@ if (document.readyState === 'loading') {
 ═══════════════════════════════════════════════════════════════════════════ */
 const _photoTracker = (() => {
   let total = 0, settled = 0, failed = 0;
+  const failedNames = [];
 
   function update() {
     const bar = document.getElementById('photo-status-bar');
@@ -2873,14 +3223,16 @@ const _photoTracker = (() => {
         `<span>Loading photos&hellip; ${settled} / ${total}</span>`;
       if (btn) { btn.textContent = '\u23F3 Loading\u2026'; btn.disabled = true; }
     } else if (failed > 0) {
+      const nameItems = failedNames.map(n => `<li style="white-space:nowrap">${n}</li>`).join('');
+      const nameList = `<details style="display:inline-block;vertical-align:middle"><summary style="cursor:pointer">${failed} photo${failed > 1 ? 's' : ''} could not load &mdash; click to see which</summary><ul style="margin:4px 0 0 1.2em;text-align:left">${nameItems}</ul></details>`;
       bar.className = 'pbar-warn';
       bar.innerHTML =
-        `<span>&#x26A0;&#xFE0F; ${failed} photo${failed > 1 ? 's' : ''} could not load &mdash; ` +
-        `ensure each Google Drive file is shared &ldquo;Anyone with the link&rdquo;. ` +
+        `<span>&#x26A0;&#xFE0F; ${nameList} ` +
+        `Ensure each Google Drive file is shared &ldquo;Anyone with the link&rdquo;. ` +
         `<a href="https://support.google.com/drive/answer/2494822" target="_blank">How to fix &rarr;</a></span>`;
       if (btn) { btn.innerHTML = '&#x1F5A8;&nbsp; Export PDF'; btn.disabled = false; }
-      /* auto-hide after 20s so it doesn't obscure print layout */
-      setTimeout(() => { if (bar.classList.contains('pbar-warn')) bar.style.opacity = '0'; }, 20000);
+      /* auto-hide after 30s so it doesn't obscure print layout */
+      setTimeout(() => { if (bar.classList.contains('pbar-warn')) bar.style.opacity = '0'; }, 30000);
     } else {
       bar.className = 'pbar-ready';
       bar.innerHTML = `<span>&#x2713; All ${total} photos loaded &mdash; ready to export PDF</span>`;
@@ -2895,6 +3247,7 @@ const _photoTracker = (() => {
       settled++;
       if (!ok) {
         failed++;
+        failedNames.push(name);
         console.warn(
           `[Photo] Could not load photo for "${name}". ` +
           `Check that the Google Drive file is shared as "Anyone with the link can view".`
@@ -2903,6 +3256,37 @@ const _photoTracker = (() => {
       update();
     },
     isReady() { return total > 0 && settled >= total; },
+    /** Call before re-rendering with live data so old registrations don't pollute the count */
+    reset() {
+      total = 0; settled = 0; failed = 0; failedNames.length = 0;
+      const bar = document.getElementById('photo-status-bar');
+      if (bar) { bar.className = ''; bar.innerHTML = ''; bar.style.opacity = ''; }
+    },
+  };
+})();
+
+/* ── Photo load queue — caps simultaneous Drive requests to avoid rate-limiting ── */
+const _photoQueue = (() => {
+  const CONCURRENCY = 6;   // at most 6 Drive requests in-flight at once
+  let active = 0;
+  const queue = [];
+  function flush() {
+    while (active < CONCURRENCY && queue.length) {
+      active++;
+      queue.shift()(() => { active--; flush(); });
+    }
+  }
+  return {
+    /**
+     * enqueue(fn)
+     * fn receives a single argument: releaseSlot().
+     * Call releaseSlot() once the image's first load/error event fires
+     * (or immediately for cached images).  Retries happen outside the slot.
+     */
+    enqueue(fn) { queue.push(fn); flush(); },
+    /** Drain all pending (not-yet-started) items without executing them.
+     *  In-flight slots complete normally so active count stays consistent. */
+    drain() { queue.length = 0; },
   };
 })();
 
@@ -3001,6 +3385,7 @@ async function init() {
   const contestants = buildContestants(EMBEDDED);
   renderGrid(contestants);
   renderProfiles(contestants);
+  renderCountries(contestants);
   renderImbbJudges();    /* IMBB judges immediately follow contestant pages */
   renderJudges();        /* IML judges follow IMBB judges */
   renderTallymasters();  /* tallymasters follow IML judges */
@@ -3012,28 +3397,28 @@ async function init() {
     const rows = parseCSV(await res.text());
     if (rows.length < 2) return;
     const live = rows.slice(1)
-      .filter(r => {
-        const status = (r[25] || '').trim();
-        return status !== 'Denied' && status !== 'Withdrawn';
-      })
+      .filter(r => (r[28] || '').trim().toUpperCase() === 'YES') /* col AC — approved */
       .map(r => ({
         name:          (r[2]  || '').trim(),
         title:         (r[3]  || '').trim(),
         bio:           truncate((r[4] || '').trim(), 100),
         photoUrl:      drivePhoto((r[5] || '').trim()),
         photoFallback: driveThumb((r[5] || '').trim()),
-        country:       (r[23] || '').trim(),
+        country:       (r[23] || '').trim(),  /* col X */
         flag:          getFlag((r[23] || '').trim()),
-        contest:       (r[24] || '').trim(),   /* col Y — "IML" or "IMBB" */
+        contest:       (r[24] || '').trim(),  /* col Y — "IML" or "IMBB" */
       }))
       .filter(c => c.name);
-    if (live.length !== contestants.length) {
-      renderGrid(live);
-      renderProfiles(live);
-      renderImbbJudges();
-      renderJudges();
-      renderTallymasters();
-    }
+    /* Always re-render with live data so the col-AC approval filter is respected.
+       Reset queue + tracker first so EMBEDDED phantom registrations don't block live photos. */
+    _photoQueue.drain();
+    _photoTracker.reset();
+    renderGrid(live);
+    renderProfiles(live);
+    renderCountries(live);
+    renderImbbJudges();
+    renderJudges();
+    renderTallymasters();
   } catch (_) { /* live refresh failed silently, embedded data stays */ }
 }
 
@@ -3044,7 +3429,7 @@ function renderGrid(list) {
 
   list.forEach((c, idx) => {
     const cell = document.createElement('div');
-    const contestKey = (c.contest || '').trim().toUpperCase();
+    const contestKey = normaliseContest(c.contest);
     cell.className = 'grid-cell' + (contestKey === 'IMBB' ? ' cell-imbb' : contestKey === 'IML' ? ' cell-iml' : '');
     cell.title = c.name;
 
@@ -3053,21 +3438,31 @@ function renderGrid(list) {
       img.alt = c.name;
       img.loading = 'eager';
       _photoTracker.register();
-      let triedFallback = false, photoSettled = false;
-      img.addEventListener('load', () => {
-        if (!photoSettled && img.isConnected) { photoSettled = true; _photoTracker.done(true, c.name); }
+      let triedFallback = false, retries = 0, photoSettled = false;
+      const settle = (ok) => { if (photoSettled) return; photoSettled = true; _photoTracker.done(ok, c.name); };
+      _photoQueue.enqueue(releaseSlot => {
+        let slotReleased = false;
+        const release = () => { if (!slotReleased) { slotReleased = true; releaseSlot(); } };
+        img.addEventListener('load',  () => { release(); settle(true); });
+        img.addEventListener('error', () => {
+          release(); /* free the slot immediately so the next photo can start */
+          if (!triedFallback && c.photoFallback) {
+            triedFallback = true;
+            img.src = c.photoFallback;
+          } else if (retries < 2) {
+            const delay = retries === 0 ? 3000 : 9000;
+            retries++;
+            const retrySrc = img.src;
+            setTimeout(() => { img.src = ''; img.src = retrySrc; }, delay);
+          } else {
+            settle(false);
+            img.replaceWith(Object.assign(document.createElement('div'),
+              { className: 'grid-placeholder', textContent: '🏅' }));
+          }
+        });
+        img.src = c.photoUrl;
+        if (img.complete && img.naturalWidth > 0) { release(); settle(true); }
       });
-      img.addEventListener('error', () => {
-        if (!triedFallback && c.photoFallback) {
-          triedFallback = true;
-          img.src = c.photoFallback;
-        } else {
-          if (!photoSettled && img.isConnected) { photoSettled = true; _photoTracker.done(false, c.name); }
-          img.replaceWith(Object.assign(document.createElement('div'),
-            { className: 'grid-placeholder', textContent: '🏅' }));
-        }
-      });
-      img.src = c.photoUrl;
       cell.appendChild(img);
     } else {
       cell.innerHTML = `<div class="grid-placeholder">🏅</div>`;
@@ -3075,7 +3470,7 @@ function renderGrid(list) {
 
     const label = document.createElement('div');
     label.className = 'grid-name-always';
-    label.textContent = c.name + (c.flag ? ' ' + c.flag : '');
+    label.innerHTML = esc(c.name) + (c.country ? ' ' + getFlagHtml(c.country) : '');
     cell.appendChild(label);
 
     /* Click scrolls to profile */
@@ -3125,22 +3520,31 @@ function renderProfiles(list) {
         img.loading = 'eager';
         placeholder.classList.add('hidden'); // hide until needed
         _photoTracker.register();
-        let triedFallback = false, photoSettled = false;
-        img.addEventListener('load', () => {
-          placeholder.classList.add('hidden');
-          if (!photoSettled && img.isConnected) { photoSettled = true; _photoTracker.done(true, c.name); }
+        let triedFallback = false, retries = 0, photoSettled = false;
+        const settle = (ok) => { if (photoSettled) return; photoSettled = true; _photoTracker.done(ok, c.name); };
+        _photoQueue.enqueue(releaseSlot => {
+          let slotReleased = false;
+          const release = () => { if (!slotReleased) { slotReleased = true; releaseSlot(); } };
+          img.addEventListener('load', () => { release(); placeholder.classList.add('hidden'); settle(true); });
+          img.addEventListener('error', () => {
+            release();
+            if (!triedFallback && c.photoFallback) {
+              triedFallback = true;
+              img.src = c.photoFallback;
+            } else if (retries < 2) {
+              const delay = retries === 0 ? 3000 : 9000;
+              retries++;
+              const retrySrc = img.src;
+              setTimeout(() => { img.src = ''; img.src = retrySrc; }, delay);
+            } else {
+              img.style.display = 'none';
+              placeholder.classList.remove('hidden');
+              settle(false);
+            }
+          });
+          img.src = c.photoUrl;
+          if (img.complete && img.naturalWidth > 0) { release(); settle(true); }
         });
-        img.addEventListener('error', () => {
-          if (!triedFallback && c.photoFallback) {
-            triedFallback = true;
-            img.src = c.photoFallback;
-          } else {
-            img.style.display = 'none';
-            placeholder.classList.remove('hidden');
-            if (!photoSettled && img.isConnected) { photoSettled = true; _photoTracker.done(false, c.name); }
-          }
-        });
-        img.src = c.photoUrl;
         photoWrap.appendChild(img);
         photoWrap.appendChild(placeholder);
       } else {
@@ -3159,18 +3563,21 @@ function renderProfiles(list) {
       nameEl.textContent = c.name;
       nameRow.appendChild(nameEl);
 
-      if (c.flag) {
-        const flagEl = document.createElement('span');
-        flagEl.className = 'c-flag';
-        flagEl.textContent = c.flag;
-        nameRow.appendChild(flagEl);
+      if (c.country) {
+        const flagHtml = getFlagHtml(c.country);
+        if (flagHtml) {
+          const flagEl = document.createElement('span');
+          flagEl.className = 'c-flag';
+          flagEl.innerHTML = flagHtml;
+          nameRow.appendChild(flagEl);
+        }
       }
 
       text.appendChild(nameRow);
 
       /* Contest badge — "IML" or "IMBB" — only shown when data is available */
       if (c.contest) {
-        const contestKey = c.contest.trim().toUpperCase();
+        const contestKey = normaliseContest(c.contest);
         const badge = document.createElement('span');
         badge.className = 'contest-badge ' + (contestKey === 'IMBB' ? 'contest-imbb' : 'contest-iml');
         badge.textContent = contestKey;
@@ -3709,6 +4116,13 @@ function renderSchedulePages() {
     return ev.venue.split('\u2014')[0].split('\u2013')[0].trim();
   }
 
+  function displayCallTime(ev) {
+    const raw = (ev.callTime || '').trim();
+    if (raw === 'NONE') return '';
+    if (raw) return raw;
+    return (typeof computeCallTime === 'function') ? (computeCallTime(ev.time) || '') : '';
+  }
+
   function buildPage(pageTitle, eyebrow, events) {
     // Group events into canonical days, preserving EVENTS array order within each day
     const grouped = {};
@@ -3728,8 +4142,10 @@ function renderSchedulePages() {
             ? '<span class="sched-contest-tag imbb-tag">IMBB</span>' : '';
           const imlTag    = ev.contest === 'IML'
             ? '<span class="sched-contest-tag iml-tag">IML</span>' : '';
+          const ct = displayCallTime(ev);
           return `<div class="sched-row">
             <div class="sched-time">${esc(displayTime(ev))}</div>
+            <div class="sched-call-time">${esc(ct)}</div>
             <div class="sched-name">${esc(ev.title)}${imbbTag}${imlTag}</div>
             <div class="sched-venue">${esc(shortVenue(ev))}</div>
             <span class="sched-badge ${badgeCls}">${badgeLbl}</span>
@@ -3768,8 +4184,22 @@ function renderSchedulePages() {
    contest = 'BOTH' → IML + IMBB badges side by side
    Anything else    → empty string
 ──────────────────────────────────────────────────────────────────────── */
+/**
+ * normaliseContest(raw)
+ * Maps any contest string from the sheet to canonical 'IML', 'IMBB', 'BOTH', or ''.
+ * Handles full names like "International Mr. Leather" as well as bare codes.
+ */
+function normaliseContest(raw) {
+  const u = (raw || '').trim().toUpperCase();
+  if (!u) return '';
+  if (u === 'BOTH') return 'BOTH';
+  if (u === 'IML'  || u.includes('LEATHER'))    return 'IML';
+  if (u === 'IMBB' || u.includes('BOOTBLACK'))  return 'IMBB';
+  return u; /* pass through anything else */
+}
+
 function buildContestBadgeHtml(contest) {
-  const c = (contest || '').trim().toUpperCase();
+  const c = normaliseContest(contest);
   if (c === 'IML')  return '<span class="contest-badge contest-iml">IML</span>';
   if (c === 'IMBB') return '<span class="contest-badge contest-imbb">IMBB</span>';
   if (c === 'BOTH') return '<span class="contest-badge contest-iml">IML</span>'
@@ -3819,8 +4249,9 @@ function renderLetters() {
 
   container.innerHTML = LETTERS.map(letter => {
     const resolvedPhoto = resolvePhotoUrl(letter.photo || '');
+    /* Photo is injected as a placeholder first; retry-aware img is wired up below */
     const photoHtml = resolvedPhoto
-      ? `<img class="letter-photo" src="${esc(resolvedPhoto)}" alt="${esc(letter.title || letter.eyebrow)}" loading="eager">`
+      ? `<img class="letter-photo" data-letter-photo="${esc(resolvedPhoto)}" alt="${esc(letter.title || letter.eyebrow)}" loading="eager">`
       : `<div class="letter-photo letter-photo--placeholder" aria-hidden="true"></div>`;
 
     const titleHtml = letter.title
@@ -3843,6 +4274,136 @@ function renderLetters() {
       </div>
     </section>`;
   }).join('');
+
+  /* Wire up retry + progress tracking for each letter photo */
+  container.querySelectorAll('img[data-letter-photo]').forEach(img => {
+    const photoUrl = img.dataset.letterPhoto;
+    _photoTracker.register();
+    let retries = 0, photoSettled = false;
+    const settle = (ok) => {
+      if (photoSettled) return;
+      photoSettled = true;
+      _photoTracker.done(ok, img.alt);
+    };
+    _photoQueue.enqueue(releaseSlot => {
+      let slotReleased = false;
+      const release = () => { if (!slotReleased) { slotReleased = true; releaseSlot(); } };
+      img.addEventListener('load', () => { release(); settle(true); });
+      img.addEventListener('error', () => {
+        release();
+        if (retries < 2) {
+          const delay = retries === 0 ? 3000 : 9000;
+          retries++;
+          setTimeout(() => { img.src = ''; img.src = photoUrl; }, delay);
+        } else {
+          settle(false);
+          img.style.display = 'none';
+          const ph = document.createElement('div');
+          ph.className = 'letter-photo letter-photo--placeholder';
+          ph.setAttribute('aria-hidden', 'true');
+          img.parentNode.insertBefore(ph, img);
+        }
+      });
+      img.src = photoUrl;
+      if (img.complete && img.naturalWidth > 0) { release(); settle(true); }
+    });
+  });
+}
+
+/* ══════════════════════════════════════════════════════════════
+   renderCountries()
+   Builds the "Where We Come From" page from contestant country data.
+   Called from init() with the contestants array.
+══════════════════════════════════════════════════════════════ */
+function renderCountries(contestants) {
+  const container = document.getElementById('countries-container');
+  if (!container) return;
+  if (!contestants) contestants = buildContestants(EMBEDDED);
+
+  /* Build per-contest country tallies */
+  const byContest = { IML: {}, IMBB: {} };
+  contestants.forEach(c => {
+    const raw = (c.country || '').trim();
+    if (!raw) return;
+    const key = raw.toLowerCase().trim();
+    const display = getCountryDisplayName(raw);
+    const contest = normaliseContest(c.contest);
+    if (!byContest[contest]) return;
+    if (!byContest[contest][key]) byContest[contest][key] = { display, key, count: 0 };
+    byContest[contest][key].count++;
+  });
+
+  const sortEntries = obj => Object.values(obj)
+    .sort((a, b) => b.count - a.count || a.display.localeCompare(b.display));
+
+  const imlList   = sortEntries(byContest.IML);
+  const imbbList  = sortEntries(byContest.IMBB);
+  const allNations = new Set([...Object.keys(byContest.IML), ...Object.keys(byContest.IMBB)]);
+
+  function rowHtml(entry, contest) {
+    const badgeClass = contest === 'IML' ? 'country-count-iml' : 'country-count-imbb';
+    const countBadge = `<span class="country-count-badge ${badgeClass}">${entry.count}</span>`;
+    return `<div class="country-row">
+      <span class="country-flag">${getFlagHtml(entry.key)}</span>
+      <span class="country-name">${esc(entry.display)}</span>
+      ${countBadge}
+    </div>`;
+  }
+
+  function colHtml(list, contest, fullTitle) {
+    const headerClass = contest === 'IML' ? 'ccol-header-iml' : 'ccol-header-imbb';
+    const colClass    = contest === 'IML' ? 'countries-col-iml' : 'countries-col-imbb';
+    return `<div class="countries-col ${colClass}">
+      <div class="ccol-header ${headerClass}">
+        <span class="ccol-title">${fullTitle}</span>
+        <span class="ccol-total">${list.length} nation${list.length !== 1 ? 's' : ''}</span>
+      </div>
+      ${list.map(e => rowHtml(e, contest)).join('')}
+    </div>`;
+  }
+
+  container.innerHTML = `
+    <div class="countries-hero">
+      <p class="countries-eyebrow">IMLBB ${IMLBB_YEAR} &nbsp;&middot;&nbsp; Chicago &nbsp;&middot;&nbsp; ${IMLBB_NUMBER}${ordSuffix(IMLBB_NUMBER)} Edition</p>
+      <div class="countries-title-row">
+        <img src="IMLBBLogo.jpg"      alt="International Mr. Leather"   class="countries-hero-logo">
+        <h2 class="countries-headline">
+          <span class="countries-headline-grad">IMLBB</span> ${IMLBB_YEAR}
+        </h2>
+        <img src="IMBBLogo_white.jpg" alt="International Mr. Bootblack" class="countries-hero-logo">
+      </div>
+      <p class="countries-subline">Leather knows no borders</p>
+    </div>
+
+    <div class="countries-stats">
+      <div class="cstat">
+        <span class="cstat-number blue">${allNations.size}</span>
+        <span class="cstat-label">Nations Represented</span>
+      </div>
+      <div class="cstat">
+        <span class="cstat-number white">${contestants.length}</span>
+        <span class="cstat-label">Competitors</span>
+      </div>
+      <div class="cstat">
+        <span class="cstat-number blue">${imlList.length}</span>
+        <span class="cstat-label">IML Nations</span>
+      </div>
+      <div class="cstat">
+        <span class="cstat-number gold">${imbbList.length}</span>
+        <span class="cstat-label">IMBB Nations</span>
+      </div>
+    </div>
+
+    <div class="countries-body">
+      ${colHtml(imlList,  'IML',  'International Mr. Leather')}
+      ${colHtml(imbbList, 'IMBB', 'International Mr. Bootblack')}
+    </div>`;
+}
+
+/* Helper: ordinal suffix (1→st, 2→nd, 3→rd, N→th) */
+function ordSuffix(n) {
+  const s = ['th','st','nd','rd'], v = n % 100;
+  return s[(v - 20) % 10] || s[v] || s[0];
 }
 
 /* ── Force-load all images before printing ── */
@@ -3929,7 +4490,14 @@ function buildPhotoImg(photoUrl, photoFallback, altText, rotateDeg, placeholderC
   img.loading = 'eager';
 
   _photoTracker.register();
-  let triedFallback = false, photoSettled = false;
+  let triedFallback = false, retries = 0, photoSettled = false;
+
+  function settle(ok) {
+    // Guard: only call done() once per registered slot
+    if (photoSettled) return;
+    photoSettled = true;
+    _photoTracker.done(ok, altText);
+  }
 
   if (rotateDeg && rotateDeg % 360 !== 0) {
     /* For 90/270° rotations the image's natural width becomes its rendered height.
@@ -3948,12 +4516,10 @@ function buildPhotoImg(photoUrl, photoFallback, altText, rotateDeg, placeholderC
 
     /* After load, set actual swap dimensions based on rendered cell size */
     img.addEventListener('load', () => {
-      if (!photoSettled && wrap.isConnected) { photoSettled = true; _photoTracker.done(true, altText); }
+      settle(true);
       const w = wrap.offsetWidth  || 150;
       const h = wrap.offsetHeight || 200;
       if (is90or270) {
-        /* rotated 90°: the image's height must equal container width,
-           and image's width must equal container height */
         const scale = Math.max(w / h, h / w);
         img.style.width  = (h * scale) + 'px';
         img.style.height = (w * scale) + 'px';
@@ -3961,22 +4527,37 @@ function buildPhotoImg(photoUrl, photoFallback, altText, rotateDeg, placeholderC
     });
   } else {
     img.style.cssText = 'width:100%;height:100%;object-fit:cover;object-position:top center;display:block;';
-    img.addEventListener('load', () => {
-      if (!photoSettled && wrap.isConnected) { photoSettled = true; _photoTracker.done(true, altText); }
-    });
+    img.addEventListener('load', () => settle(true));
   }
 
-  img.addEventListener('error', () => {
-    if (!triedFallback && photoFallback) {
-      triedFallback = true;
-      img.src = photoFallback;
-    } else {
-      if (!photoSettled && wrap.isConnected) { photoSettled = true; _photoTracker.done(false, altText); }
-      wrap.innerHTML = `<div class="grid-placeholder">${placeholderChar}</div>`;
-    }
+  _photoQueue.enqueue(releaseSlot => {
+    let slotReleased = false;
+    const release = () => { if (!slotReleased) { slotReleased = true; releaseSlot(); } };
+
+    /* Wrap the load listeners already added above so they also release the slot */
+    const origLoad = img.onload;
+    img.addEventListener('load', release);
+
+    img.addEventListener('error', () => {
+      release();
+      if (!triedFallback && photoFallback) {
+        triedFallback = true;
+        img.src = photoFallback;
+      } else if (retries < 2) {
+        const delay = retries === 0 ? 3000 : 9000;
+        retries++;
+        const retrySrc = img.src;
+        setTimeout(() => { img.src = ''; img.src = retrySrc; }, delay);
+      } else {
+        settle(false);
+        wrap.innerHTML = `<div class="grid-placeholder">${placeholderChar}</div>`;
+      }
+    });
+
+    img.src = photoUrl;
+    if (img.complete && img.naturalWidth > 0) { release(); settle(true); }
   });
 
-  img.src = photoUrl;
   wrap.appendChild(img);
   return wrap;
 }
