@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IMLBB 2026 — Contestant Roster</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons@7/css/flag-icons.min.css" crossorigin="">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:         #080808;
+      --bg2:        #0f0f18;
+      --blue:       #1b4fa8;
+      --blue-mid:   #2260cc;
+      --blue-light: #5b8fe8;
+      --gold:       #e0a840;
+      --gold-dim:   rgba(180,120,10,.25);
+      --gold-border:rgba(180,120,10,.55);
+      --white:      #ffffff;
+      --off-white:  rgba(255,255,255,0.88);
+      --muted:      rgba(255,255,255,0.50);
+      --border:     rgba(255,255,255,0.08);
+      --row-hover:  rgba(255,255,255,0.04);
+      --font:       'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--font);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 900;
+      background: rgba(8,8,8,0.96); backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 32px; height: 56px;
+    }
+    .nav-brand {
+      font-size: 13px; font-weight: 700; letter-spacing: 4px;
+      color: var(--white); text-transform: uppercase;
+    }
+    .nav-right {
+      font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      text-align: center;
+      padding: 60px 24px 40px;
+      background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(27,79,168,.35) 0%, transparent 70%);
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-eyebrow {
+      font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--blue-light); margin-bottom: 14px;
+    }
+    .hero-title {
+      font-size: clamp(32px, 5vw, 64px);
+      font-weight: 900; letter-spacing: -2px; line-height: 1;
+      margin-bottom: 10px;
+    }
+    .hero-title span { color: var(--blue-light); }
+    .hero-sub {
+      font-size: 13px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── STATS ── */
+    .stats {
+      display: flex; flex-wrap: wrap; gap: 1px;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--border);
+    }
+    .stat {
+      flex: 1 1 120px;
+      background: var(--bg);
+      padding: 24px 20px;
+      text-align: center;
+    }
+    .stat-num   { font-size: 2.4rem; font-weight: 900; line-height: 1; }
+    .stat-label { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); margin-top: 6px; }
+    .blue { color: var(--blue-light); }
+    .gold { color: var(--gold); }
+
+    /* ── MAIN ── */
+    main { max-width: 1200px; margin: 0 auto; padding: 36px 24px 64px; }
+
+    /* ── CONTEST SECTION ── */
+    .contest-section { margin-bottom: 48px; }
+
+    .contest-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-bottom: 10px;
+      border-bottom: 2px solid;
+      margin-bottom: 16px;
+    }
+    .contest-iml  .contest-header { border-color: var(--blue-light); }
+    .contest-imbb .contest-header { border-color: var(--gold); }
+
+    .contest-header-title {
+      font-size: 11px; font-weight: 700; letter-spacing: 4px;
+      text-transform: uppercase;
+    }
+    .contest-iml  .contest-header-title { color: var(--blue-light); }
+    .contest-imbb .contest-header-title { color: var(--gold); }
+
+    .contest-header-meta {
+      font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── TWO-COLUMN LAYOUT ── */
+    .two-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 1px;
+      background: var(--border);
+    }
+    .col-panel { background: var(--bg); }
+
+    /* ── TABLE ── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead th {
+      padding: 8px 12px;
+      font-size: 8px; font-weight: 700;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background .15s;
+    }
+    tbody tr:hover { background: var(--row-hover); }
+    tbody tr:last-child { border-bottom: none; }
+
+    td {
+      padding: 7px 12px;
+      font-size: 12px;
+      vertical-align: middle;
+    }
+
+    /* Country cell — only on first row of group */
+    .td-country {
+      font-size: 9px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      white-space: nowrap;
+      color: var(--muted);
+      width: 110px;
+      vertical-align: top;
+      padding-top: 10px;
+    }
+    .td-country .fi {
+      display: inline-block;
+      width: 16px; height: 11px;
+      vertical-align: middle;
+      border-radius: 2px;
+      box-shadow: 0 1px 3px rgba(0,0,0,.5);
+      margin-right: 6px;
+    }
+
+    tr.country-first td { border-top: 1px solid rgba(255,255,255,.12); }
+
+    .td-name {
+      font-size: 13px; font-weight: 600;
+      color: var(--white);
+    }
+    .td-title {
+      font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── Status / loading ── */
+    #status {
+      text-align: center;
+      padding: 80px 20px;
+      color: var(--muted);
+      font-size: 13px; letter-spacing: 1px;
+    }
+    #status strong { color: var(--white); }
+    #status code {
+      background: rgba(255,255,255,.08);
+      padding: 2px 8px; border-radius: 4px;
+      font-family: monospace; font-size: 12px;
+      color: var(--blue-light);
+    }
+
+    /* ── PRINT ── */
+    @media print {
+      body { background: #fff !important; color: #000 !important; }
+      nav  { display: none !important; }
+      .hero {
+        background: none !important;
+        padding: 12pt 0 8pt;
+        border-bottom: 1.5pt solid #000;
+      }
+      .hero-title { color: #000 !important; font-size: 22pt !important; letter-spacing: -1pt !important; }
+      .hero-title span { color: #1b4fa8 !important; }
+      .hero-eyebrow, .hero-sub { color: #555 !important; }
+      .stats { background: #ddd !important; }
+      .stat  { background: #fff !important; padding: 6pt 8pt !important; }
+      .stat-num   { font-size: 16pt !important; }
+      .stat-label { color: #555 !important; font-size: 6pt !important; }
+      .blue { color: #1b4fa8 !important; }
+      .gold { color: #8a5c00 !important; }
+      main { padding: 10pt 0 !important; max-width: 100% !important; }
+      .contest-section { margin-bottom: 16pt !important; }
+      .two-cols { background: #ccc !important; }
+      .col-panel { background: #fff !important; }
+      .contest-iml  .contest-header { border-color: #1b4fa8 !important; }
+      .contest-imbb .contest-header { border-color: #8a5c00 !important; }
+      .contest-iml  .contest-header-title { color: #1b4fa8 !important; }
+      .contest-imbb .contest-header-title { color: #8a5c00 !important; }
+      .contest-header-meta { color: #555 !important; }
+      thead th  { color: #555 !important; border-bottom: 0.5pt solid #ccc !important; padding: 4pt 8pt !important; }
+      tbody tr  { border-bottom: 0.5pt solid #ddd !important; }
+      tbody tr:hover { background: inherit !important; }
+      td { padding: 3.5pt 8pt !important; font-size: 8pt !important; color: #000 !important; }
+      tr.country-first td { border-top: 0.5pt solid #bbb !important; }
+      .td-country { color: #555 !important; font-size: 7pt !important; width: 70pt !important; }
+      .td-name    { font-size: 8pt !important; }
+      .td-title   { font-size: 6.5pt !important; color: #666 !important; }
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-brand">IMLBB 2026</span>
+  <span class="nav-right">Contestant Roster</span>
+</nav>
+
+<div class="hero">
+  <p class="hero-eyebrow">IMLBB #48 &nbsp;·&nbsp; Chicago &nbsp;·&nbsp; 2026</p>
+  <h1 class="hero-title"><span>IMLBB</span> 2026</h1>
+  <p class="hero-sub">International Mr. Leather &amp; International Mr. Bootblack</p>
+</div>
+
+<div class="stats" id="stats" style="display:none"></div>
+
+<div id="status">Loading contestant data&hellip;</div>
+
+<main id="main" style="display:none"></main>
+
+<script>
+const SHEET_ID  = '1wPGSfDhd3Tb5a1skEeOiM0MXIbxhBzEnyzDUYkNEm6Q';
+const SHEET_TAB = 'Sheet1';
+const CSV_URL   = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(SHEET_TAB)}`;
+
+const COUNTRY_ISO = {
+  'usa':'us','united states':'us','united states of america':'us','us':'us','u.s.':'us','u.s.a.':'us','america':'us',
+  'australia':'au','au':'au','spain':'es','españa':'es','es':'es','brazil':'br','brasil':'br','br':'br',
+  'italy':'it','italia':'it','it':'it','colombia':'co','co':'co','ireland':'ie','republic of ireland':'ie','ie':'ie',
+  'norway':'no','norge':'no','no':'no','germany':'de','deutschland':'de','de':'de','france':'fr','fr':'fr',
+  'uk':'gb','united kingdom':'gb','great britain':'gb','england':'gb','gb':'gb',
+  'netherlands':'nl','the netherlands':'nl','holland':'nl','nl':'nl',
+  'sweden':'se','sverige':'se','se':'se','mexico':'mx','méxico':'mx','mx':'mx','canada':'ca','ca':'ca',
+  'austria':'at','at':'at','portugal':'pt','pt':'pt','argentina':'ar','ar':'ar',
+  'new zealand':'nz','nz':'nz','aotearoa':'nz','south africa':'za','za':'za',
+  'japan':'jp','jp':'jp','belgium':'be','be':'be','switzerland':'ch','ch':'ch',
+  'denmark':'dk','danmark':'dk','dk':'dk','finland':'fi','suomi':'fi','fi':'fi',
+  'chile':'cl','cl':'cl','peru':'pe','pe':'pe','venezuela':'ve','ve':'ve',
+  'costa rica':'cr','cr':'cr','panama':'pa','pa':'pa','ecuador':'ec','ec':'ec',
+  'philippines':'ph','ph':'ph','taiwan':'tw','tw':'tw','south korea':'kr','korea':'kr','kr':'kr',
+  'israel':'il','il':'il','turkey':'tr','türkiye':'tr','tr':'tr','greece':'gr','gr':'gr',
+  'poland':'pl','pl':'pl','czech republic':'cz','czechia':'cz','cz':'cz',
+  'hungary':'hu','hu':'hu','romania':'ro','ro':'ro','ukraine':'ua','ua':'ua',
+  'iceland':'is','is':'is','croatia':'hr','hr':'hr','luxembourg':'lu','lu':'lu',
+};
+
+function getFlagHtml(country) {
+  const iso = COUNTRY_ISO[(country || '').toLowerCase().trim()];
+  return iso ? `<span class="fi fi-${iso}"></span>` : '';
+}
+
+function parseCSV(text) {
+  const rows = [];
+  let cur = '', inQ = false, cells = [];
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+    if (ch === '"') {
+      if (inQ && text[i+1] === '"') { cur += '"'; i++; }
+      else inQ = !inQ;
+    } else if (ch === ',' && !inQ) { cells.push(cur); cur = ''; }
+    else if ((ch === '\n' || ch === '\r') && !inQ) {
+      cells.push(cur); cur = '';
+      if (cells.some(c => c !== '')) rows.push(cells);
+      cells = [];
+      if (ch === '\r' && text[i+1] === '\n') i++;
+    } else cur += ch;
+  }
+  if (cur || cells.length) { cells.push(cur); if (cells.some(c => c !== '')) rows.push(cells); }
+  return rows;
+}
+
+function normaliseContest(raw) {
+  const u = (raw || '').trim().toUpperCase();
+  if (u === 'IML'  || u.includes('LEATHER'))   return 'IML';
+  if (u === 'IMBB' || u.includes('BOOTBLACK')) return 'IMBB';
+  return '';
+}
+
+function esc(s) {
+  return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+window.onerror = (msg, src, line) => {
+  document.getElementById('status').innerHTML =
+    `<strong>Script error:</strong> ${msg} (line ${line})`;
+};
+
+async function load() {
+  const statusEl = document.getElementById('status');
+  const statsEl  = document.getElementById('stats');
+  const mainEl   = document.getElementById('main');
+
+  try {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 15000);
+    const res = await fetch(CSV_URL, { signal: ctrl.signal });
+    clearTimeout(timer);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const rows = parseCSV(await res.text());
+    if (rows.length < 2) throw new Error('No data rows found');
+
+    const contestants = rows.slice(1)
+      .filter(r => (r[28] || '').trim().toUpperCase() === 'YES')
+      .map(r => ({
+        name:    (r[2]  || '').trim(),
+        title:   (r[3]  || '').trim(),
+        country: (r[23] || '').trim(),
+        contest: normaliseContest(r[24]),
+      }))
+      .filter(c => c.name && c.contest);
+
+    if (!contestants.length) throw new Error('No approved contestants found');
+
+    const imlList  = contestants.filter(c => c.contest === 'IML');
+    const imbbList = contestants.filter(c => c.contest === 'IMBB');
+    const nations  = new Set(contestants.map(c => c.country.toLowerCase()).filter(Boolean));
+
+    /* ── Stats ── */
+    statsEl.innerHTML = `
+      <div class="stat"><div class="stat-num blue">${contestants.length}</div><div class="stat-label">Contestants</div></div>
+      <div class="stat"><div class="stat-num blue">${imlList.length}</div><div class="stat-label">IML</div></div>
+      <div class="stat"><div class="stat-num gold">${imbbList.length}</div><div class="stat-label">IMBB</div></div>
+      <div class="stat"><div class="stat-num blue">${nations.size}</div><div class="stat-label">Nations</div></div>
+    `;
+    statsEl.style.display = 'flex';
+
+    /* ── Sections ── */
+    let html = '';
+    for (const contest of ['IMBB', 'IML']) {
+      const group = contestants.filter(c => c.contest === contest);
+      if (!group.length) continue;
+
+      const byCountry = {};
+      group.forEach(c => {
+        const key = c.country || '—';
+        if (!byCountry[key]) byCountry[key] = [];
+        byCountry[key].push(c);
+      });
+      const sortedCountries = Object.keys(byCountry).sort((a, b) => a.localeCompare(b));
+
+      const fullTitle = contest === 'IML' ? 'International Mr. Leather' : 'International Mr. Bootblack';
+
+      /* Flatten all rows in alphabetical country order (USA is last alphabetically).
+         Split at the midpoint — USA will start somewhere in the left column and
+         spill into the right column, balancing both sides as evenly as possible. */
+      const flatRows = [];
+      sortedCountries.forEach(country => {
+        byCountry[country]
+          .sort((a, b) => a.name.localeCompare(b.name))
+          .forEach(c => flatRows.push({ country, name: c.name, title: c.title }));
+      });
+
+      const mid = Math.ceil(flatRows.length / 2);
+      const halfA = flatRows.slice(0, mid);
+      const halfB = flatRows.slice(mid);
+
+      function buildTableFromFlat(rows) {
+        if (!rows.length) return '';
+        let html = '';
+        let lastCountry = null;
+        rows.forEach(r => {
+          const isFirst = r.country !== lastCountry;
+          lastCountry = r.country;
+          const flag = getFlagHtml(r.country);
+          const countryCell = isFirst
+            ? `<td class="td-country">${flag}${esc(r.country)}</td>`
+            : `<td class="td-country"></td>`;
+          html += `<tr class="${isFirst ? 'country-first' : ''}">
+            ${countryCell}
+            <td class="td-name">${esc(r.name)}</td>
+            <td class="td-title">${esc(r.title)}</td>
+          </tr>`;
+        });
+        return `<table>
+          <thead><tr><th>Country</th><th>Name</th><th>Title</th></tr></thead>
+          <tbody>${html}</tbody>
+        </table>`;
+      }
+
+      html += `
+      <div class="contest-section contest-${contest.toLowerCase()}">
+        <div class="contest-header">
+          <span class="contest-header-title">${fullTitle}</span>
+          <span class="contest-header-meta">${group.length} contestants &nbsp;·&nbsp; ${sortedCountries.length} nations</span>
+        </div>
+        <div class="two-cols">
+          <div class="col-panel">${buildTableFromFlat(halfA)}</div>
+          <div class="col-panel">${buildTableFromFlat(halfB)}</div>
+        </div>
+      </div>`;
+    }
+
+    mainEl.innerHTML = html;
+    mainEl.style.display = 'block';
+    statusEl.style.display = 'none';
+
+  } catch (err) {
+    const msg = err.message || String(err);
+    let hint;
+    if (err.name === 'AbortError') {
+      hint = `Request timed out after 15 seconds.<br>Check your internet connection and that the Google Sheet is shared "Anyone with the link".`;
+    } else if (msg.toLowerCase().includes('failed') || msg.toLowerCase().includes('fetch')) {
+      hint = `Network error — ensure you're opening this via the local server:<br>
+              <code>http://localhost:8766/roster.html</code>`;
+    } else {
+      hint = esc(msg);
+    }
+    statusEl.innerHTML = `<strong>Could not load data.</strong><br><br>${hint}`;
+  }
+}
+
+load();
+</script>
+</body>
+</html>

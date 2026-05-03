@@ -1365,7 +1365,7 @@
       gap: 28px; margin-bottom: 22px;
     }
     .countries-hero-logo {
-      height: 80px; width: auto; object-fit: contain; flex-shrink: 0;
+      height: 80px; width: 80px; object-fit: contain; flex-shrink: 0;
     }
     .countries-headline {
       font-size: clamp(40px, 5.5vw, 80px); font-weight: 900;
@@ -1835,7 +1835,7 @@
       .countries-hero {
         padding: 0.35in 0.5in 0 !important;
       }
-      .countries-hero-logo { height: 52pt !important; }
+      .countries-hero-logo { height: 52pt !important; width: 52pt !important; }
       .countries-title-row { gap: 16pt !important; margin-bottom: 14pt !important; }
       .countries-headline { font-size: 38pt !important; letter-spacing: -1pt !important; white-space: nowrap !important; }
       .countries-subline  { font-size: 9pt !important; margin-bottom: 0.25in !important; }
@@ -3267,7 +3267,7 @@ const _photoTracker = (() => {
 
 /* ── Photo load queue — caps simultaneous Drive requests to avoid rate-limiting ── */
 const _photoQueue = (() => {
-  const CONCURRENCY = 6;   // at most 6 Drive requests in-flight at once
+  const CONCURRENCY = 4;   // at most 4 Drive requests in-flight at once
   let active = 0;
   let generation = 0;      // incremented on drain() to invalidate in-flight slots
   const queue = [];
@@ -3303,6 +3303,71 @@ const _photoQueue = (() => {
     },
   };
 })();
+
+/**
+ * queuePhoto(img, primaryUrl, fallbackUrl, trackerName)
+ *
+ * Loads a Drive photo through the concurrency queue.
+ * Every attempt — including fallback and retries — goes back through the queue
+ * so we never exceed CONCURRENCY simultaneous Drive requests, even on a cold
+ * cache where all photos need fresh network hits.
+ *
+ * Retry schedule (all via queue, so slots are still respected):
+ *   attempt 1 — primaryUrl  (immediate)
+ *   attempt 2 — fallbackUrl (immediate, different CDN endpoint)
+ *   attempt 3 — fallbackUrl (after 5 s)
+ *   attempt 4 — fallbackUrl (after 15 s)
+ *   → settle(false) and show placeholder
+ */
+function queuePhoto(img, primaryUrl, fallbackUrl, trackerName, onPlaceholder) {
+  _photoTracker.register();
+  let settled = false;
+  const settle = (ok) => {
+    if (settled) return;
+    settled = true;
+    _photoTracker.done(ok, trackerName);
+    if (!ok && typeof onPlaceholder === 'function') onPlaceholder();
+  };
+
+  const state = { usedFallback: false, retries: 0 };
+
+  function attempt(url, delayMs) {
+    const run = () => _photoQueue.enqueue(releaseSlot => {
+      let released = false;
+      const release = () => { if (!released) { released = true; releaseSlot(); } };
+
+      const onLoad = () => { release(); settle(true); };
+      const onError = () => {
+        release();
+        if (!state.usedFallback && fallbackUrl) {
+          state.usedFallback = true;
+          attempt(fallbackUrl, 0);
+        } else if (state.retries < 2) {
+          const d = state.retries === 0 ? 5000 : 15000;
+          state.retries++;
+          attempt(url, d);
+        } else {
+          console.warn(`[Photo] Failed to load after all retries: ${trackerName}`);
+          settle(false);
+        }
+      };
+      img.addEventListener('load',  onLoad,  { once: true });
+      img.addEventListener('error', onError, { once: true });
+
+      /* Set src AFTER listeners so we never miss the event.
+         Do NOT set src='' first — that can fire a spurious error event in
+         some browsers and burn the { once:true } listener before the real
+         URL is attempted. Drive 4xx responses aren't browser-cached anyway. */
+      img.src = url;
+      if (img.complete && img.naturalWidth > 0) { img.removeEventListener('error', onError); release(); settle(true); }
+    });
+
+    if (delayMs > 0) setTimeout(run, delayMs);
+    else run();
+  }
+
+  attempt(primaryUrl, 0);
+}
 
 /* ── Smart print: waits up to 90s for all photos to settle ── */
 async function printWhenReady(btn) {
@@ -3452,31 +3517,9 @@ function renderGrid(list) {
       const img = document.createElement('img');
       img.alt = c.name;
       img.loading = 'eager';
-      _photoTracker.register();
-      let triedFallback = false, retries = 0, photoSettled = false;
-      const settle = (ok) => { if (photoSettled) return; photoSettled = true; _photoTracker.done(ok, c.name); };
-      _photoQueue.enqueue(releaseSlot => {
-        let slotReleased = false;
-        const release = () => { if (!slotReleased) { slotReleased = true; releaseSlot(); } };
-        img.addEventListener('load',  () => { release(); settle(true); });
-        img.addEventListener('error', () => {
-          release(); /* free the slot immediately so the next photo can start */
-          if (!triedFallback && c.photoFallback) {
-            triedFallback = true;
-            img.src = c.photoFallback;
-          } else if (retries < 2) {
-            const delay = retries === 0 ? 3000 : 9000;
-            retries++;
-            const retrySrc = img.src;
-            setTimeout(() => { img.src = ''; img.src = retrySrc; }, delay);
-          } else {
-            settle(false);
-            img.replaceWith(Object.assign(document.createElement('div'),
-              { className: 'grid-placeholder', textContent: '🏅' }));
-          }
-        });
-        img.src = c.photoUrl;
-        if (img.complete && img.naturalWidth > 0) { release(); settle(true); }
+      queuePhoto(img, c.photoUrl, c.photoFallback, c.name, () => {
+        img.replaceWith(Object.assign(document.createElement('div'),
+          { className: 'grid-placeholder', textContent: '🏅' }));
       });
       cell.appendChild(img);
     } else {
@@ -3533,32 +3576,10 @@ function renderProfiles(list) {
         const img = document.createElement('img');
         img.alt = c.name;
         img.loading = 'eager';
-        placeholder.classList.add('hidden'); // hide until needed
-        _photoTracker.register();
-        let triedFallback = false, retries = 0, photoSettled = false;
-        const settle = (ok) => { if (photoSettled) return; photoSettled = true; _photoTracker.done(ok, c.name); };
-        _photoQueue.enqueue(releaseSlot => {
-          let slotReleased = false;
-          const release = () => { if (!slotReleased) { slotReleased = true; releaseSlot(); } };
-          img.addEventListener('load', () => { release(); placeholder.classList.add('hidden'); settle(true); });
-          img.addEventListener('error', () => {
-            release();
-            if (!triedFallback && c.photoFallback) {
-              triedFallback = true;
-              img.src = c.photoFallback;
-            } else if (retries < 2) {
-              const delay = retries === 0 ? 3000 : 9000;
-              retries++;
-              const retrySrc = img.src;
-              setTimeout(() => { img.src = ''; img.src = retrySrc; }, delay);
-            } else {
-              img.style.display = 'none';
-              placeholder.classList.remove('hidden');
-              settle(false);
-            }
-          });
-          img.src = c.photoUrl;
-          if (img.complete && img.naturalWidth > 0) { release(); settle(true); }
+        placeholder.classList.add('hidden');
+        queuePhoto(img, c.photoUrl, c.photoFallback, c.name, () => {
+          img.style.display = 'none';
+          placeholder.classList.remove('hidden');
         });
         photoWrap.appendChild(img);
         photoWrap.appendChild(placeholder);
@@ -3692,7 +3713,7 @@ function renderImbbJudges() {
       if (j.flag) {
         const flagEl = document.createElement('span');
         flagEl.className = 'c-flag';
-        flagEl.textContent = '\u00a0' + j.flag;
+        flagEl.innerHTML = '\u00a0' + getFlagHtml(j.flag);
         nameRow.appendChild(flagEl);
       }
       text.appendChild(nameRow);
@@ -3810,7 +3831,7 @@ function renderJudges() {
       if (j.flag) {
         const flagEl = document.createElement('span');
         flagEl.className = 'c-flag';
-        flagEl.textContent = '\u00a0' + j.flag;
+        flagEl.innerHTML = '\u00a0' + getFlagHtml(j.flag);
         nameRow.appendChild(flagEl);
       }
       text.appendChild(nameRow);
@@ -4293,34 +4314,12 @@ function renderLetters() {
   /* Wire up retry + progress tracking for each letter photo */
   container.querySelectorAll('img[data-letter-photo]').forEach(img => {
     const photoUrl = img.dataset.letterPhoto;
-    _photoTracker.register();
-    let retries = 0, photoSettled = false;
-    const settle = (ok) => {
-      if (photoSettled) return;
-      photoSettled = true;
-      _photoTracker.done(ok, img.alt);
-    };
-    _photoQueue.enqueue(releaseSlot => {
-      let slotReleased = false;
-      const release = () => { if (!slotReleased) { slotReleased = true; releaseSlot(); } };
-      img.addEventListener('load', () => { release(); settle(true); });
-      img.addEventListener('error', () => {
-        release();
-        if (retries < 2) {
-          const delay = retries === 0 ? 3000 : 9000;
-          retries++;
-          setTimeout(() => { img.src = ''; img.src = photoUrl; }, delay);
-        } else {
-          settle(false);
-          img.style.display = 'none';
-          const ph = document.createElement('div');
-          ph.className = 'letter-photo letter-photo--placeholder';
-          ph.setAttribute('aria-hidden', 'true');
-          img.parentNode.insertBefore(ph, img);
-        }
-      });
-      img.src = photoUrl;
-      if (img.complete && img.naturalWidth > 0) { release(); settle(true); }
+    queuePhoto(img, photoUrl, null, img.alt, () => {
+      img.style.display = 'none';
+      const ph = document.createElement('div');
+      ph.className = 'letter-photo letter-photo--placeholder';
+      ph.setAttribute('aria-hidden', 'true');
+      img.parentNode.insertBefore(ph, img);
     });
   });
 }
@@ -4504,73 +4503,28 @@ function buildPhotoImg(photoUrl, photoFallback, altText, rotateDeg, placeholderC
   img.alt = altText;
   img.loading = 'eager';
 
-  _photoTracker.register();
-  let triedFallback = false, retries = 0, photoSettled = false;
-
-  function settle(ok) {
-    // Guard: only call done() once per registered slot
-    if (photoSettled) return;
-    photoSettled = true;
-    _photoTracker.done(ok, altText);
-  }
-
   if (rotateDeg && rotateDeg % 360 !== 0) {
-    /* For 90/270° rotations the image's natural width becomes its rendered height.
-       We scale it up so the shorter rotated dimension fills the container,
-       then let object-fit:cover handle the rest. */
     const is90or270 = Math.abs(rotateDeg % 180) === 90;
     img.style.cssText = [
-      'position:absolute',
-      'top:50%', 'left:50%',
+      'position:absolute', 'top:50%', 'left:50%',
       `transform:translate(-50%,-50%) rotate(${rotateDeg}deg)`,
-      'width:100%', 'height:100%',
-      'object-fit:cover',
-      /* swap dimensions so image fills correctly when rotated 90/270° */
+      'width:100%', 'height:100%', 'object-fit:cover',
       is90or270 ? 'max-width:none;width:100%;height:100%;' : '',
     ].join(';');
-
-    /* After load, set actual swap dimensions based on rendered cell size */
     img.addEventListener('load', () => {
-      settle(true);
-      const w = wrap.offsetWidth  || 150;
-      const h = wrap.offsetHeight || 200;
+      const w = wrap.offsetWidth || 150, h = wrap.offsetHeight || 200;
       if (is90or270) {
         const scale = Math.max(w / h, h / w);
         img.style.width  = (h * scale) + 'px';
         img.style.height = (w * scale) + 'px';
       }
-    });
+    }, { once: true });
   } else {
     img.style.cssText = 'width:100%;height:100%;object-fit:cover;object-position:top center;display:block;';
-    img.addEventListener('load', () => settle(true));
   }
 
-  _photoQueue.enqueue(releaseSlot => {
-    let slotReleased = false;
-    const release = () => { if (!slotReleased) { slotReleased = true; releaseSlot(); } };
-
-    /* Wrap the load listeners already added above so they also release the slot */
-    const origLoad = img.onload;
-    img.addEventListener('load', release);
-
-    img.addEventListener('error', () => {
-      release();
-      if (!triedFallback && photoFallback) {
-        triedFallback = true;
-        img.src = photoFallback;
-      } else if (retries < 2) {
-        const delay = retries === 0 ? 3000 : 9000;
-        retries++;
-        const retrySrc = img.src;
-        setTimeout(() => { img.src = ''; img.src = retrySrc; }, delay);
-      } else {
-        settle(false);
-        wrap.innerHTML = `<div class="grid-placeholder">${placeholderChar}</div>`;
-      }
-    });
-
-    img.src = photoUrl;
-    if (img.complete && img.naturalWidth > 0) { release(); settle(true); }
+  queuePhoto(img, photoUrl, photoFallback, altText, () => {
+    wrap.innerHTML = `<div class="grid-placeholder">${placeholderChar}</div>`;
   });
 
   wrap.appendChild(img);
