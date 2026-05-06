@@ -3334,7 +3334,27 @@ function queuePhoto(img, primaryUrl, fallbackUrl, trackerName, onPlaceholder) {
   function attempt(url, delayMs) {
     const run = () => _photoQueue.enqueue(releaseSlot => {
       let released = false;
-      const release = () => { if (!released) { released = true; releaseSlot(); } };
+
+      /* Safety net: if neither load nor error fires within 20 s (Drive timeout,
+         browser quirk, cached-failure-no-event, etc.) force-release the slot
+         so the queue can never permanently stall. */
+      const slotTimer = setTimeout(() => {
+        console.warn(`[Photo] Slot timeout — force-releasing slot for: ${trackerName}`);
+        img.removeEventListener('load',  onLoad);
+        img.removeEventListener('error', onError);
+        release();
+        if (!state.usedFallback && fallbackUrl) {
+          state.usedFallback = true; attempt(fallbackUrl, 0);
+        } else if (state.retries < 2) {
+          const d = state.retries === 0 ? 5000 : 15000;
+          state.retries++; attempt(url, d);
+        } else { settle(false); }
+      }, 20000);
+
+      const release = () => {
+        clearTimeout(slotTimer);
+        if (!released) { released = true; releaseSlot(); }
+      };
 
       const onLoad = () => { release(); settle(true); };
       const onError = () => {
@@ -3362,17 +3382,17 @@ function queuePhoto(img, primaryUrl, fallbackUrl, trackerName, onPlaceholder) {
 
       /* After setting src, check if the browser already has a result from cache.
          Some browsers do NOT re-fire load/error for cached entries — they just
-         leave img.complete=true.  Without this check, those slots are never
-         released and the queue permanently stalls. */
+         leave img.complete=true.  Without this check those slots rely solely
+         on the timeout above to unblock. */
       if (img.complete && img.naturalWidth > 0) {
         /* Cached success */
         img.removeEventListener('error', onError);
         release(); settle(true);
       } else if (img.complete) {
-        /* Cached failure (naturalWidth===0) — error event won't re-fire */
+        /* Cached failure (naturalWidth===0) — error event may not re-fire */
         img.removeEventListener('load',  onLoad);
         img.removeEventListener('error', onError);
-        onError();   /* triggers fallback / retry / settle(false) as normal */
+        onError();
       }
     });
 
