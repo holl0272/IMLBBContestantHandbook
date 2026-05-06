@@ -3357,9 +3357,23 @@ function queuePhoto(img, primaryUrl, fallbackUrl, trackerName, onPlaceholder) {
       /* Set src AFTER listeners so we never miss the event.
          Do NOT set src='' first — that can fire a spurious error event in
          some browsers and burn the { once:true } listener before the real
-         URL is attempted. Drive 4xx responses aren't browser-cached anyway. */
+         URL is attempted. */
       img.src = url;
-      if (img.complete && img.naturalWidth > 0) { img.removeEventListener('error', onError); release(); settle(true); }
+
+      /* After setting src, check if the browser already has a result from cache.
+         Some browsers do NOT re-fire load/error for cached entries — they just
+         leave img.complete=true.  Without this check, those slots are never
+         released and the queue permanently stalls. */
+      if (img.complete && img.naturalWidth > 0) {
+        /* Cached success */
+        img.removeEventListener('error', onError);
+        release(); settle(true);
+      } else if (img.complete) {
+        /* Cached failure (naturalWidth===0) — error event won't re-fire */
+        img.removeEventListener('load',  onLoad);
+        img.removeEventListener('error', onError);
+        onError();   /* triggers fallback / retry / settle(false) as normal */
+      }
     });
 
     if (delayMs > 0) setTimeout(run, delayMs);
