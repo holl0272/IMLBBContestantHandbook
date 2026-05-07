@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IMLBB 2026 — Class Yearbook</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css"/>
+  <style>
+    :root {
+      --bg:       #0a0a0a;
+      --card-bg:  #161616;
+      --gold:     #e0a840;
+      --gold-dim: rgba(224,168,64,.18);
+      --blue:     #1b4fa8;
+      --blue-dim: rgba(27,79,168,.18);
+      --white:    #f0f0f0;
+      --muted:    #666;
+      --sans: 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--sans);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── Top bar ─── */
+    #top-bar {
+      width: 8.5in;
+      margin: 18px auto 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    #top-bar .bar-label {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    #top-bar button {
+      background: var(--gold);
+      color: #000;
+      border: none;
+      padding: 8px 22px;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-family: var(--sans);
+      font-weight: 700;
+      border-radius: 2px;
+      transition: background .15s;
+    }
+    #top-bar button:hover { background: #f0c050; }
+
+    #status {
+      width: 8.5in;
+      margin: 30px auto;
+      text-align: center;
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: var(--muted);
+    }
+
+    /* ─── Main document flow ─── */
+    #yearbook-doc {
+      width: 8.5in;
+      margin: 0 auto;
+      padding: 0 0.46in;
+    }
+
+    /* ─── Section header (IMBB or IML) ─── */
+    .section-header {
+      padding: 0.28in 0 0.18in;
+      text-align: center;
+      /* Keep the header with the first row of cards below it when printing */
+      break-after: avoid;
+      page-break-after: avoid;
+    }
+    .section-badge {
+      display: inline-block;
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 2px 12px;
+      border-radius: 20px;
+      margin-bottom: 6px;
+    }
+    .section-header--imbb .section-badge {
+      background: var(--gold-dim);
+      color: var(--gold);
+      border: 1px solid rgba(224,168,64,.35);
+    }
+    .section-header--iml .section-badge {
+      background: var(--blue-dim);
+      color: #7aa8f0;
+      border: 1px solid rgba(27,79,168,.45);
+    }
+    .section-title {
+      font-size: 19px;
+      font-weight: 700;
+      letter-spacing: 7px;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+    .section-subtitle {
+      font-size: 8px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+    .section-rule {
+      height: 2px;
+      border: none;
+      margin: 10px auto 0;
+      width: 100%;
+    }
+    .section-header--imbb .section-rule { background: var(--gold); }
+    .section-header--iml  .section-rule { background: var(--blue); }
+
+    /* ─── Photo grid ─── */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px 10px;
+      padding-bottom: 0.1in;
+    }
+
+    /* ─── Card ─── */
+    .yb-card {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      /* Don't split a card across print pages */
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    /*
+     * Photo: strict 3:4, object-fit:cover so every image is identical size/crop.
+     * object-position: top ensures faces stay visible when portrait is tall.
+     */
+    .yb-photo {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      background: var(--card-bg);
+      border-radius: 3px;
+      overflow: hidden;
+      flex-shrink: 0;
+      position: relative;
+    }
+    .yb-photo img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+    }
+    .yb-placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      font-size: 22px;
+      color: #2a2a2a;
+    }
+
+    .yb-info { padding: 5px 2px 0; min-width: 0; }
+
+    .yb-name-row {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      min-width: 0;
+    }
+    .yb-flag .fi {
+      display: inline-block;
+      width: 17px;
+      height: 12px;
+      border-radius: 2px;
+      flex-shrink: 0;
+      vertical-align: middle;
+    }
+    .yb-name {
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      line-height: 1.25;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex: 1;
+      min-width: 0;
+      color: var(--white);
+    }
+    .yb-title {
+      font-size: 7.8px;
+      line-height: 1.35;
+      margin-top: 2px;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+    .imbb .yb-title { color: var(--gold); }
+    .iml  .yb-title { color: #7aa8f0;    }
+
+    /* ─── Per-section repeating-header table ─── */
+    .yb-section-table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+    .yb-section-table > thead > tr > td,
+    .yb-section-table > tbody > tr > td {
+      padding: 0;
+      vertical-align: top;
+    }
+
+    /* Footer line at very bottom of print output */
+    #yb-footer {
+      width: 8.5in;
+      margin: 18px auto 24px;
+      text-align: center;
+      font-size: 7px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-top: 1px solid rgba(255,255,255,.07);
+      padding-top: 10px;
+    }
+
+    /* ─── Print ─── */
+    @media print {
+      @page { size: 8.5in 11in portrait; margin: 0.38in 0.46in; }
+
+      *, *::before, *::after {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        color-adjust: exact !important;
+      }
+
+      html, body { background: #0a0a0a !important; }
+      #top-bar, #status { display: none !important; }
+
+      /* Remove screen padding — @page margin takes over */
+      #yearbook-doc { padding: 0; }
+
+      /* IML table follows IMBB — a little top breathing room on the first page.
+         On subsequent IML pages the thead repeats flush to the page margin. */
+      .yb-section-table + .yb-section-table .section-header--iml {
+        padding-top: 0.18in;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div id="top-bar">
+  <span class="bar-label">IMLBB 2026 &mdash; Class Yearbook</span>
+  <button onclick="window.print()">&#x1F5A8;&nbsp; Print / Save PDF</button>
+</div>
+<div id="status">Loading&hellip;</div>
+
+<div id="yearbook-doc" style="display:none">
+
+  <!-- IMBB section — thead repeats on every page this table spans -->
+  <table class="yb-section-table">
+    <thead>
+      <tr><td>
+        <div class="section-header section-header--imbb">
+          <div class="section-badge">International Mr. Bootblack</div>
+          <div class="section-title">Class of 2026</div>
+          <div class="section-subtitle" id="imbb-subtitle"></div>
+          <hr class="section-rule">
+        </div>
+      </td></tr>
+    </thead>
+    <tbody>
+      <tr><td>
+        <div class="photo-grid" id="imbb-grid"></div>
+      </td></tr>
+    </tbody>
+  </table>
+
+  <!-- IML section — thead repeats on every page this table spans -->
+  <table class="yb-section-table">
+    <thead>
+      <tr><td>
+        <div class="section-header section-header--iml">
+          <div class="section-badge">International Mr. Leather</div>
+          <div class="section-title">Class of 2026</div>
+          <div class="section-subtitle" id="iml-subtitle"></div>
+          <hr class="section-rule">
+        </div>
+      </td></tr>
+    </thead>
+    <tbody>
+      <tr><td>
+        <div class="photo-grid" id="iml-grid"></div>
+      </td></tr>
+    </tbody>
+  </table>
+
+</div>
+
+<div id="yb-footer">International Mr. Bootblack 2026 &nbsp;&middot;&nbsp; Chicago, Illinois</div>
+
+<script src="config.js"></script>
+<script>
+/* ══════════════════════════════════════════
+   HELPERS
+══════════════════════════════════════════ */
+function extractDriveId(v) {
+  if (!v) return null;
+  if (/^[a-zA-Z0-9_-]{10,}$/.test(v)) return v;
+  let m = v.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+  if (!m) m = v.match(/\/d\/([a-zA-Z0-9_-]+)/);
+  return m ? m[1] : null;
+}
+function drivePhoto(v, sz) {
+  const id = extractDriveId(v);
+  return id ? `https://drive.google.com/thumbnail?id=${id}&sz=${sz || 'w800'}` : null;
+}
+
+const COUNTRY_ISO = {
+  'usa':'us','united states':'us','united states of america':'us','us':'us','u.s.':'us','u.s.a.':'us','america':'us',
+  'australia':'au','au':'au','spain':'es','españa':'es','espana':'es','brazil':'br','brasil':'br',
+  'italy':'it','italia':'it','colombia':'co','ireland':'ie','republic of ireland':'ie',
+  'norway':'no','norge':'no','germany':'de','deutschland':'de','france':'fr',
+  'uk':'gb','united kingdom':'gb','great britain':'gb','england':'gb-eng','wales':'gb-wls','scotland':'gb-sct',
+  'netherlands':'nl','the netherlands':'nl','holland':'nl','sweden':'se','sverige':'se',
+  'mexico':'mx','méxico':'mx','canada':'ca','austria':'at','österreich':'at','portugal':'pt',
+  'argentina':'ar','new zealand':'nz','south africa':'za','japan':'jp','belgium':'be',
+  'switzerland':'ch','denmark':'dk','finland':'fi','chile':'cl','peru':'pe','venezuela':'ve',
+  'costa rica':'cr','panama':'pa','ecuador':'ec','uruguay':'uy','paraguay':'py','bolivia':'bo',
+  'cuba':'cu','puerto rico':'pr','philippines':'ph','taiwan':'tw','south korea':'kr','china':'cn',
+  'india':'in','indonesia':'id','thailand':'th','malaysia':'my','singapore':'sg','israel':'il',
+  'turkey':'tr','türkiye':'tr','greece':'gr','poland':'pl','czech republic':'cz','czechia':'cz',
+  'slovakia':'sk','hungary':'hu','romania':'ro','ukraine':'ua','russia':'ru','estonia':'ee',
+  'latvia':'lv','lithuania':'lt','luxembourg':'lu','iceland':'is','malta':'mt','croatia':'hr',
+  'serbia':'rs','slovenia':'si','albania':'al','lebanon':'lb','egypt':'eg','nigeria':'ng',
+  'kenya':'ke','ghana':'gh','zimbabwe':'zw',
+};
+function getFlagHtml(country) {
+  const iso = COUNTRY_ISO[(country || '').toLowerCase().trim()];
+  return iso ? `<span class="fi fi-${iso}" title="${country}"></span>` : '';
+}
+function inferContest(title) {
+  return /bootblack/i.test(title || '') ? 'IMBB' : 'IML';
+}
+function parseCSV(raw) {
+  const rows = []; let inQ = false, cur = '', fields = [];
+  for (let i = 0; i < raw.length; i++) {
+    const c = raw[i];
+    if (c==='"') { if (inQ&&raw[i+1]==='"') {cur+='"';i++;} else inQ=!inQ; }
+    else if (c===','&&!inQ) { fields.push(cur); cur=''; }
+    else if (c==='\n'&&!inQ) { fields.push(cur); if(fields.some(Boolean))rows.push(fields); fields=[];cur=''; }
+    else if (c!=='\r') cur+=c;
+  }
+  if (cur||fields.length){fields.push(cur);if(fields.some(Boolean))rows.push(fields);}
+  return rows;
+}
+
+/* ── Semaphore queue — max 4 concurrent Drive thumbnail fetches ──
+   Prevents burst-rate failures while keeping progress fast.
+   Each slot is held until the image settles (load, error, or watchdog). */
+class SemaphoreQueue {
+  constructor(max) { this._max = max; this._n = 0; this._q = []; }
+  run(fn) {
+    return new Promise((res, rej) => {
+      this._q.push({ fn, res, rej });
+      this._tick();
+    });
+  }
+  _tick() {
+    while (this._n < this._max && this._q.length) {
+      const { fn, res, rej } = this._q.shift();
+      this._n++;
+      fn().then(v => { this._n--; res(v); this._tick(); },
+                e => { this._n--; rej(e); this._tick(); });
+    }
+  }
+}
+const _imgQ = new SemaphoreQueue(4);
+
+/* Queue one card's photo load.  Each call occupies one slot until settled. */
+function queueImg(photoDiv, primaryUrl, fallbackUrl) {
+  _imgQ.run(() => new Promise(done => loadOne(photoDiv, primaryUrl, fallbackUrl, false, done)));
+}
+
+/* Load a single URL into photoDiv, retry with fallback on failure.
+   Always creates a fresh <img> element — never reuses one with a cached
+   failure.  Handlers registered BEFORE src assignment to avoid race. */
+function loadOne(photoDiv, url, fallbackUrl, isFallback, done) {
+  photoDiv.innerHTML = '';           /* clear previous content / img */
+  const img = document.createElement('img');
+  photoDiv.appendChild(img);        /* must be in DOM before src for Chrome */
+
+  let settled = false;
+  const succeed = () => {
+    if (settled) return; settled = true;
+    clearTimeout(wd);
+    done();
+  };
+  const fail = () => {
+    if (settled) return; settled = true;
+    clearTimeout(wd);
+    if (!isFallback && fallbackUrl && url !== fallbackUrl) {
+      loadOne(photoDiv, fallbackUrl, null, true, done);   /* try w400 */
+    } else {
+      photoDiv.innerHTML = '<div class="yb-placeholder">&#x1F3C5;</div>';
+      done();
+    }
+  };
+
+  img.addEventListener('load',  succeed, { once: true });
+  img.addEventListener('error', fail,    { once: true });
+  const wd = setTimeout(fail, 20000);  /* 20-second safety net */
+
+  img.src = url;
+
+  /* Sync check: browser may mark img.complete before async events fire */
+  if (img.complete) {
+    if (img.naturalWidth > 0) succeed();
+    else                       fail();
+  }
+}
+
+/* ── Build a single card ── */
+function buildCard(c) {
+  const card = document.createElement('div');
+  card.className = `yb-card ${c.contest === 'IMBB' ? 'imbb' : 'iml'}`;
+
+  /* Photo container — aspect-ratio enforced by CSS */
+  const photoDiv = document.createElement('div');
+  photoDiv.className = 'yb-photo';
+
+  if (c.photoUrl) {
+    queueImg(photoDiv, c.photoUrl, c.photoFallback);
+  } else {
+    photoDiv.innerHTML = '<div class="yb-placeholder">&#x1F3C5;</div>';
+  }
+
+  /* Info */
+  const info = document.createElement('div');
+  info.className = 'yb-info';
+
+  const nameRow = document.createElement('div');
+  nameRow.className = 'yb-name-row';
+  const flagHtml = getFlagHtml(c.country);
+  if (flagHtml) {
+    const fw = document.createElement('span');
+    fw.className = 'yb-flag';
+    fw.innerHTML = flagHtml;
+    nameRow.appendChild(fw);
+  }
+  const nameEl = document.createElement('span');
+  nameEl.className = 'yb-name';
+  nameEl.textContent = c.name;
+  nameRow.appendChild(nameEl);
+
+  const titleEl = document.createElement('div');
+  titleEl.className = 'yb-title';
+  titleEl.textContent = c.title;
+
+  info.appendChild(nameRow);
+  info.appendChild(titleEl);
+  card.appendChild(photoDiv);
+  card.appendChild(info);
+  return card;
+}
+
+/* ── Render both grids ── */
+function renderYearbook(contestants) {
+  /* Sort by country then name (case-insensitive) regardless of source */
+  contestants = [...contestants].sort((a, b) => {
+    const ca = (a.country || '').toLowerCase();
+    const cb = (b.country || '').toLowerCase();
+    if (ca !== cb) return ca < cb ? -1 : 1;
+    const na = (a.name || '').toLowerCase();
+    const nb = (b.name || '').toLowerCase();
+    return na < nb ? -1 : na > nb ? 1 : 0;
+  });
+
+  const imbb = contestants.filter(c => c.contest === 'IMBB');
+  const iml  = contestants.filter(c => c.contest === 'IML');
+
+  const edition = (typeof IML_NUMBER!=='undefined' && typeof IML_YEAR!=='undefined')
+    ? `IMLBB #${IML_NUMBER} · ${IML_YEAR}` : 'IMLBB 2026';
+
+  document.getElementById('imbb-subtitle').textContent =
+    `${edition}  ·  ${imbb.length} contestant${imbb.length!==1?'s':''}`;
+  document.getElementById('iml-subtitle').textContent =
+    `${edition}  ·  ${iml.length} contestant${iml.length!==1?'s':''}`;
+
+  const imbbGrid = document.getElementById('imbb-grid');
+  const imlGrid  = document.getElementById('iml-grid');
+  imbbGrid.innerHTML = '';
+  imlGrid.innerHTML  = '';
+
+  imbb.forEach(c => imbbGrid.appendChild(buildCard(c)));
+  iml.forEach(c  => imlGrid.appendChild(buildCard(c)));
+
+  document.getElementById('status').style.display = 'none';
+  document.getElementById('yearbook-doc').style.display = 'block';
+}
+
+/* ══════════════════════════════════════════
+   EMBEDDED SNAPSHOT  (contest inferred from title)
+══════════════════════════════════════════ */
+const EMBEDDED_RAW = [
+  /* ── IMBB (by country → name) ── */
+  {name:"Jimmy Basset",      title:"Northeast Drummer Bootblack 2017",          fileId:"1D0dGZHlV_PnTKZ8DYMdL4Ewla3WGBS61",  country:"Germany"},
+  {name:"Atlas Rose",        title:"Route 66 Bootblack 2025",                  fileId:"1UoC4Di2LxbLRye4DdszfrZaNaZJhlQfU",  country:"USA"},
+  {name:"Pup Verde",         title:"Texas Bootblack",                          fileId:"15as84dthtt0HYqVSWoP9usQcml3GaZnq",  country:"USA"},
+
+  /* ── IML (by country → name) ── */
+  /* Australia */
+  {name:"BB",                title:"Laird Leatherman 2025",                    fileId:"1aCrpqVaPdKW-R-c7ezlzQkoQQXhwQIwd",  country:"Australia"},
+  {name:"Jacob Harland",     title:"Mr Queensland Leather 2025",               fileId:"1bybWtWbKAAdIc33VzZOWlEKdJiqnlNT7",  country:"Australia"},
+  {name:"Liam Clark",        title:"Mr Australian Leather 2025",               fileId:"1ZYKl1FVSdw8BfNHK9mGwIobtiI4zHDWB",  country:"Australia"},
+  {name:"Luis Beltran",      title:"Sydney Mr Leather 2025",                   fileId:"1lnSU6XzI-Vr0ytMBswuOWeRvYvb0y1BP",  country:"Australia"},
+  {name:"Pendragon Nic",     title:"Pride of the Hide 2023",                   fileId:"111XTB8aDPTL5xLwyiEigFzhwBd7EpowE",  country:"Australia"},
+  /* Brazil */
+  {name:"Renan Botelho",     title:"Mister Fetish Brazil 2025",                fileId:"1la6kKzHtJTc88oSKG-htKB4A32HvYvdo",  country:"Brazil"},
+  /* Canada */
+  {name:"AntoineINCuir",     title:"M. Cuir Montréal 2025",                    fileId:"1SkucDLc1az7eDxJm_i8vDWJN0chgEcey",  country:"Canada"},
+  /* Colombia */
+  {name:"Jaiver Amador",     title:"Mr. Colombia Leather 2026",                fileId:"1f7bp-dgTJp4r0ClXn06nfoZ7BcewVkkl",  country:"Colombia"},
+  /* Germany */
+  {name:"Andreas",           title:"Bavarian Mister Fetish 2025",              fileId:"1vNPOs6bKL7vxxlcjPfDJT-7GGFzh8V3P",  country:"Germany"},
+  {name:"Shkody",            title:"Mr. Fetish Germany 2026",                  fileId:"1Qw8xbQES3-ggsIzk2nR1qbYjEOv58MB2",  country:"Germany"},
+  {name:"Stefan Rixdorf",    title:"Mister Leather Berlin 2025",               fileId:"1XV9xHZlKNV3TUrG5NxZJm5QWJZaPWd_v",  country:"Germany"},
+  {name:"Stefan Schäfer",    title:"Mr Fetish Germany 2025",                   fileId:"1yesKkAefGPKfbRys_ISypuMapA_cqtat",  country:"Germany"},
+  /* Ireland */
+  {name:"Jamie RYan",        title:"Mister Leather Europe 2026",               fileId:"1pq8E3FXpkI5C_Zb1yiPy-SvYuu6p0WeY",  country:"Ireland"},
+  /* Italy */
+  {name:"Kai",               title:"Italian Fetishman of the Year 2025",       fileId:"1dXKZwLvHtWMGG_Bz2h7i5fiXoVEnrqEX",  country:"Italy"},
+  /* Mexico */
+  {name:"Daddy Keith",       title:"Mr Leather Vallarta 2025",                 fileId:"1B1G4Cz9dqDo4KWh1WOdfmckySdp2swjo",  country:"Mexico"},
+  /* Netherlands */
+  {name:"Mees",              title:"Mister Leather Netherlands 2025",          fileId:"1Rb7eBvPc8UhumXDTN497_uK0_fvqFkwl",  country:"Netherlands"},
+  /* Spain */
+  {name:"Chuso",             title:"Mister Leather Spain 2025",                fileId:"1Mftsdl_4FsAY300UlJVqiCABf9ysQh-B",  country:"Spain"},
+  /* USA */
+  {name:"Abe Villarreal",    title:"Mr. RGV Leather 2025",                     fileId:"1UtYkpFnpOiWFhy8HJ0GttRRdwtJgBDcM",  country:"USA"},
+  {name:"Ames Robin",        title:"Mx Atlanta Eagle 2024",                    fileId:"1cd5p0PGE38LJ5vfNuDVE1htiT7h9HrRm",  country:"USA"},
+  {name:"Atlas",             title:"Mr. Michigan Leather 2026",                fileId:"1ejwYRi9HffTOc1em5WD4g7WEC2B2S1OQ",  country:"USA"},
+  {name:"Austin Abernathy",  title:"Mr. Firedancer 2024",                      fileId:"128BfEIe7qEklVKCsE65Sdy_-9xCh8ET0",  country:"USA"},
+  {name:"Bear",              title:"Mr. Bolt Leather 2026",                    fileId:"1Y0J_lZDS855y78wueB-QK_Q5DIkuDroU",  country:"USA"},
+  {name:"Ben C",             title:"Mr Anvil Phoenix 2025",                    fileId:"1AGW4MXQNnInCcMS2D__g2CKmPX3QaRlt",  country:"USA"},
+  {name:"Boy Evan",          title:"Mr. Keystone Leather 2024",                fileId:"1m2QbzS2YgyVV80ZTKm-6F4jl67Ve2Buz",  country:"USA"},
+  {name:"boy nick",          title:"Iowa Leather 2026",                        fileId:"",                                   country:"USA"},
+  {name:"Brad Speck",        title:"Mr. Cleveland Leather 2025",               fileId:"12ZbxoL-YKoEuBvwV3pKX7bQc6PtkLSTY",  country:"USA"},
+  {name:"Champ",             title:"Mr Eagle NYC 2026",                        fileId:"1uIxU4_k3J0I5mhzKLW80cH3drjOfTMK7",  country:"USA"},
+  {name:"Daddy LeVan",       title:"Mr. Louisiana Leather 2026",               fileId:"1yGPR1xZE8VkioKCUEMUelPOR-52EQ3nH",  country:"USA"},
+  {name:"Dat Ashe",          title:"Mr. Texas Leather 2025",                   fileId:"1C3gI5r_UUTOxfD0spXAuZQvV0WkWZjVy",  country:"USA"},
+  {name:"Denzel Belin",      title:"Mr. Twin Cities Leather 2026",             fileId:"1K5zKqlZ0GVCM8ad3Q_5pbQr8ov636YlX",  country:"USA"},
+  {name:"Derek McCandless",  title:"Mr. Fire Island Leather 2025",             fileId:"1zIMVokbKShCAqJ0l3BFoNd1d_CqGottX",  country:"USA"},
+  {name:"Doc Elite",         title:"Mr. Reno Leather 2025-2026",               fileId:"1oS51FSKqcwKL_GSeuJ4MaBrZTYg5RQNg",  country:"USA"},
+  {name:"Eric the Red",      title:"Mr New England Leather 2026",              fileId:"1gxAJRHzavQPcMP_RHAbgGPgAOg-7X3aC",  country:"USA"},
+  {name:"Erick Fletes",      title:"Mr. Toolshed Palm Springs 2026",           fileId:"1_BNMUvGzgM_AGdpTY72IDvQJ6x-W8IVT",  country:"USA"},
+  {name:"Gray Gibson",       title:"Mr. SF Eagle Leather 2026",                fileId:"1rNnzrzB-h9RsmUQYKKz2SzdmaUGGeFmK",  country:"USA"},
+  {name:"Honey Davenport",   title:"Mr. Palm Springs Leather 2026",            fileId:"1awvol_VgT8-VMEOHPzbl8yV5I4w6TkH3",  country:"USA"},
+  {name:"Hottesome",         title:"Mr Bullet Leather 2025",                   fileId:"1FismLQlBiutDuGi0_dJ7VEU1ZmR_HEMq",  country:"USA"},
+  {name:"Isaac Cardona",     title:"Mr. Alamo City Leather 2025",              fileId:"1M18-5zFDVNDduSvy94GgzAdMC6_LEj65",  country:"USA"},
+  {name:"Jafar Jaafar",      title:"Mr. Eagle Wilton Manors 2026",             fileId:"1xQp0m6XljDq9wWj1YDPWz5OXwu77cKOh",  country:"USA"},
+  {name:"James Phillips",    title:"Mr Fireside Daddy 2025",                   fileId:"17Ok9gzIrqZMjhp63m_o29wmpYvHpxjIo",  country:"USA"},
+  {name:"JCub Hart",         title:"Mr Ohio Leather 2025",                     fileId:"1QozsDtrB4QZa6lR7-A483vqJqXbIgh1C",  country:"USA"},
+  {name:"Jeff Silver",       title:"Mr Providence Eagle 2026",                 fileId:"16YwT8WUoY-B-70VviCcOTYyQ9yNkEgwF",  country:"USA"},
+  {name:"Jesse Nicholson",   title:"Mr. Ramrod 2026 (Ft Lauderdale)",          fileId:"1NHGAINHgGhY9y0GGBYAU53E0TM-E3rW9",  country:"USA"},
+  {name:"Johnny Rodriguez",  title:"SF Team Friendly Ambassador 2026",         fileId:"1gwzNApFEH0WSplK93BxBGxraY1OyLYGh",  country:"USA"},
+  {name:"Kevin",             title:"Mr. Missouri Leather 2025",                fileId:"1ai7XvjjQGQvcaI6GxPxhogLi6H-qcvym",  country:"USA"},
+  {name:"Kevin",             title:"Mr. San Diego Leather 2025",               fileId:"17COeKsM1wegYMCTQtgfAZ3TkhhOBY_S-",  country:"USA"},
+  {name:"Larry Foster",      title:"Mr. Buckwood Leather 2025",                fileId:"1sjJrn9mwJlBwdTlfrBoaC1GshWUYuBja",  country:"USA"},
+  {name:"Mason Volt",        title:"Mr. Kentucky Leather 2025",                fileId:"1tvq6D6-bwdu-X7wXzbQX535A1b7h7F66",  country:"USA"},
+  {name:"Master Adam",       title:"Mr Nu Towne Phoenix 2025",                 fileId:"1xmT550WtKiniabrVcAyybC0OFkuo1IaW",  country:"USA"},
+  {name:"Matt Swanson",      title:"Mr. GNI Leather 2025",                     fileId:"1UduMFlYc3r1BEGvyaRR6-FJiDQWiNHYn",  country:"USA"},
+  {name:"Nerdy Otter",       title:"Mr. Dallas Eagle 2025",                    fileId:"1otJfknD9ggb5g2Vvn2gozLpeAAG4BcmC",  country:"USA"},
+  {name:"Noble LaPier",      title:"Mr. GayDays Leather 2025",                 fileId:"1i4IN1YjVgs2fUgg76PleWX0g8y2Pm3v_",  country:"USA"},
+  {name:"Paul Gosselin",     title:"Mr. CMEN Leather 2025",                    fileId:"1lHzOkdJPYcHcUyEs3PttOsYf4ZOIWUdF",  country:"USA"},
+  {name:"Red Panda Matt",    title:"Mr. Mayhem Leather 2025",                  fileId:"13P5opLA5iPufS71h8i3BUfr0a6K7P2Y7",  country:"USA"},
+  {name:"Richard Smoot",     title:"Mr. STP Leather 2026",                     fileId:"1MKtSPqQ8jgmXW1uCCwFuJ-0oNmmH9673",  country:"USA"},
+  {name:"Rodney Nettles",    title:"MX.AFCLG 2024/2025",                       fileId:"1dV1Tixe5Q9Z6k-7-XB7Sx2QioSxwo4Dj",  country:"USA"},
+  {name:"Scotty Grefseng",   title:"Mr. America's Finest City Leather 2024/2025",fileId:"1HqdL5q2cMixXlyjSbc4nkW_h6qJUUMAu",country:"USA"},
+  {name:"Sgt. Alex",         title:"Mr. Cincinnati Leather '25",               fileId:"1YtmTF7hoQMiGf-z1-jiDoAW0dDIJ8Cgg",  country:"USA"},
+  {name:"Shane",             title:"Mr Eagle Portland 2025",                   fileId:"1RKv2a4xJ3Fb8a4bT0bdgP32ww4itD85p",  country:"USA"},
+  {name:"Sir Don",           title:"Mr Virginia Leather 2025",                 fileId:"1i6MGBIvqm_7WuOgIxMM66aNaejIwKVlr",  country:"USA"},
+  {name:"Sir Jim",           title:"R&J Leather Mr. Classic Leather 2025",     fileId:"1xJ88AGb0Nj8VIn54CXEY9IhSA3kQMX4m",  country:"USA"},
+  {name:"SwitchBlade",       title:"Mr. NJ Leather 2025",                      fileId:"1ZOrYo8-cVAccOZ2Fbz6SPR5TSkMXO7Kg",  country:"USA"},
+  {name:"Titan Fenrir",      title:"Mr. Rt. 66 Leather 2025",                  fileId:"16Po77115a1mNH5xJ1i7lp3pqUF7isQDy",  country:"USA"},
+];
+
+/* ══════════════════════════════════════════
+   INIT — single render, no double-render cache poisoning
+   Strategy: try live sheet first (8-second timeout).
+   Fall back to embedded snapshot if fetch fails or times out.
+   renderYearbook() is called EXACTLY ONCE.
+══════════════════════════════════════════ */
+async function init() {
+  const embedded = EMBEDDED_RAW.filter(c => c.name).map(c => ({
+    name:          c.name,
+    title:         c.title,
+    country:       c.country || '',
+    contest:       inferContest(c.title),
+    photoUrl:      c.fileId ? drivePhoto(c.fileId, 'w800') : null,
+    photoFallback: c.fileId ? drivePhoto(c.fileId, 'w400') : null,
+  }));
+
+  let contestants = embedded;
+
+  try {
+    const sheetUrl = `https://docs.google.com/spreadsheets/d/${CONTESTANTS_SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(CONTESTANTS_SHEET_TAB)}`;
+    const ctrl     = new AbortController();
+    const timeout  = setTimeout(() => ctrl.abort(), 8000);
+    const res = await fetch(sheetUrl, { signal: ctrl.signal });
+    clearTimeout(timeout);
+
+    if (res.ok) {
+      const rows = parseCSV(await res.text());
+      if (rows.length >= 2) {
+        const live = rows.slice(1)
+          .filter(r => (r[28]||'').trim().toUpperCase() === 'YES')
+          .map(r => ({
+            name:          (r[2] ||'').trim(),
+            title:         (r[3] ||'').trim(),
+            country:       (r[23]||'').trim(),
+            contest:       (r[24]||'').trim().toUpperCase() || inferContest((r[3]||'').trim()),
+            photoUrl:      drivePhoto((r[5]||'').trim(), 'w800'),
+            photoFallback: drivePhoto((r[5]||'').trim(), 'w400'),
+          }))
+          .filter(c => c.name);
+        if (live.length) contestants = live;
+      }
+    }
+  } catch(e) {
+    console.log('[Yearbook] Live fetch unavailable — using embedded snapshot.');
+  }
+
+  /* ONE render — Drive thumbnail URLs are requested for the first time here */
+  renderYearbook(contestants);
+}
+
+init();
+</script>
+</body>
+</html>

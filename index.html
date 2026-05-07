@@ -2039,6 +2039,15 @@
   " onmouseover="this.style.background='#2260cc'" onmouseout="this.style.background='var(--blue)'">
     &#x1F5A8;&nbsp; Export PDF
   </button>
+  <button id="print-sec23-btn" onclick="printSections23(this)" style="
+    background:#b8860b; border:none; color:var(--white); cursor:pointer;
+    font-size:10px; letter-spacing:2px; text-transform:uppercase;
+    padding:0 16px; height:32px; margin-left:8px;
+    font-family:var(--font); transition:background .2s;
+  " onmouseover="this.style.background='#d4a017'" onmouseout="this.style.background='#b8860b'"
+     title="Export Contestants + Judges pages only">
+    &#x1F5A8;&nbsp; Sec 2+3 PDF
+  </button>
 </nav>
 <div id="photo-status-bar"></div>
 
@@ -3413,6 +3422,34 @@ async function printWhenReady(btn) {
     await new Promise(r => setTimeout(r, 400));
   }
   if (btn) { btn.innerHTML = orig; btn.disabled = false; }
+  window.print();
+}
+
+/* ── Print sections 2 + 3 only (Contestants + Judges) ── */
+async function printSections23(btn) {
+  const keep = new Set(['contestants', 'imbb-judges', 'judges', 'tallymasters']);
+  // Collect elements to temporarily hide
+  const saved = [];
+  document.querySelectorAll('section').forEach(el => {
+    if (!keep.has(el.id)) saved.push({ el, v: el.style.display });
+  });
+  const lettersEl = document.getElementById('letters-container');
+  if (lettersEl) saved.push({ el: lettersEl, v: lettersEl.style.display });
+  // Hide them
+  saved.forEach(({ el }) => { el.style.display = 'none'; });
+  // Restore after print dialog closes
+  const restore = () => {
+    saved.forEach(({ el, v }) => { el.style.display = v; });
+    window.removeEventListener('afterprint', restore);
+    if (btn) { btn.innerHTML = btn._orig; btn.disabled = false; }
+  };
+  window.addEventListener('afterprint', restore);
+  // Wait for photos then print
+  if (btn) { btn._orig = btn.innerHTML; btn.innerHTML = '&#x23F3; Preparing&hellip;'; btn.disabled = true; }
+  const deadline = Date.now() + 90_000;
+  while (!_photoTracker.isReady() && Date.now() < deadline) {
+    await new Promise(r => setTimeout(r, 400));
+  }
   window.print();
 }
 
