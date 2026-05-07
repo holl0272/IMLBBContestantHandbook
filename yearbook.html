@@ -126,9 +126,8 @@
     /* ─── Photo grid ─── */
     .photo-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px 10px;
-      padding-bottom: 0.1in;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px 6px;
     }
 
     /* ─── Card ─── */
@@ -223,7 +222,7 @@
       vertical-align: top;
     }
 
-    /* Footer line at very bottom of print output */
+    /* Footer line at the bottom of the on-screen view (hidden in print) */
     #yb-footer {
       width: 5.5in;
       margin: 18px auto 24px;
@@ -247,7 +246,7 @@
       }
 
       html, body { background: #0a0a0a !important; }
-      #top-bar, #status { display: none !important; }
+      #top-bar, #status, #yb-footer { display: none !important; }
 
       /* Remove screen padding — @page margin takes over */
       #yearbook-doc { padding: 0; }
