@@ -28,7 +28,7 @@
 
     /* ─── Top bar ─── */
     #top-bar {
-      width: 8.5in;
+      width: 5.5in;
       margin: 18px auto 10px;
       display: flex;
       align-items: center;
@@ -57,7 +57,7 @@
     #top-bar button:hover { background: #f0c050; }
 
     #status {
-      width: 8.5in;
+      width: 5.5in;
       margin: 30px auto;
       text-align: center;
       font-size: 11px;
@@ -67,9 +67,9 @@
 
     /* ─── Main document flow ─── */
     #yearbook-doc {
-      width: 8.5in;
+      width: 5.5in;
       margin: 0 auto;
-      padding: 0 0.46in;
+      padding: 0 0.3in;
     }
 
     /* ─── Section header (IMBB or IML) ─── */
@@ -126,7 +126,7 @@
     /* ─── Photo grid ─── */
     .photo-grid {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 12px 10px;
       padding-bottom: 0.1in;
     }
@@ -225,7 +225,7 @@
 
     /* Footer line at very bottom of print output */
     #yb-footer {
-      width: 8.5in;
+      width: 5.5in;
       margin: 18px auto 24px;
       text-align: center;
       font-size: 7px;
@@ -238,7 +238,7 @@
 
     /* ─── Print ─── */
     @media print {
-      @page { size: 8.5in 11in portrait; margin: 0.38in 0.46in; }
+      @page { size: 5.5in 8.5in; margin: 0.3in 0.3in; }
 
       *, *::before, *::after {
         -webkit-print-color-adjust: exact !important;
