@@ -200,7 +200,7 @@ const EVENTS = [
     day: 'Thursday and Friday',
     time: 'Various',
     callTime: 'NONE',
-    venue: 'Congress Plaza Hotel - Lincoln Room',
+    venue: 'Congress Plaza Hotel - Victorian and Columbus',
     badge: 'OPTIONAL',
     contest: 'BOTH',
     leftCol: [
