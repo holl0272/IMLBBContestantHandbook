@@ -28,7 +28,7 @@
 
     /* ─── Top bar ─── */
     #top-bar {
-      width: 8.5in;
+      width: 5.5in;
       margin: 18px auto 10px;
       display: flex;
       align-items: center;
@@ -57,7 +57,7 @@
     #top-bar button:hover { background: #f0c050; }
 
     #status {
-      width: 8.5in;
+      width: 5.5in;
       margin: 30px auto;
       text-align: center;
       font-size: 11px;
@@ -67,14 +67,14 @@
 
     /* ─── Main document flow ─── */
     #yearbook-doc {
-      width: 8.5in;
+      width: 5.5in;
       margin: 0 auto;
-      padding: 0 0.46in;
+      padding: 0 0.3in;
     }
 
     /* ─── Section header (IMBB or IML) ─── */
     .section-header {
-      padding: 0.28in 0 0.18in;
+      padding: 0.08in 0 0.05in;
       text-align: center;
       /* Keep the header with the first row of cards below it when printing */
       break-after: avoid;
@@ -88,7 +88,7 @@
       text-transform: uppercase;
       padding: 2px 12px;
       border-radius: 20px;
-      margin-bottom: 6px;
+      margin-bottom: 3px;
     }
     .section-header--imbb .section-badge {
       background: var(--gold-dim);
@@ -101,23 +101,23 @@
       border: 1px solid rgba(27,79,168,.45);
     }
     .section-title {
-      font-size: 19px;
+      font-size: 14px;
       font-weight: 700;
-      letter-spacing: 7px;
+      letter-spacing: 6px;
       text-transform: uppercase;
       color: var(--white);
     }
     .section-subtitle {
-      font-size: 8px;
+      font-size: 7.5px;
       letter-spacing: 2px;
       text-transform: uppercase;
       color: var(--muted);
-      margin-top: 4px;
+      margin-top: 2px;
     }
     .section-rule {
       height: 2px;
       border: none;
-      margin: 10px auto 0;
+      margin: 5px auto 0;
       width: 100%;
     }
     .section-header--imbb .section-rule { background: var(--gold); }
@@ -127,8 +127,7 @@
     .photo-grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      gap: 12px 10px;
-      padding-bottom: 0.1in;
+      gap: 4px 6px;
     }
 
     /* ─── Card ─── */
@@ -142,12 +141,12 @@
     }
 
     /*
-     * Photo: strict 3:4, object-fit:cover so every image is identical size/crop.
-     * object-position: top ensures faces stay visible when portrait is tall.
+     * Photo: 4:5 portrait, object-fit:cover so every image is identical
+     * size/crop.  object-position: top ensures faces stay visible.
      */
     .yb-photo {
       width: 100%;
-      aspect-ratio: 3 / 4;
+      aspect-ratio: 4 / 5;
       background: var(--card-bg);
       border-radius: 3px;
       overflow: hidden;
@@ -171,7 +170,7 @@
       color: #2a2a2a;
     }
 
-    .yb-info { padding: 5px 2px 0; min-width: 0; }
+    .yb-info { padding: 3px 2px 0; min-width: 0; }
 
     .yb-name-row {
       display: flex;
@@ -223,9 +222,9 @@
       vertical-align: top;
     }
 
-    /* Footer line at very bottom of print output */
+    /* Footer line at the bottom of the on-screen view (hidden in print) */
     #yb-footer {
-      width: 8.5in;
+      width: 5.5in;
       margin: 18px auto 24px;
       text-align: center;
       font-size: 7px;
@@ -238,7 +237,7 @@
 
     /* ─── Print ─── */
     @media print {
-      @page { size: 8.5in 11in portrait; margin: 0.38in 0.46in; }
+      @page { size: 5.5in 8.5in; margin: 0.3in 0.3in; }
 
       *, *::before, *::after {
         -webkit-print-color-adjust: exact !important;
@@ -247,7 +246,7 @@
       }
 
       html, body { background: #0a0a0a !important; }
-      #top-bar, #status { display: none !important; }
+      #top-bar, #status, #yb-footer { display: none !important; }
 
       /* Remove screen padding — @page margin takes over */
       #yearbook-doc { padding: 0; }
@@ -255,7 +254,7 @@
       /* IML table follows IMBB — a little top breathing room on the first page.
          On subsequent IML pages the thead repeats flush to the page margin. */
       .yb-section-table + .yb-section-table .section-header--iml {
-        padding-top: 0.18in;
+        padding-top: 0.06in;
       }
     }
   </style>
@@ -510,6 +509,24 @@ function renderYearbook(contestants) {
 
   document.getElementById('status').style.display = 'none';
   document.getElementById('yearbook-doc').style.display = 'block';
+
+  /* Cards are now in the flow with their final widths — shrink any name
+     whose text overflows its slot so the entire name fits beside the flag. */
+  requestAnimationFrame(fitNames);
+}
+
+/* ── Shrink each name until it fits its card.  Bold 9.5px is the design
+   default; we step down to as low as 6.5px before letting the ellipsis
+   in CSS take over for genuinely huge names. ── */
+function fitNames() {
+  document.querySelectorAll('.yb-name').forEach(el => {
+    let fs = 9.5;
+    el.style.fontSize = fs + 'px';
+    while (el.scrollWidth > el.clientWidth && fs > 6.5) {
+      fs -= 0.25;
+      el.style.fontSize = fs + 'px';
+    }
+  });
 }
 
 /* ══════════════════════════════════════════
