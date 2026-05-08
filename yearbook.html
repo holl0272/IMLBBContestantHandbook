@@ -500,13 +500,14 @@ function renderYearbook(contestants) {
   const imbb = contestants.filter(c => c.contest === 'IMBB');
   const iml  = contestants.filter(c => c.contest === 'IML');
 
-  const edition = (typeof IML_NUMBER!=='undefined' && typeof IML_YEAR!=='undefined')
-    ? `IMLBB #${IML_NUMBER} · ${IML_YEAR}` : 'IMLBB 2026';
+  const year       = (typeof IML_YEAR   !== 'undefined') ? IML_YEAR   : 2026;
+  const imlEdition = (typeof IML_NUMBER  !== 'undefined') ? `IML #${IML_NUMBER}`  : 'IML';
+  const imbbEd     = (typeof IMBB_NUMBER !== 'undefined') ? `IMBB #${IMBB_NUMBER}` : 'IMBB';
 
   document.getElementById('imbb-subtitle').textContent =
-    `${edition}  ·  ${imbb.length} contestant${imbb.length!==1?'s':''}`;
+    `${imbbEd} · ${year}  ·  ${imbb.length} contestant${imbb.length!==1?'s':''}`;
   document.getElementById('iml-subtitle').textContent =
-    `${edition}  ·  ${iml.length} contestant${iml.length!==1?'s':''}`;
+    `${imlEdition} · ${year}  ·  ${iml.length} contestant${iml.length!==1?'s':''}`;
 
   const imbbGrid = document.getElementById('imbb-grid');
   const imlGrid  = document.getElementById('iml-grid');

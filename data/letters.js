@@ -66,7 +66,7 @@ const LETTERS = [
   {
     id: 'letter-den-daddy',
     photo: 'https://drive.google.com/file/d/1HUnMazEVrBcb56m6AQ-YkgkeF74PoXoF/view?usp=drive_link',   // paste Google Drive file ID here once uploaded
-    title: 'Den Daddy Miguel',
+    title: 'Miguel Torres',
     eyebrow: 'A message from your Den Daddy',
     paragraphs: [
       'To the IMLBB 2026 Class,',

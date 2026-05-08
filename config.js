@@ -23,8 +23,9 @@
 /* ─────────────────────────────────────────────
    1.  EDITION
 ───────────────────────────────────────────── */
-const IML_NUMBER = 48;          // e.g. 48 → "IMLBB #48"
-const IML_YEAR   = 2026;        // 4-digit year
+const IML_NUMBER  = 48;         // IML edition number  → "IML #48"
+const IMBB_NUMBER = 34;         // IMBB edition number → "IMBB #34"
+const IML_YEAR    = 2026;       // 4-digit year
 
 /* ─────────────────────────────────────────────
    2.  VENUE

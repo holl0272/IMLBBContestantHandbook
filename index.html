@@ -3029,7 +3029,7 @@ function getFlagHtml(country) {
 function applyConfig() {
   const year = IMLBB_YEAR;
   const num  = IMLBB_NUMBER;
-  const edition = `IMLBB #${num}`;
+  const edition = `IML #${num}`;
 
   document.title = `${edition} // ${year} Contestant Handbook`;
 
@@ -4180,10 +4180,12 @@ function renderSchedulePages() {
   const imbbContainer = document.getElementById('imbb-schedule-container');
   if (!imlContainer && !imbbContainer) return;
 
-  const edition     = typeof IMLBB_NUMBER !== 'undefined' ? 'IMLBB #' + IMLBB_NUMBER : 'IMLBB';
+  const imlEdition  = typeof IMLBB_NUMBER !== 'undefined' ? 'IML #'  + IMLBB_NUMBER : 'IML';
+  const imbbEdition = typeof IMBB_NUMBER  !== 'undefined' ? 'IMBB #' + IMBB_NUMBER  : 'IMBB';
   const year        = typeof IMLBB_YEAR   !== 'undefined' ? IMLBB_YEAR : '';
   const city        = (typeof VENUE !== 'undefined' && VENUE.city) ? VENUE.city : 'Chicago';
-  const subtitleStr = edition + ' \u00b7 ' + city + ' \u00b7 ' + year;
+  const imlSubtitleStr  = imlEdition  + ' \u00b7 ' + city + ' \u00b7 ' + year;
+  const imbbSubtitleStr = imbbEdition + ' \u00b7 ' + city + ' \u00b7 ' + year;
 
   // Canonical day-group labels (in display order)
   const DAY_ORDER = [
@@ -4230,7 +4232,7 @@ function renderSchedulePages() {
     return (typeof computeCallTime === 'function') ? (computeCallTime(ev.time) || '') : '';
   }
 
-  function buildPage(pageTitle, eyebrow, events) {
+  function buildPage(pageTitle, eyebrow, events, subtitleStr) {
     // Group events into canonical days, preserving EVENTS array order within each day
     const grouped = {};
     for (const ev of events) {
@@ -4274,9 +4276,9 @@ function renderSchedulePages() {
   const imbbEvents = EVENTS.filter(e => e.contest === 'IMBB' || e.contest === 'BOTH');
 
   if (imlContainer)
-    imlContainer.innerHTML  = buildPage('IML \u00b7 At a Glance',  'Schedule Overview', imlEvents);
+    imlContainer.innerHTML  = buildPage('IML \u00b7 At a Glance',  'Schedule Overview', imlEvents,  imlSubtitleStr);
   if (imbbContainer)
-    imbbContainer.innerHTML = buildPage('IMBB \u00b7 At a Glance', 'Schedule Overview', imbbEvents);
+    imbbContainer.innerHTML = buildPage('IMBB \u00b7 At a Glance', 'Schedule Overview', imbbEvents, imbbSubtitleStr);
 }
 
 /* ══════════════════════════════════════════════════════════════

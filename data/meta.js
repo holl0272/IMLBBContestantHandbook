@@ -6,7 +6,8 @@
  * ╚══════════════════════════════════════════════════════════╝
  */
 
-const IMLBB_NUMBER = 48;    // e.g. 48 → "IMLBB #48"
+const IMLBB_NUMBER = 48;    // IML edition number  → "IML #48"
+const IMBB_NUMBER  = 34;    // IMBB edition number → "IMBB #34"
 const IMLBB_YEAR   = 2026;  // 4-digit year
 
 /**
@@ -40,4 +41,4 @@ const PHOTOS_BASE_URL = 'https://drive.google.com/thumbnail?sz=w400-h500&id=';
 // Bare file IDs in the `photo` field get this prefix automatically.
 // Full drive.google.com share URLs also work — the renderer extracts the ID.
 
-if (typeof module !== 'undefined') module.exports = { IMLBB_NUMBER, IMLBB_YEAR, PHOTOS_BASE_URL };
+if (typeof module !== 'undefined') module.exports = { IMLBB_NUMBER, IMBB_NUMBER, IMLBB_YEAR, PHOTOS_BASE_URL };
