@@ -509,6 +509,24 @@ function renderYearbook(contestants) {
 
   document.getElementById('status').style.display = 'none';
   document.getElementById('yearbook-doc').style.display = 'block';
+
+  /* Cards are now in the flow with their final widths — shrink any name
+     whose text overflows its slot so the entire name fits beside the flag. */
+  requestAnimationFrame(fitNames);
+}
+
+/* ── Shrink each name until it fits its card.  Bold 9.5px is the design
+   default; we step down to as low as 6.5px before letting the ellipsis
+   in CSS take over for genuinely huge names. ── */
+function fitNames() {
+  document.querySelectorAll('.yb-name').forEach(el => {
+    let fs = 9.5;
+    el.style.fontSize = fs + 'px';
+    while (el.scrollWidth > el.clientWidth && fs > 6.5) {
+      fs -= 0.25;
+      el.style.fontSize = fs + 'px';
+    }
+  });
 }
 
 /* ══════════════════════════════════════════
