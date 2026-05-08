@@ -141,12 +141,17 @@
     }
 
     /*
-     * Photo: square crop with object-fit:cover so every image is identical
-     * size.  object-position: top keeps faces visible.
+     * Photo: fixed 1.4in tall with object-fit:cover so every image is
+     * identical size.  object-position: top keeps faces visible.  Using
+     * an explicit inch height (rather than aspect-ratio) because Chrome's
+     * print engine doesn't always honor aspect-ratio inside a CSS grid,
+     * which lets a 5th row sneak onto each page.  Sized so exactly 4 rows
+     * of 5 cards fill a half-letter page when headers/footers are
+     * disabled in the browser print dialog.
      */
     .yb-photo {
       width: 100%;
-      aspect-ratio: 1 / 1;
+      height: 1.4in;
       background: var(--card-bg);
       border-radius: 3px;
       overflow: hidden;
@@ -248,8 +253,11 @@
       html, body { background: #0a0a0a !important; }
       #top-bar, #status, #yb-footer { display: none !important; }
 
-      /* Remove screen padding — @page margin takes over */
-      #yearbook-doc { padding: 0; }
+      /* Remove screen padding and let the doc fill the printable area —
+         keeping width: 5.5in here would overflow the @page 0.3in margin
+         and make Chrome scale every photo down, letting a 5th row sneak
+         onto each page. */
+      #yearbook-doc { padding: 0; width: auto; }
 
       /* IML table follows IMBB — a little top breathing room on the first page.
          On subsequent IML pages the thead repeats flush to the page margin. */
@@ -536,6 +544,7 @@ const EMBEDDED_RAW = [
   /* ── IMBB (by country → name) ── */
   {name:"Jimmy Basset",      title:"Northeast Drummer Bootblack 2017",          fileId:"1D0dGZHlV_PnTKZ8DYMdL4Ewla3WGBS61",  country:"Germany"},
   {name:"Atlas Rose",        title:"Route 66 Bootblack 2025",                  fileId:"1UoC4Di2LxbLRye4DdszfrZaNaZJhlQfU",  country:"USA"},
+  {name:"BootBlack Scottie J", title:"BootBlack, Ramrod Bar 2021-2026",         fileId:"1XKqZW2_q1NA8Vm4AxiFanZcj2Q_1lK9C",  country:"USA"},
   {name:"Pup Verde",         title:"Texas Bootblack",                          fileId:"15as84dthtt0HYqVSWoP9usQcml3GaZnq",  country:"USA"},
 
   /* ── IML (by country → name) ── */
