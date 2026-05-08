@@ -141,17 +141,18 @@
     }
 
     /*
-     * Photo: fixed 1.4in tall with object-fit:cover so every image is
+     * Photo: fixed 1.2in tall with object-fit:cover so every image is
      * identical size.  object-position: top keeps faces visible.  Using
      * an explicit inch height (rather than aspect-ratio) because Chrome's
-     * print engine doesn't always honor aspect-ratio inside a CSS grid,
-     * which lets a 5th row sneak onto each page.  Sized so exactly 4 rows
-     * of 5 cards fill a half-letter page when headers/footers are
-     * disabled in the browser print dialog.
+     * print engine doesn't always honor aspect-ratio inside a CSS grid.
+     * 1.2in keeps each card at ~1.5in so 4 rows leave ~1in of headroom
+     * on a half-letter page (Chrome breaks pages conservatively, so a
+     * tighter fit caused it to drop to 3 rows); a 5th row still can't
+     * fit, locking in the desired 4-rows-of-5 layout.
      */
     .yb-photo {
       width: 100%;
-      height: 1.4in;
+      height: 1.2in;
       background: var(--card-bg);
       border-radius: 3px;
       overflow: hidden;
