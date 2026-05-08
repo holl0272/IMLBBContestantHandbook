@@ -141,12 +141,12 @@
     }
 
     /*
-     * Photo: 4:5 portrait, object-fit:cover so every image is identical
-     * size/crop.  object-position: top ensures faces stay visible.
+     * Photo: square crop with object-fit:cover so every image is identical
+     * size.  object-position: top keeps faces visible.
      */
     .yb-photo {
       width: 100%;
-      aspect-ratio: 4 / 5;
+      aspect-ratio: 1 / 1;
       background: var(--card-bg);
       border-radius: 3px;
       overflow: hidden;
