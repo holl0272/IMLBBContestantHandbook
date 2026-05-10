@@ -880,80 +880,49 @@
       .c-name-row  { margin-bottom: 6pt !important; }
 
       /* ══════════════════════════════
-         IMBB JUDGES — section title + 3-per-page layout
-         s-header (0.52in) + margin (0.12in) + first page-block (10.36in) = 11in
+         IMBB JUDGES — page-block-header on every page replaces s-header
+         s-header hidden; first page-block is full 11in
       ══════════════════════════════ */
       #imbb-judges {
         padding: 0 !important;
         page-break-before: always !important;
         break-before: page !important;
       }
-      #imbb-judges > .s-header {
-        height: 0.52in !important;
-        padding: 0 !important;
-        margin-bottom: 0.12in !important;
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        justify-content: center !important;
-        text-align: center !important;
-      }
       #imbb-judges .page-block:first-child {
         page-break-before: avoid !important;
         break-before: avoid !important;
-        height: 10.36in !important;
-        min-height: 10.36in !important;
+        height: 11in !important;
+        min-height: 11in !important;
       }
 
       /* ══════════════════════════════
-         IML JUDGES — section title + 3-per-page layout
-         s-header (0.52in) + margin (0.12in) + first page-block (10.36in) = 11in
+         IML JUDGES — same as IMBB
       ══════════════════════════════ */
       #judges {
         padding: 0 !important;
         page-break-before: always !important;
         break-before: page !important;
       }
-      #judges > .s-header {
-        height: 0.52in !important;
-        padding: 0 !important;
-        margin-bottom: 0.12in !important;
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        justify-content: center !important;
-        text-align: center !important;
-      }
       #judges .page-block:first-child {
         page-break-before: avoid !important;
         break-before: avoid !important;
-        height: 10.36in !important;
-        min-height: 10.36in !important;
+        height: 11in !important;
+        min-height: 11in !important;
       }
 
       /* ══════════════════════════════
-         TALLYMASTERS — mirrors judges layout
+         TALLYMASTERS — same as IMBB/IML judges
       ══════════════════════════════ */
       #tallymasters {
         padding: 0 !important;
         page-break-before: always !important;
         break-before: page !important;
       }
-      #tallymasters > .s-header {
-        height: 0.52in !important;
-        padding: 0 !important;
-        margin-bottom: 0.12in !important;
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        justify-content: center !important;
-        text-align: center !important;
-      }
       #tallymasters .page-block:first-child {
         page-break-before: avoid !important;
         break-before: avoid !important;
-        height: 10.36in !important;
-        min-height: 10.36in !important;
+        height: 11in !important;
+        min-height: 11in !important;
       }
 
       /* ══════════════════════════════
@@ -2003,6 +1972,11 @@
       .venue-section-label { font-size: 7pt !important; }
       .callout-box-intro .callout-text { font-size: 12pt !important; }
       .callout-box-intro .callout-label { font-size: 6pt !important; }
+
+      /* Judges: hide static s-header — page-block-header on every block replaces it */
+      #imbb-judges > .s-header,
+      #judges > .s-header,
+      #tallymasters > .s-header { display: none !important; }
 
       #floor-map {
         width: 8.5in !important;
@@ -3894,7 +3868,7 @@ function renderImbbJudges() {
     const block = document.createElement('div');
     block.className = 'page-block';
 
-    if (pi > 0) {
+    {
       const header = document.createElement('div');
       header.className = 'page-block-header';
       header.textContent = 'SECTION 3  \u00b7  YOUR IMBB JUDGES';
@@ -4018,7 +3992,7 @@ function renderJudges() {
 
     /* First page: section title lives in the static s-header above the container.
        Subsequent pages get the small running header so readers know where they are. */
-    if (pi > 0) {
+    {
       const header = document.createElement('div');
       header.className = 'page-block-header';
       header.textContent = 'SECTION 3  \u00b7  YOUR IML JUDGES';
@@ -4136,7 +4110,7 @@ function renderTallymasters() {
 
     /* First page: section title in static s-header handles the heading.
        Subsequent pages get the small running header. */
-    if (pi > 0) {
+    {
       const header = document.createElement('div');
       header.className = 'page-block-header';
       header.textContent = `SECTION 4  \u00b7  TALLYMASTERS`;
