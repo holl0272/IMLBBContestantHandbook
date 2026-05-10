@@ -3029,9 +3029,11 @@ function getFlagHtml(country) {
 function applyConfig() {
   const year = IMLBB_YEAR;
   const num  = IMLBB_NUMBER;
-  const edition = `IML #${num}`;
+  const imlEditionCover  = `IML #${num}`;
+  const imbbEditionCover = typeof IMBB_NUMBER !== 'undefined' ? `IMBB #${IMBB_NUMBER}` : 'IMBB';
+  const edition = imlEditionCover;
 
-  document.title = `${edition} // ${year} Contestant Handbook`;
+  document.title = `${imlEditionCover} · ${imbbEditionCover} // ${year} Contestant Handbook`;
 
   const navBrand = document.getElementById('nav-brand');
   if (navBrand) navBrand.textContent = `IMLBB ${year}`;
@@ -3042,7 +3044,7 @@ function applyConfig() {
 
   const coverMeta = document.getElementById('cover-meta');
   if (coverMeta) coverMeta.innerHTML =
-    `${edition} &nbsp;&middot;&nbsp; ${year}<br>${VENUE.name}<br>${VENUE.city}, ${VENUE.state}`;
+    `${imlEditionCover} &nbsp;&middot;&nbsp; ${imbbEditionCover} &nbsp;&middot;&nbsp; ${year}<br>${VENUE.name}<br>${VENUE.city}, ${VENUE.state}`;
 
   /* Render welcome letters from data/letters.js */
   renderLetters();
