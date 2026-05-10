@@ -1208,6 +1208,14 @@
         page-break-before: always !important;
         break-before: always !important;
       }
+      /* Last CoC sub-section — no forced blank page after the section ends */
+      #code-of-conduct > .coc-sub:last-child {
+        break-after: auto !important;
+        page-break-after: auto !important;
+        height: auto !important;
+        min-height: 0 !important;
+        flex: 1 !important;
+      }
 
       /* ── Section typography ── */
       .coc-sub-title {
@@ -1826,9 +1834,11 @@
       .letter-sign      { font-size: 12pt !important; margin-top: 18pt !important; }
 
       #countries {
-        width: 8.5in !important; min-height: 11in !important;
+        width: 8.5in !important; height: 11in !important;
+        overflow: hidden !important;
         box-sizing: border-box !important;
         page-break-before: always !important; break-before: page !important;
+        page-break-after: always !important; break-after: page !important;
         border-top: none !important;
         display: flex !important; flex-direction: column !important;
       }
@@ -1980,12 +1990,14 @@
 
       /* ══ SCHEDULE OVERVIEW PAGES ══ */
       #iml-schedule, #imbb-schedule {
-        width: 8.5in !important; height: 11in !important;
-        overflow: hidden !important;
+        width: 8.5in !important;
         padding: 0.38in 0.55in !important;
         box-sizing: border-box !important;
         page-break-before: always !important; break-before: page !important;
-        page-break-after: always !important; break-after: page !important;
+      }
+      .sched-day {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
       }
       .sched-eyebrow { font-size: 5.5pt !important; letter-spacing: 3pt !important; padding: 2pt 7pt !important; margin-bottom: 6pt !important; }
       .sched-title { font-size: 22pt !important; letter-spacing: 2pt !important; margin-bottom: 2pt !important; }
@@ -3067,11 +3079,7 @@ function applyConfig() {
         <p class="venue-section-label">Nearby Amenities</p>
         <p class="venue-section-text">${VENUE.amenitiesNote}</p>
       </div>
-      ${VENUE.northTowerTip ? `<div class="callout-box-intro"><p class="callout-label">Good to Know</p><p class="callout-text">The hotel is very wide. We advise you request a room in the <strong>North Tower</strong> if possible. Most contestant activities take place in one central area. Contestants will be transported to competition venues not in the hotel.</p></div>` : ''}
-      <div class="callout-box-intro">
-        <p class="callout-label">International Contestants</p>
-        <p class="callout-text">All international contestants must obtain the necessary travel authorisation and documents to enter the United States. Visit <a href="https://www.cbp.gov/" target="_blank" style="color:var(--blue-light);">cbp.gov</a> for details.</p>
-      </div>`;
+      ${VENUE.northTowerTip ? `<div class="callout-box-intro"><p class="callout-label">Good to Know</p><p class="callout-text">The hotel is very wide. We advise you request a room in the <strong>North Tower</strong> if possible. Most contestant activities take place in one central area. Contestants will be transported to competition venues not in the hotel.</p></div>` : ''}`;
   }
   if (venueSidebar) {
     const bbox = VENUE.mapBbox.split(',').map(encodeURIComponent).join('%2C');
@@ -3090,6 +3098,10 @@ function applyConfig() {
       <div class="callout-box-intro tip">
         <p class="callout-label">Top Tip &mdash; Packing Your Leather</p>
         <p class="callout-text">When traveling to ${VENUE.city}, try not to pack all your leather in one suitcase to be checked in. If possible, spread your gear amongst a few bags. For extra peace of mind, have your most delicate or important items with you as carry-on luggage.</p>
+      </div>
+      <div class="callout-box-intro">
+        <p class="callout-label">International Contestants</p>
+        <p class="callout-text">All international contestants must obtain the necessary travel authorisation and documents to enter the United States. Visit <a href="https://www.cbp.gov/" target="_blank" style="color:var(--blue-light);">cbp.gov</a> for details.</p>
       </div>`;
   }
 
@@ -3752,16 +3764,17 @@ function renderImbbJudges() {
 
       if (j.photo) {
         const img = document.createElement('img');
-        img.src = j.photo;
         img.alt = j.name;
         img.loading = 'eager';
         const ph = document.createElement('div');
         ph.className = 'c-photo-placeholder hidden';
         ph.textContent = '\u2696\uFE0F';
-        img.addEventListener('error', () => {
-          img.style.display = 'none';
-          ph.classList.remove('hidden');
-        });
+        _photoTracker.register();
+        let _jSettled = false;
+        const _jSettle = (ok) => { if (_jSettled) return; _jSettled = true; _photoTracker.done(ok, j.name); };
+        img.addEventListener('load',  () => _jSettle(true));
+        img.addEventListener('error', () => { img.style.display = 'none'; ph.classList.remove('hidden'); _jSettle(false); });
+        img.src = j.photo;
         photoWrap.appendChild(img);
         photoWrap.appendChild(ph);
       } else {
@@ -3870,16 +3883,17 @@ function renderJudges() {
 
       if (j.photo) {
         const img = document.createElement('img');
-        img.src = j.photo;
         img.alt = j.name;
         img.loading = 'eager';
         const ph = document.createElement('div');
         ph.className = 'c-photo-placeholder hidden';
         ph.textContent = '\u2696\uFE0F';
-        img.addEventListener('error', () => {
-          img.style.display = 'none';
-          ph.classList.remove('hidden');
-        });
+        _photoTracker.register();
+        let _jSettled = false;
+        const _jSettle = (ok) => { if (_jSettled) return; _jSettled = true; _photoTracker.done(ok, j.name); };
+        img.addEventListener('load',  () => _jSettle(true));
+        img.addEventListener('error', () => { img.style.display = 'none'; ph.classList.remove('hidden'); _jSettle(false); });
+        img.src = j.photo;
         photoWrap.appendChild(img);
         photoWrap.appendChild(ph);
       } else {
@@ -3982,16 +3996,17 @@ function renderTallymasters() {
 
       if (t.photo) {
         const img = document.createElement('img');
-        img.src = t.photo;
         img.alt = t.name;
         img.loading = 'eager';
         const ph = document.createElement('div');
         ph.className = 'c-photo-placeholder hidden';
         ph.textContent = '\uD83C\uDFC5';
-        img.addEventListener('error', () => {
-          img.style.display = 'none';
-          ph.classList.remove('hidden');
-        });
+        _photoTracker.register();
+        let _tSettled = false;
+        const _tSettle = (ok) => { if (_tSettled) return; _tSettled = true; _photoTracker.done(ok, t.name); };
+        img.addEventListener('load',  () => _tSettle(true));
+        img.addEventListener('error', () => { img.style.display = 'none'; ph.classList.remove('hidden'); _tSettle(false); });
+        img.src = t.photo;
         photoWrap.appendChild(img);
         photoWrap.appendChild(ph);
       } else {

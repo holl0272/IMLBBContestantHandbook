@@ -636,7 +636,7 @@ const EVENTS = [
     cardMeta: 'Sunday · The Riviera Theater',
     day: 'Sunday',
     time: '6:00 PM \u2013 09:00 PM',
-    callTime: '11:00 PM',
+    callTime: '11:00 AM',
     venue: 'The Riviera Theater',
     badge: 'MANDATORY',
     contest: 'BOTH',
