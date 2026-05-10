@@ -75,9 +75,11 @@ const LETTERS = [
 
       'We often say to not look at this as you\u2019re competing against your classmates, but you are going through this experience together. Only one of you will have the golden medallion around your neck, but the relationships and connections you will make with your classmates is the real prize.',
 
-      'You as the IMLBB 2026 class have a unique opportunity to show the world that we can support each other, that we can be each other\u2019s cheerleaders without taking anyone or anything down, that we can be celebrated in all shapes and sizes, that we respect and value our bootblacks, and bring this positive energy back into your communities. Change is long and hard, but the hardest part is to begin, and you\u2019ve done that already.',
+      'I am personally so thrilled to finally have the International Mr. Bootblack contest back, and I want to personally welcome all the IMBB contestants this year and say: WELCOME HOME. You belong here, and you are an integral and inseparable part of the leather community and I will personally do anything I possibly can to make sure you feel safe and welcome.',
+      
+      ' You as the IMLBB 2026 class have a unique opportunity to show the world that we can support each other, that we can be each other\u2019s cheerleaders without taking anyone or anything down, that we can be celebrated in all shapes and sizes, that we respect and value our bootblacks, and bring this positive energy back into your communities. Change is long and hard, but the hardest part is to begin, and you\u2019ve done that already.',
 
-      'I\u2019m immensely humbled and honored to have this class as my very first class as the IMLBB Den Daddy. Myself and my team of incredible handlers and Team Shine know what you are experiencing, and will be there to support you at every step. I want each and every one of you to have an incredibly fulfilling experience regardless of your placement, and I will do everything I can to make that happen. I hope that I make you proud.',
+      'I\u2019ve loved getting to know you over the last several months, and I am already so proud of you. Me and the team of incredible contestant handlers and Team Shine know what you are experiencing, and will be there to support you at every step. I want each and every one of you to have an incredibly fulfilling experience regardless of your placement, and I will do everything I can to make that happen. I hope that I make you proud.',
     ],
     signature: '\u2014 Your Den Daddy Miguel',
   },
