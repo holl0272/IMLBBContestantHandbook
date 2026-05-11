@@ -134,7 +134,6 @@ const LETTERS = [
       'As you will see repeatedly, leather equals family. Welcome to our family reunion.',
       
       'In Leather,',
-      'David Ronneberg & Becky Perdue',
       
     ],
     signature: '\u2014 David Ronneberg & Becky Perdue, Executive Directors, IMLBB'
