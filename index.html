@@ -3743,6 +3743,13 @@ async function init() {
     renderImbbJudges();
     renderJudges();
     renderTallymasters();
+    /* Re-render team grid so its photos are re-queued AFTER drain().
+       initTeam() queued team photos before this drain, which wiped them.
+       Using TEAM_EMBEDDED here is safe — initTeam()'s live-sheet fetch will
+       call renderTeamGrid() again if it succeeds, with the live data. */
+    if (typeof TEAM_EMBEDDED !== 'undefined') {
+      renderTeamGrid(buildTeamMembers(TEAM_EMBEDDED));
+    }
   } catch (_) { /* live refresh failed silently, embedded data stays */ }
 }
 
