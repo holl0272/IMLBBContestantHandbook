@@ -116,14 +116,27 @@ const LETTERS = [
   {
     id: 'letter-ed',
     photo: '',          /* <-- paste Google Drive file ID or full https:// URL */
-    title: 'David & Becky',
+    title: 'David Ronneberg & Becky Perdue',
     eyebrow: 'A message from your IML & IMBB Executive Directors',
     paragraphs: [
-      'To the IMLBB 2026 Class,',
+      'To the Contestants of IMLBB 2026,',
 
-      'A message from David and Becky will go here.',
+      'Welcome to IMLBB 2026 and to the IMLBB Brotherhood! As contestants for International Mr. Bootblack & International Mr. Leather, you are at the beginning of an incredible journey.'
+
+      'It\u2019s a special year. This year, for the first time, we don\u2019t have an IML 48 class and an IMBB 34 class, every one of you makes up the IMLBB 2026 contestant class. And that part is intentional, very intentional. As the world becomes a more hostile environment for our entire community, one idea has always been true - we are stronger together. So, look around and know that despite so many differences, we are one. You have all stepped up to be a visible, vocal symbol of a community that relies on your honor, integrity, respect, and courage to carry us forward, together.'
+
+      'It\u2019s going to be a busy weekend, full of interviews, rehearsals, stage appearances, wardrobe changes, education, and bootblacking (for some of you). Only two of you will take home a sash, and that will require that you have given every minute of the weekend your all. Show up as your best, authentic self and keep pushing through, even when that Sunday morning alarm seems to have gone off awfully early!'
+      
+      'During all of it, even as you compete with one another, we hope that you\u2019ll support one another, cheer for one another, and build the friendship and brotherhood that so many contestant classes before you have enjoyed. In the end, this is about being part of a legacy, of something bigger than yourself, and making your mark. To be here this weekend, we stand on the shoulders of giants and, whether you win or not, every one of you has the special opportunity to become the giant whose shoulders the next generation stands on.'
+      
+      'We want you to enjoy your time as an IMLBB contestant. Remember to pause, breathe, be present in the moment - and soak it all in. Love unapologetically, laugh with abandon, even if it\u2019s at yourself, and play and have embarrassingly wicked fun!'
+      'As you will see repeatedly, leather equals family. Welcome to our family reunion.'
+      
+      'In Leather,'
+      'David Ronneberg & Becky Perdue'
+      
     ],
-    signature: '\u2014 David & Becky, IML & IMBB Executive Directors',
+    signature: '\u2014 David Ronneberg & Becky Perdue, Executive Directors', IMLBB'
   },
 
 ];
