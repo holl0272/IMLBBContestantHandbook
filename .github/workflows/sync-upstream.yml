@@ -1,0 +1,33 @@
+name: Sync Fork with Upstream
+
+on:
+  schedule:
+    - cron: '0 * * * *'   # Runs every hour — adjust as needed
+  workflow_dispatch:        # Lets you trigger it manually too
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout fork
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Add upstream remote
+        run: git remote add upstream https://github.com/OWNER/ORIGINAL-REPO.git
+        # 🔁 Replace OWNER/ORIGINAL-REPO with the source repo
+
+      - name: Fetch upstream
+        run: git fetch upstream
+
+      - name: Merge upstream main into fork
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git merge upstream/main --no-edit --allow-unrelated-histories
+
+      - name: Push to fork
+        run: git push origin main
