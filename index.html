@@ -1534,6 +1534,105 @@
       margin-bottom: 1.5em;
     }
 
+    /* IML page accent */
+    .history-iml-bar { height: 4px; width: 100%; background: var(--blue-light); flex-shrink: 0; }
+    .history-iml-label { color: var(--blue-light) !important; }
+
+    /* IMBB History page ─────────────────────────────── */
+    #imbb-history {
+      padding: 0; border-top: none; overflow: hidden;
+      display: flex; flex-direction: column;
+    }
+    .imbb-hist-bar {
+      height: 5px; width: 100%;
+      background: linear-gradient(90deg, #b8860b 0%, #e0a840 40%, #f5c842 70%, #e0a840 100%);
+      flex-shrink: 0;
+    }
+    .imbb-hist-head {
+      text-align: center; padding: 40px 5vw 28px;
+      border-bottom: 1px solid rgba(224,168,64,.2);
+    }
+    .imbb-hist-eyebrow {
+      display: block; font-size: 10px; letter-spacing: 6px;
+      text-transform: uppercase; color: #e0a840; margin-bottom: 10px;
+    }
+    .imbb-hist-title {
+      font-size: clamp(52px, 9vw, 110px); font-weight: 900;
+      letter-spacing: -2px; line-height: 1;
+      background: linear-gradient(135deg, #b8860b 0%, #e0a840 40%, #f5d060 70%, #c9921a 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; margin: 0 0 12px;
+    }
+    .imbb-hist-tagline {
+      font-size: clamp(14px,1.4vw,17px); line-height: 1.65;
+      color: var(--off-white); max-width: 600px; margin: 0 auto;
+    }
+    .imbb-hist-founder {
+      padding: 22px 5vw; border-bottom: 1px solid rgba(224,168,64,.15);
+      display: flex; align-items: baseline; gap: 20px; flex-wrap: wrap;
+    }
+    .imbb-hist-founder-label {
+      font-size: 9px; letter-spacing: 4px; text-transform: uppercase;
+      color: #e0a840; flex-shrink: 0; padding-top: 2px;
+    }
+    .imbb-hist-founder-name {
+      font-size: clamp(18px,2vw,24px); font-weight: 700; flex-shrink: 0;
+      color: var(--white); margin: 0;
+    }
+    .imbb-hist-founder-bio {
+      font-size: clamp(13px,1.3vw,15px); line-height: 1.7;
+      color: var(--off-white); margin: 0; flex: 1 1 280px;
+    }
+    .imbb-hist-timeline {
+      padding: 0 5vw; flex: 1;
+    }
+    .imbb-tl-item {
+      display: grid; grid-template-columns: 52px 28px 1fr;
+      align-items: start; gap: 0 14px; padding: 18px 0;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .imbb-tl-item:last-child { border-bottom: none; }
+    .imbb-tl-year {
+      font-size: 12px; font-weight: 700; letter-spacing: 1px;
+      color: #e0a840; padding-top: 2px; text-align: right;
+    }
+    .imbb-tl-year--now { color: #f5c842; font-size: 13px; }
+    .imbb-tl-connector {
+      display: flex; flex-direction: column; align-items: center;
+      padding-top: 5px;
+    }
+    .imbb-tl-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: rgba(224,168,64,.4); border: 2px solid #e0a840;
+      flex-shrink: 0;
+    }
+    .imbb-tl-dot--now {
+      background: #e0a840; box-shadow: 0 0 8px rgba(224,168,64,.6);
+    }
+    .imbb-tl-content {
+      font-size: clamp(13px,1.3vw,15px); line-height: 1.65;
+      color: var(--off-white); padding-top: 0;
+    }
+    .imbb-tl-content strong { color: var(--white); }
+    .imbb-hist-stats {
+      display: flex; align-items: center; justify-content: center;
+      gap: 0; border-top: 1px solid rgba(224,168,64,.2);
+      background: rgba(224,168,64,.05);
+    }
+    .imbb-hist-stat {
+      display: flex; flex-direction: column; align-items: center;
+      padding: 18px 32px;
+    }
+    .imbb-hist-stat-num {
+      font-size: clamp(28px,3.5vw,44px); font-weight: 900;
+      line-height: 1; color: #e0a840; letter-spacing: -1px;
+    }
+    .imbb-hist-stat-label {
+      font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--muted); margin-top: 4px;
+    }
+    .imbb-hist-stat-div { width: 1px; height: 40px; background: rgba(224,168,64,.25); }
+
     /* Archive links / videos */
     #archive {
       padding: 80px 5vw; border-top: 1px solid var(--border);
@@ -1967,6 +2066,57 @@
       .founder-dates { font-size: 6.5pt !important; margin-bottom: 3pt !important; }
       .history-body { font-size: 11.5pt !important; line-height: 1.65 !important; margin-bottom: 6pt !important; }
 
+      /* IML page print accent */
+      .history-iml-bar { height: 3pt !important; }
+
+      /* ══ IMBB HISTORY PAGE print ══════════════════════
+         Page: 8.5 × 11in  padding: 0 (bar flush to edge)
+         bar 3pt + head 1.5in + founder 0.7in + timeline 7.5in + stats 0.5in = 10.2in ≈ fits
+      ════════════════════════════════════════════════ */
+      #imbb-history {
+        width: 8.5in !important; height: 11in !important;
+        padding: 0 !important; box-sizing: border-box !important;
+        page-break-before: always !important; break-before: page !important;
+        page-break-after: always !important; break-after: page !important;
+        display: flex !important; flex-direction: column !important;
+        overflow: hidden !important; border-top: none !important;
+      }
+      .imbb-hist-bar { height: 4pt !important; flex-shrink: 0 !important; }
+      .imbb-hist-head {
+        padding: 0.18in 0.52in 0.14in !important;
+        flex-shrink: 0 !important;
+      }
+      .imbb-hist-eyebrow { font-size: 7pt !important; letter-spacing: 5pt !important; margin-bottom: 4pt !important; }
+      .imbb-hist-title { font-size: 58pt !important; margin-bottom: 6pt !important; letter-spacing: -2pt !important; }
+      .imbb-hist-tagline { font-size: 9pt !important; line-height: 1.55 !important; max-width: 100% !important; }
+      .imbb-hist-founder {
+        padding: 10pt 0.52in !important;
+        gap: 14pt !important; flex-shrink: 0 !important;
+      }
+      .imbb-hist-founder-label { font-size: 6pt !important; }
+      .imbb-hist-founder-name { font-size: 13pt !important; }
+      .imbb-hist-founder-bio { font-size: 8.5pt !important; line-height: 1.55 !important; flex: 1 1 auto !important; }
+      .imbb-hist-timeline {
+        padding: 0 0.52in !important;
+        flex: 1 !important; min-height: 0 !important;
+      }
+      .imbb-tl-item {
+        grid-template-columns: 38pt 22pt 1fr !important;
+        gap: 0 10pt !important;
+        padding: 8pt 0 !important;
+      }
+      .imbb-tl-year { font-size: 7.5pt !important; }
+      .imbb-tl-year--now { font-size: 8pt !important; }
+      .imbb-tl-dot { width: 7pt !important; height: 7pt !important; }
+      .imbb-tl-content { font-size: 8.5pt !important; line-height: 1.5 !important; }
+      .imbb-hist-stats {
+        padding: 0 !important; flex-shrink: 0 !important;
+      }
+      .imbb-hist-stat { padding: 10pt 24pt !important; }
+      .imbb-hist-stat-num { font-size: 22pt !important; }
+      .imbb-hist-stat-label { font-size: 5.5pt !important; letter-spacing: 2pt !important; }
+      .imbb-hist-stat-div { height: 26pt !important; }
+
       #archive {
         width: 8.5in !important; min-height: 11in !important;
         padding: 0.4in 0.6in !important; box-sizing: border-box !important;
@@ -2230,19 +2380,16 @@
 
 <!-- ── PAGE 5: HISTORY ── -->
 <section id="history">
-  <div class="s-header">
-    <span class="s-num">History</span>
+  <div class="history-iml-bar"></div>
+  <div class="s-header" style="padding-top:0;">
+    <span class="s-num history-iml-label">International Mr. Leather</span>
     <h2 class="s-title">Founded in 1979</h2>
   </div>
   <p class="history-body">
-    The International Mister Leather competition was founded in 1979 by Chuck Renslow
+    The International Mr. Leather competition was founded in 1979 by Chuck Renslow
     and his then partner Dom Orejudos, as a way to increase visibility for the leather
     community and celebrate the best of our community. As IMLBB <span class="imlbb-year-label"></span> contestants,
     you continue their work and legacy.
-    </p>
-    <p class="history-body">
-    The International Mister Bootblack competition was founded in 1993 by Harry Shattuck
-    who sought to increase representation for bootblacking in the leather scene.
   </p>
   <div class="history-founders">
     <div class="founder-card">
@@ -2266,6 +2413,120 @@
       </div>
     </div>
   </div>
+</section>
+
+<!-- ── IMBB HISTORY PAGE ── -->
+<section id="imbb-history">
+
+  <!-- gold accent bar -->
+  <div class="imbb-hist-bar"></div>
+
+  <!-- header -->
+  <div class="imbb-hist-head">
+    <span class="imbb-hist-eyebrow">International Mr. Bootblack</span>
+    <h2 class="imbb-hist-title">Est. 1993</h2>
+    <p class="imbb-hist-tagline">
+      Born from leather&rsquo;s conviction that the craftsperson belongs
+      on the same stage as the titleholder.
+    </p>
+  </div>
+
+  <!-- founder callout -->
+  <div class="imbb-hist-founder">
+    <span class="imbb-hist-founder-label">Founder</span>
+    <p class="imbb-hist-founder-name">Harry Shattuck</p>
+    <p class="imbb-hist-founder-bio">
+      Harry Shattuck established the International Mr. Bootblack competition in 1993
+      as a companion contest to IML, driven by the belief that bootblacks&mdash;the
+      craftspeople who care for the leather community&rsquo;s most prized possessions
+      &mdash;deserved their own place of honour at leather&rsquo;s biggest stage.
+    </p>
+  </div>
+
+  <!-- timeline -->
+  <div class="imbb-hist-timeline">
+
+    <div class="imbb-tl-item">
+      <span class="imbb-tl-year">1993</span>
+      <div class="imbb-tl-connector"><div class="imbb-tl-dot"></div></div>
+      <div class="imbb-tl-content">
+        <strong>The contest is born.</strong>
+        Harry Shattuck launches the International Mr. Bootblack competition
+        alongside IML in Chicago, Illinois &mdash; giving the leather
+        community&rsquo;s craftspeople their own championship stage.
+      </div>
+    </div>
+
+    <div class="imbb-tl-item">
+      <span class="imbb-tl-year">1996</span>
+      <div class="imbb-tl-connector"><div class="imbb-tl-dot"></div></div>
+      <div class="imbb-tl-content">
+        <strong>Todd Nelson</strong> of Seattle, WA wins International Bootblack,
+        becoming one of the contest&rsquo;s earliest torchbearers and later a
+        substance-abuse counselor serving his community.
+      </div>
+    </div>
+
+    <div class="imbb-tl-item">
+      <span class="imbb-tl-year">2008</span>
+      <div class="imbb-tl-connector"><div class="imbb-tl-dot"></div></div>
+      <div class="imbb-tl-content">
+        <strong>Andrew &ldquo;Bootdog&rdquo; Johnson</strong> wins International Mr. Bootblack.
+        He goes on to produce IMBB from 2012 to 2017, shaping the competition&rsquo;s
+        modern format and returning to Chicago in 2026 as IMBB Coordinator.
+      </div>
+    </div>
+
+    <div class="imbb-tl-item">
+      <span class="imbb-tl-year">2018</span>
+      <div class="imbb-tl-connector"><div class="imbb-tl-dot"></div></div>
+      <div class="imbb-tl-content">
+        <strong>Lucky Rebel</strong> (Portland, OR) wins International Mr. Bootblack,
+        bringing community activism and a Chicano heritage lens to the title.
+      </div>
+    </div>
+
+    <div class="imbb-tl-item">
+      <span class="imbb-tl-year">2024</span>
+      <div class="imbb-tl-connector"><div class="imbb-tl-dot"></div></div>
+      <div class="imbb-tl-content">
+        <strong>SpankCake</strong> (Los Angeles, CA) wins International Ms. Bootblack,
+        serving as Executive Director of bootblack.org and founding <em>Rice Up</em>
+        to amplify Asian voices in the leather community.
+      </div>
+    </div>
+
+    <div class="imbb-tl-item imbb-tl-item--now">
+      <span class="imbb-tl-year imbb-tl-year--now">2026</span>
+      <div class="imbb-tl-connector"><div class="imbb-tl-dot imbb-tl-dot--now"></div></div>
+      <div class="imbb-tl-content">
+        <strong>IMBB #34 returns to IML.</strong>
+        For the first time, International Mr. Leather and International Mr. Bootblack
+        compete together as one unified class &mdash; IMLBB 2026 &mdash;
+        stronger together on leather&rsquo;s biggest stage.
+      </div>
+    </div>
+
+  </div><!-- /timeline -->
+
+  <!-- bottom stats -->
+  <div class="imbb-hist-stats">
+    <div class="imbb-hist-stat">
+      <span class="imbb-hist-stat-num">34</span>
+      <span class="imbb-hist-stat-label">Competitions</span>
+    </div>
+    <div class="imbb-hist-stat-div"></div>
+    <div class="imbb-hist-stat">
+      <span class="imbb-hist-stat-num">30+</span>
+      <span class="imbb-hist-stat-label">Years of Legacy</span>
+    </div>
+    <div class="imbb-hist-stat-div"></div>
+    <div class="imbb-hist-stat">
+      <span class="imbb-hist-stat-num">&#x1f3d9;</span>
+      <span class="imbb-hist-stat-label">Chicago, Illinois</span>
+    </div>
+  </div>
+
 </section>
 
 <!-- ── PAGE 6: ARCHIVE / VIDEO LINKS ── -->
