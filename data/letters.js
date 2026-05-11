@@ -130,6 +130,7 @@ const LETTERS = [
       'During all of it, even as you compete with one another, we hope that you\u2019ll support one another, cheer for one another, and build the friendship and brotherhood that so many contestant classes before you have enjoyed. In the end, this is about being part of a legacy, of something bigger than yourself, and making your mark. To be here this weekend, we stand on the shoulders of giants and, whether you win or not, every one of you has the special opportunity to become the giant whose shoulders the next generation stands on.'
       
       'We want you to enjoy your time as an IMLBB contestant. Remember to pause, breathe, be present in the moment - and soak it all in. Love unapologetically, laugh with abandon, even if it\u2019s at yourself, and play and have embarrassingly wicked fun!'
+      
       'As you will see repeatedly, leather equals family. Welcome to our family reunion.'
       
       'In Leather,'
