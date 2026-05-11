@@ -84,32 +84,46 @@ const LETTERS = [
     signature: '\u2014 Your Den Daddy Miguel',
   },
 
-  /* ─── 3. Letter from the IMLBB Executive Director ─── */
+  /* ─── 3. Joint letter from the IML & IMBB Executive Directors ───
+   *
+   *  HOW TO UPDATE THIS LETTER
+   *  ───────────────────────────────────────────────────────────────────
+   *  photo      Upload ONE portrait photo to Google Drive (David & Becky
+   *             together works best, or use one of them if that is all that
+   *             is available).  Share it as "Anyone with the link can view",
+   *             then paste the FILE ID below — the long string between /d/
+   *             and /view in the share link.
+   *             Example: '1AbCdEfGhIjKlMnOpQrStUvWxYz'
+   *             A full https:// URL is also accepted and used as-is.
+   *             Leave as '' to show a placeholder box.
+   *
+   *  title      Name(s) shown large next to the photo.
+   *             Example: 'David & Becky'
+   *
+   *  eyebrow    Small uppercase label shown above the title.
+   *
+   *  paragraphs Replace each placeholder string below with a paragraph of
+   *             the real letter.  Each string in the array becomes one <p>.
+   *             - Use \u2019 for a right single quote ( ’ ) inside the text.
+   *             - Use \u2014 for an em-dash ( — ).
+   *             - NEVER put a raw straight apostrophe inside a single-quoted
+   *               string — it breaks the JS parser.  Use \u2019 instead.
+   *
+   *  signature  Sign-off line shown in italic below the body.
+   *
+   *  After any edit:  python validate.py && python build.py
+   *  ─────────────────────────────────────────────────────────────────── */
   {
-    id: 'letter-imlbb-ed',
-    photo: '',
-    title: 'David',
-    eyebrow: 'A message from the IMLBB Executive Director',
+    id: 'letter-ed',
+    photo: '',          /* <-- paste Google Drive file ID or full https:// URL */
+    title: 'David & Becky',
+    eyebrow: 'A message from your IML & IMBB Executive Directors',
     paragraphs: [
       'To the IMLBB 2026 Class,',
 
-      'A message from David will go here',
+      'A message from David and Becky will go here.',
     ],
-    signature: '\u2014 IMLBB Executive Director',
-  },
-
-  /* ─── 4. Letter from the IMBB Executive Director ─── */
-  {
-    id: 'letter-imbb-ed',
-    photo: '',
-    title: 'Becky',
-    eyebrow: 'A message from the IMBB Executive Director',
-    paragraphs: [
-      'To the IMLBB 2026 Class,',
-
-      'A message from Becky will go here.',
-    ],
-    signature: '\u2014 IMBB Executive Director',
+    signature: '\u2014 David & Becky, IML & IMBB Executive Directors',
   },
 
 ];

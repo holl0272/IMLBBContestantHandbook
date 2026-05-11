@@ -716,9 +716,10 @@
       ══════════════════════════════ */
       #class-grid {
         width: 8.5in !important;
-        height: 11in !important;
-        overflow: hidden !important;
-        padding: 0.18in 0.18in 0.18in !important;  /* perimeter black margin */
+        /* No fixed height — allows natural multi-page flow when contestant count grows.
+           Each "page" is defined by break-before on the section + the natural page height. */
+        overflow: visible !important;
+        padding: 0.18in !important;  /* perimeter margin */
         box-sizing: border-box !important;
         display: block !important;
         page-break-before: always !important;
@@ -729,7 +730,7 @@
       #class-grid .s-header {
         height: 0.52in !important;
         padding: 0 !important;
-        margin-bottom: 0.12in !important;
+        margin: 0 0 0.12in !important;  /* reset top margin too */
         display: flex !important;
         flex-direction: column !important;
         align-items: center !important;
@@ -737,15 +738,16 @@
         text-align: center !important;
       }
       #photo-grid {
-        /* explicit height = 11in − 0.18 top − 0.52 header − 0.12 gap − 0.18 bottom = 10.0in */
-        height: 10.0in !important;
+        /* Height and row count set dynamically by renderGrid() via <style id="class-grid-print-style">.
+           Fallback row height keeps photos visible even without JS injection. */
+        height: auto !important;
         width: 100% !important;       /* = 8.5 − 0.18 − 0.18 = 8.14in */
         display: grid !important;
         grid-template-columns: repeat(8, 1fr) !important;
-        grid-template-rows: repeat(9, 1fr) !important;  /* each row = 10.0/9 = 1.111in */
+        grid-auto-rows: 1.092in !important;  /* fallback: 9 rows × 1.092in ≈ 9.83in */
         gap: 2px !important;
         padding: 0 !important;
-        overflow: hidden !important;
+        overflow: visible !important;
       }
       .grid-cell {
         aspect-ratio: unset !important;  /* explicit row height controls size */
@@ -3757,6 +3759,26 @@ async function init() {
 function renderGrid(list) {
   const grid = document.getElementById('photo-grid');
   grid.innerHTML = '';
+
+  /* Inject / update print CSS so the grid always fits the actual contestant count.
+     COLS = 8 (matches grid-template-columns: repeat(8,1fr) above).
+     ROW_H = row height in inches.  9 rows × 1.092in = 9.828in < 10.0in available.
+     If contestant count grows beyond 9 rows, the section flows across multiple
+     pages naturally (no fixed height on #class-grid). */
+  const COLS     = 8;
+  const ROW_H_IN = 1.092;  /* inches per row */
+  const rows     = Math.ceil(list.length / COLS);
+  let dynStyle = document.getElementById('class-grid-print-style');
+  if (!dynStyle) {
+    dynStyle = document.createElement('style');
+    dynStyle.id = 'class-grid-print-style';
+    document.head.appendChild(dynStyle);
+  }
+  dynStyle.textContent = [
+    '@media print {',
+    `  #photo-grid { grid-auto-rows: ${ROW_H_IN}in !important; }`,
+    '}',
+  ].join('\n');
 
   list.forEach((c, idx) => {
     const cell = document.createElement('div');

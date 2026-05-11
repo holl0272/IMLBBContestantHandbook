@@ -227,8 +227,12 @@ def audit_print_pages(html):
     print_css = extract_media_print(html)
 
     # Selectors expected to be exact-height page containers
+    # NOTE: #class-grid is intentionally excluded — it uses height:auto so that
+    # the contestant photo grid can span multiple pages when the class grows
+    # beyond 72 members (8 cols × 9 rows).  Row height is injected dynamically
+    # by renderGrid() via a <style id="class-grid-print-style"> tag.
     REQUIRED_EXACT = [
-        '#cover', '#class-grid', '.page-block', '.event-block',
+        '#cover', '.page-block', '.event-block',
         '#first-wives', '#closing', '#experience',
         '.letter-page', '.coc-sub',
     ]
