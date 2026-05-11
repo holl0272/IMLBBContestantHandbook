@@ -69,6 +69,14 @@ const TEAM_GRID_COLS = 5;   /* columns in the printed photo grid page */
 
 const TEAM_MEMBERS = [
 
+  /* ── IMLBB Den Daddy ─────────────────────────────────── */
+   {
+    name: 'Miguel Torres',
+    role: 'Den Daddy',
+    bio: 'As your Den Daddy, my job is to make sure you have everything you could possibly need to have a life changing experience at IMLBB. Honor your pace, be kind to yourself and open yourself to the experience that you’re about to go through. The true prize is not the gold medal, it is the lifelong relationships you make along the process',
+    fileId: '1VYBD4Pif5Beimj0JJGB4JSexPpeU6Lwz',
+  },
+  
   /* ── Contestant Handlers ─────────────────────────────────── */
 
   {
