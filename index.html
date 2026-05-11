@@ -1534,19 +1534,12 @@
       margin-bottom: 1.5em;
     }
 
-    /* IML page accent */
-    .history-iml-bar { height: 4px; width: 100%; background: var(--blue-light); flex-shrink: 0; }
     .history-iml-label { color: var(--blue-light) !important; }
 
     /* IMBB History page ─────────────────────────────── */
     #imbb-history {
       padding: 0; border-top: none; overflow: hidden;
       display: flex; flex-direction: column;
-    }
-    .imbb-hist-bar {
-      height: 5px; width: 100%;
-      background: linear-gradient(90deg, #b8860b 0%, #e0a840 40%, #f5c842 70%, #e0a840 100%);
-      flex-shrink: 0;
     }
     .imbb-hist-head {
       text-align: center; padding: 40px 5vw 28px;
@@ -2066,8 +2059,6 @@
       .founder-dates { font-size: 6.5pt !important; margin-bottom: 3pt !important; }
       .history-body { font-size: 11.5pt !important; line-height: 1.65 !important; margin-bottom: 6pt !important; }
 
-      /* IML page print accent */
-      .history-iml-bar { height: 3pt !important; }
 
       /* ══ IMBB HISTORY PAGE print ══════════════════════
          Page: 8.5 × 11in  padding: 0 (bar flush to edge)
@@ -2081,8 +2072,7 @@
         display: flex !important; flex-direction: column !important;
         overflow: hidden !important; border-top: none !important;
       }
-      .imbb-hist-bar { height: 4pt !important; flex-shrink: 0 !important; }
-      .imbb-hist-head {
+.imbb-hist-head {
         padding: 0.18in 0.52in 0.14in !important;
         flex-shrink: 0 !important;
       }
@@ -2380,7 +2370,6 @@
 
 <!-- ── PAGE 5: HISTORY ── -->
 <section id="history">
-  <div class="history-iml-bar"></div>
   <div class="s-header" style="padding-top:0;">
     <span class="s-num history-iml-label">International Mr. Leather</span>
     <h2 class="s-title">IML - Founded 1979</h2>
@@ -2417,9 +2406,6 @@
 
 <!-- ── IMBB HISTORY PAGE ── -->
 <section id="imbb-history">
-
-  <!-- gold accent bar -->
-  <div class="imbb-hist-bar"></div>
 
   <!-- header -->
   <div class="imbb-hist-head">
