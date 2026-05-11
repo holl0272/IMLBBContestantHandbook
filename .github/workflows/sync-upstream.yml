@@ -31,7 +31,7 @@ jobs:
 
           echo "=== Setting remote URLs ==="
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
-          git remote add upstream https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/OWNER/ORIGINAL-REPO.git
+          git remote add upstream https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/Tintinex/IMLBBContestantHandbook.git
 
           echo "=== Fetching upstream ==="
           git fetch upstream 2>&1
