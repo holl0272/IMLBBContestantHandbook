@@ -1,8 +1,6 @@
 name: Sync Fork with Upstream
 
 on:
-  schedule:
-    - cron: '0 * * * *'
   workflow_dispatch:
 
 env:
@@ -21,17 +19,28 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Configure Git and remotes
+      - name: Diagnose and sync
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          set -x
+
+          echo "=== Git version ==="
+          git --version
+
+          echo "=== Current remotes ==="
+          git remote -v
+
+          echo "=== Setting remote URLs ==="
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           git remote add upstream https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/OWNER/ORIGINAL-REPO.git
 
-      - name: Fetch upstream
-        run: git fetch upstream
+          echo "=== Fetching upstream ==="
+          git fetch upstream 2>&1
 
-      - name: Merge and push
-        run: |
-          git merge upstream/main --no-edit --allow-unrelated-histories
-          git push origin main
+          echo "=== Current branch ==="
+          git branch -a
+
+          echo "=== Merging ==="
+          git merge upstream/main --no-edit --allow-unrelated-histories 2>&1
+
+          echo "=== Pushing ==="
+          git push origin main 2>&1
