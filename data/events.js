@@ -144,7 +144,7 @@ const EVENTS = [
     cardMeta: 'Thursday · Florentine Room',
     day: 'Thursday',
     time: '12:00 PM \u2013 3:00 PM',
-    callTime: '',
+    callTime: '11:30 AM',
     venue: 'Congress Plaza Hotel \u2014 Florentine Room',
     badge: 'MANDATORY',
     contest: 'BOTH',
@@ -230,7 +230,7 @@ const EVENTS = [
     title: 'Opening Ceremonies',
     cardMeta: 'Thursday · Florentine Room',
     day: 'Thursday',
-    time: '7:00 PM \u2013 09:00 PM',
+    time: '7:00 PM \u2013 08:30 PM',
     callTime: '5:00 PM',
     venue: 'Congress Plaza Hotel \u2014 Florentine Room',
     badge: 'MANDATORY',
@@ -243,11 +243,11 @@ const EVENTS = [
       },
       {
         type: 'checklist',
-        q: 'What to wear',
+        q: 'What to bring',
         items: [
           'Leather or uniform gear \u2014 this is a leather event',
           'Contestant badge / sash if provided',
-          'Comfortable footwear (you\u2019ll be on your feet)',
+          'Your IML/IMBB medallion',
         ],
         note: '',
       },
@@ -258,16 +258,7 @@ const EVENTS = [
       },
     ],
     rightCol: [
-      {
-        type: 'checklist',
-        q: 'Talking points to prepare',
-        items: [
-          'Your title and home community',
-          'Why IMLBB matters to you personally',
-          'One thing you hope to learn this weekend',
-        ],
-        note: '',
-      },
+      
       {
         type: 'textarea',
         q: 'Your prep notes',
@@ -285,7 +276,7 @@ const EVENTS = [
   {
     id: 'event-5',
     number: '05',
-    title: 'First Shine @ Spit Shine',
+    title: 'Last and First Shine @ Spit Shine',
     cardMeta: 'Thursday Evening',
     day: 'Thursday Evening',
     time: '10:00 PM \u2013 11:00 PM',
@@ -325,11 +316,7 @@ const EVENTS = [
         q: 'Will I have support?',
         a: 'Yes. Staff will guide you from the assembly area to and from the stands, and a staff member will be present for the duration of your shine.',
       },
-      {
-        type: 'qa',
-        q: 'When will I know my assembly time and location?',
-        a: 'Specific assembly times and locations are provided during Thursday Orientation.',
-      },
+
       {
         type: 'textarea',
         q: 'Your prep notes',
@@ -343,26 +330,26 @@ const EVENTS = [
   {
     id: 'event-6',
     number: '06',
-    title: 'Contestant Interviews',
+    title: 'IML Contestant Interviews',
     cardMeta: 'Friday and Saturday',
     day: 'Friday and Saturday',
     time: 'Main Stage',
     callTime: '',
     venue: 'Congress Plaza Hotel - Judges Room',
     badge: 'MANDATORY',
-    contest: 'BOTH',
+    contest: 'IML',
     leftCol: [
       {
         type: 'qa',
         q: 'What happens here?',
-        a: 'The first stage of judging. Each contestant has a 8-minute private interview with a panel of judges. You will be asked about your leather background, your community involvement, and your vision for the IMLBB title. This is your chance to show the judges who you are beyond the stage.',
+        a: 'The first stage of judging. Each contestant has an 8-minute private interview with a panel of judges. You will be asked about your leather background, your community involvement, and your vision for the IMLBB title. This is your chance to show the judges who you are beyond the stage.',
       },
       {
         type: 'checklist',
         q: 'Scoring criteria',
         items: [
-          'Quality and condition of leather gear',
-          'Stage presence and confidence',
+          'Be Prepared to talk about anything you are wearing',
+          'Presence and confidence',
           'Overall presentation and grooming',
           'How authentically you embody the leather aesthetic',
         ],
@@ -383,7 +370,6 @@ const EVENTS = [
           'All hardware shined',
           'Boots \u2014 spit-polished or mirror-finish',
           'Sash / title badge secured',
-          'Backup boot laces / snap repair kit',
         ],
         note: '',
       },
@@ -394,8 +380,9 @@ const EVENTS = [
         rows: 3,
       },
       {
-        type: 'tip',
-        text: 'Practice your walk. Find your pace. Slow is confident. Rushed is nervous.',
+        type: 'callout',
+        label: 'Tip',
+        text: 'Your Interview time will depend on your contestant number. Groups A,B,C on Friday, Groups D,E,F,G on Saturday.',
       },
     ],
   },
@@ -407,8 +394,8 @@ const EVENTS = [
     title: 'Bootblack Stand Time',
     cardMeta: 'Friday & Saturday',
     day: 'Friday & Saturday',
-    time: '12:00 PM \u2013 4:00 PM',
-    callTime: '',
+    time: '11:00 AM \u2013 3:00 PM',
+    callTime: '10:30 AM',
     venue: '',
     badge: 'MANDATORY',
     contest: 'IMBB',
@@ -443,13 +430,9 @@ const EVENTS = [
       {
         type: 'qa',
         q: 'When will I know my schedule?',
-        a: 'Exact stand hours are communicated at least two weeks in advance. Specific assembly times and locations are also confirmed during Thursday Orientation.',
+        a: 'Exact stand hours will be communicated by your Coordinator or Den Daddy. Specific assembly times and locations are also confirmed during Thursday Orientation.',
       },
-      {
-        type: 'qa',
-        q: 'Will I have support?',
-        a: 'Staff will guide you from assembly areas to and from the stands. A staff member remains present for the full duration of your stand time.',
-      },
+
       {
         type: 'textarea',
         q: 'Your prep notes',
@@ -488,12 +471,7 @@ const EVENTS = [
       },
     ],
     rightCol: [
-      {
-        type: 'textarea',
-        q: 'Your prep notes',
-        placeholder: 'Add personal notes here\u2026',
-        rows: 3,
-      },
+
       {
         type: 'tip',
         text: 'Bring any specific gear or accessories you want to be included in your photoshoot. This is your moment to shine \u2014 make sure you have everything you need to look and feel your best.',
@@ -509,7 +487,7 @@ const EVENTS = [
     cardMeta: 'Friday · The Riviera Theater',
     day: 'Friday',
     time: '8:00 PM \u2013 11:00 PM',
-    callTime: '4:00 PM',
+    callTime: '3:30 PM',
     venue: 'The Riviera Theater',
     badge: 'MANDATORY',
     contest: 'BOTH',
@@ -517,7 +495,7 @@ const EVENTS = [
       {
         type: 'qa',
         q: 'What happens here?',
-        a: 'A public stage event scored on your physique, stage presence, and public speaking ability. All contestants appear three times: first walking on stage in numerical order and holding position until everyone is assembled; second entering by preliminary judging group with freedom of movement while being introduced from your contestant profile; and third returning to the stage as a full group to close the event.',
+        a: 'A public stage event scored on your physique, stage presence, and public speaking ability. All contestants appear three times: first all contestants on stage and walked off one by one by number; second entering by contestant group and each one will come up to the microphone while part of their contestant profile is read, approach the microphone and introduce themselves, and third returning to the stage as a full group to close the event.',
       },
       {
         type: 'checklist',
@@ -539,7 +517,7 @@ const EVENTS = [
       {
         type: 'qa',
         q: 'How is it judged?',
-        a: 'Performance is scored on physique, stage presence, and public speaking ability according to the published IML scoring system.',
+        a: 'Performance is scored on physique, stage presence, and public speaking ability according to the published IMLBB scoring system.',
       },
       {
         type: 'qa',
@@ -547,9 +525,8 @@ const EVENTS = [
         a: 'Yes. Staff will guide you to the event, assist with preparation before each stage appearance, and be available as you exit.',
       },
       {
-        type: 'qa',
-        q: 'When will I know my assembly time and location?',
-        a: 'Specific assembly time and location are provided at Thursday Orientation.',
+        type: 'tip',
+        text: 'What you say at the microphone is up to you. Many contestants prepare a short introduction, but this is not required. Speak from the heart and keep it very brief, ideally 1 short sentence',
       },
       {
         type: 'textarea',
@@ -636,7 +613,7 @@ const EVENTS = [
     cardMeta: 'Sunday · The Riviera Theater',
     day: 'Sunday',
     time: '6:00 PM \u2013 09:00 PM',
-    callTime: '11:00 AM',
+    callTime: '10:30 AM',
     venue: 'The Riviera Theater',
     badge: 'MANDATORY',
     contest: 'BOTH',
@@ -650,7 +627,7 @@ const EVENTS = [
         type: 'checklist',
         q: 'What all contestants do',
         items: [,
-          'Individual introduction \u2014 leather attire including sash, medal, or title vest recommended',
+          'Individual introduction \u2014 leather attire including sash, medallion, or title vest recommended',
           'Finalist announcement \u2014 remain on stage in leather',
           'Top 20 finalists for IML and top 3 finalists for IMBB are announced on stage',
         ],
@@ -753,51 +730,30 @@ const EVENTS = [
     day: 'Monday',
     time: '10:00 AM \u2013 01:00 PM',
     callTime: 'NONE',
-    venue: 'Congress Plaza Hotel',
+    venue: 'Congress Plaza Hotel - Grant Park Room',
     badge: 'OPTIONAL',
     contest: 'BOTH',
     leftCol: [
       {
         type: 'qa',
         q: 'What happens here?',
-        a: 'The second stage judging event. You may appear in uniform (military, police, fire, or other), fetish gear, or fantasy leather. This category celebrates the full breadth of leather and kink expression. You have more creative freedom here \u2014 use it.',
+        a: 'Your Den Daddy will have a sealed envelop with your contest scores and a rolled up signed poster for you. This is completely optional and you may do with your score envelope as you wish',
       },
-      {
-        type: 'checklist',
-        q: 'Outfit checklist',
-        items: [
-          'Outfit chosen and fitted in advance',
-          'All pieces clean and pressed / polished',
-          'Footwear appropriate and secured',
-          'Any props or accessories tested',
-        ],
-        note: '',
-      },
+
       {
         type: 'callout',
-        label: 'Remember',
-        text: 'Fantasy does not mean costume. Whatever you wear, commit to it with full conviction. Authenticity reads from the back row.',
+        label: 'Tip',
+        text: 'This can be a cathartic and emotional experience for some as you find out what your final placement was within the class',
       },
     ],
-    rightCol: [
-      {
-        type: 'textarea',
-        q: 'Your prep notes',
-        placeholder: 'Describe your outfit concept\u2026',
-        rows: 3,
-      },
-      {
-        type: 'tip',
-        text: 'Rehearse how you\u2019ll walk in this outfit specifically. Uniform boots walk differently than leather boots. Know your gear.',
-      },
-    ],
+
   },
 
   /* ─── 14 · Monday ─── */
   {
     id: 'event-14',
     number: '14',
-    title: 'Contestant Speeches',
+    title: 'Non-finalists Contestant Speeches',
     cardMeta: 'Monday · Congress Plaza Hotel',
     day: 'Monday',
     time: '10:00 AM \u2013 01:00 PM',
@@ -809,22 +765,15 @@ const EVENTS = [
       {
         type: 'qa',
         q: 'What happens here?',
-        a: 'A beloved IMLBB tradition \u2014 a brunch gathering for the partners, spouses, and significant others of contestants. A space for support, laughter, and community away from the competition floor. See the dedicated section of this handbook for full details.',
+        a: 'A powerful IMLBB tradition \u2014 a space where any contestant that did not make it to the finals can share their speeches. Everyone has a story to tell',
       },
       {
         type: 'callout',
         label: 'Remember',
-        text: 'Your support network matters. The people who travel with you are part of your IMLBB story. Make sure they feel included in the weekend.',
+        text: 'Your placement does not define your worthiness or the value of your story. This is a chance to share your voice and be heard by the community you just represented on one of leather\u2019s biggest stages.',
       },
     ],
-    rightCol: [
-      {
-        type: 'textarea',
-        q: 'Your prep notes',
-        placeholder: 'Notes for your partner / support person\u2026',
-        rows: 3,
-      },
-    ],
+
   },
 
   /* ─── 15 · Monday Night ─── */
@@ -834,7 +783,7 @@ const EVENTS = [
     title: 'Geartunes',
     cardMeta: 'Monday Night · Sidetrack',
     day: 'Monday Night',
-    time: '9:00 PM \u2013 2:00 AM',
+    time: '8:00 PM \u2013 2:00 AM',
     callTime: 'NONE',
     venue: 'Sidetrack Bar',
     badge: 'OPTIONAL',
@@ -843,7 +792,7 @@ const EVENTS = [
       {
         type: 'qa',
         q: 'What happens here?',
-        a: 'Geartunes is a Monday night celebration bringing leather, showtunes, and community together to close out IMLBB weekend. A great way to unwind, connect with fellow contestants, and soak in the last hours of the weekend.',
+        a: 'Geartunes is a Monday night celebration bringing leather, showtunes, and community together to close out IMLBB weekend. A great way to unwind, connect with fellow contestants, and soak in the last hours of the event.',
       },
       {
         type: 'callout',
@@ -875,7 +824,7 @@ const EVENTS = [
       {
         type: 'qa',
         q: 'What happens here?',
-        a: 'After the crowning, Chicago\u2019s leather venues host celebratory events across the weekend\u2019s closing night. Time to decompress, celebrate with your fellow contestants, and enjoy the community you\u2019ve spent the weekend building. Details are shared at the Finals.',
+        a: 'We close out the weekend with The Black and Blue Ball on Monday, May 25th at Jackhammer: The Hole. We figured a more intimate venue might be a nice change of pace for our partygoers 😉 Doors will also open at 9 pm and we will party it up until 4 am with DJs Boost and Tristan JAXX.',
       },
       {
         type: 'callout',
@@ -892,5 +841,62 @@ const EVENTS = [
   },
 
 ];
+
+  /* ─── 17 · Friday & Saturday ─── */
+  {
+    id: 'event-17',
+    number: '17',
+    title: 'IMBB Contestant Interviews',
+    cardMeta: 'Friday',
+    day: 'Friday',
+    time: '9:00 AM \u2013 10:00 AM',
+    callTime: '8:30 AM',
+    venue: 'Congress Plaza Hotel - Judges Room',
+    badge: 'MANDATORY',
+    contest: 'IMBB',
+    leftCol: [
+      {
+        type: 'qa',
+        q: 'What happens here?',
+        a: 'The first stage of judging. Each contestant has an 8-minute private interview with a panel of judges. You will be asked about your background, your community involvement, and your vision for the IMBB title. This is your chance to show the judges who you are beyond the stage.',
+      },
+      {
+        type: 'checklist',
+        q: 'Scoring criteria',
+        items: [
+          'Be Prepared to talk about anything you are wearing',
+          'Presence and confidence',
+          'Overall presentation and grooming',
+          'How authentically you embody the leather aesthetic',
+        ],
+        note: '',
+      },
+      {
+        type: 'callout',
+        label: 'Remember',
+        text: 'The judges want to see you \u2014 your authentic leather self. Don\u2019t perform; inhabit.',
+      },
+    ],
+    rightCol: [
+      {
+        type: 'checklist',
+        q: 'Gear checklist',
+        items: [
+          'Leather polished and conditioned',
+          'All hardware shined',
+          'Boots \u2014 spit-polished or mirror-finish',
+          'Sash / title badge secured',
+        ],
+        note: '',
+      },
+      {
+        type: 'textarea',
+        q: 'Your prep notes',
+        placeholder: 'Add personal notes here\u2026',
+        rows: 3,
+      },
+
+    ],
+  },
 
 if (typeof module !== 'undefined') module.exports = { EVENTS };
