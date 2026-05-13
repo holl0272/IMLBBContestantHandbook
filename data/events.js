@@ -387,10 +387,67 @@ const EVENTS = [
     ],
   },
 
-  /* ─── 07 · Friday & Saturday ─── */
+  /* --- 07 · IMBB Contestant Interviews --- */
   {
     id: 'event-7',
     number: '07',
+    title: 'IMBB Contestant Interviews',
+    cardMeta: 'Friday',
+    day: 'Friday',
+    time: '9:00 AM \u2013 10:00 AM',
+    callTime: '8:30 AM',
+    venue: 'Congress Plaza Hotel - Judges Room',
+    badge: 'MANDATORY',
+    contest: 'IMBB',
+    leftCol: [
+      {
+        type: 'qa',
+        q: 'What happens here?',
+        a: 'The first stage of judging. Each contestant has an 8-minute private interview with a panel of judges. You will be asked about your background, your community involvement, and your vision for the IMBB title. This is your chance to show the judges who you are beyond the stage.',
+      },
+      {
+        type: 'checklist',
+        q: 'Scoring criteria',
+        items: [
+          'Be Prepared to talk about anything you are wearing',
+          'Presence and confidence',
+          'Overall presentation and grooming',
+          'How authentically you embody the leather aesthetic',
+        ],
+        note: '',
+      },
+      {
+        type: 'callout',
+        label: 'Remember',
+        text: 'The judges want to see you \u2014 your authentic leather self. Don\u2019t perform; inhabit.',
+      },
+    ],
+    rightCol: [
+      {
+        type: 'checklist',
+        q: 'Gear checklist',
+        items: [
+          'Leather polished and conditioned',
+          'All hardware shined',
+          'Boots \u2014 spit-polished or mirror-finish',
+          'Sash / title badge secured',
+        ],
+        note: '',
+      },
+      {
+        type: 'textarea',
+        q: 'Your prep notes',
+        placeholder: 'Add personal notes here\u2026',
+        rows: 3,
+      },
+
+    ],
+  },
+
+  /* ─── 07 · Friday & Saturday ─── */
+  {
+    id: 'event-8',
+    number: '08',
     title: 'Bootblack Stand Time',
     cardMeta: 'Friday & Saturday',
     day: 'Friday & Saturday',
@@ -448,8 +505,8 @@ const EVENTS = [
 
   /* ─── 08 · All Weekend ─── */
   {
-    id: 'event-8',
-    number: '08',
+    id: 'event-9',
+    number: '09',
     title: 'IMLBB Photoshoot',
     cardMeta: 'Needs to be scheduled',
     day: 'all weekend',
@@ -481,8 +538,8 @@ const EVENTS = [
 
   /* ─── 09 · Friday Evening ─── */
   {
-    id: 'event-9',
-    number: '09',
+    id: 'event-10',
+    number: '10',
     title: 'Physique and Stage Presence',
     cardMeta: 'Friday · The Riviera Theater',
     day: 'Friday',
@@ -543,8 +600,8 @@ const EVENTS = [
 
   /* ─── 10 · Saturday ─── */
   {
-    id: 'event-10',
-    number: '10',
+    id: 'event-11',
+    number: '11',
     title: 'Educational Presentation',
     cardMeta: 'Saturday',
     day: 'Saturday',
@@ -607,8 +664,8 @@ const EVENTS = [
 
   /* ─── 11 · Sunday Evening ─── */
   {
-    id: 'event-11',
-    number: '11',
+    id: 'event-12',
+    number: '12',
     title: 'IMLBB Contest Finals',
     cardMeta: 'Sunday · The Riviera Theater',
     day: 'Sunday',
@@ -681,8 +738,8 @@ const EVENTS = [
 
   /* ─── 12 · Sunday Night ─── */
   {
-    id: 'event-12',
-    number: '12',
+    id: 'event-13',
+    number: '13',
     title: 'The Victory Party',
     cardMeta: 'Sunday Evening · House of Blues',
     day: 'Sunday Evening',
@@ -723,8 +780,8 @@ const EVENTS = [
 
   /* ─── 13 · Monday ─── */
   {
-    id: 'event-13',
-    number: '13',
+    id: 'event-14',
+    number: '14',
     title: 'Contestant Scores & Poster Pickup',
     cardMeta: 'Monday Morning',
     day: 'Monday',
@@ -751,8 +808,8 @@ const EVENTS = [
 
   /* ─── 14 · Monday ─── */
   {
-    id: 'event-14',
-    number: '14',
+    id: 'event-15',
+    number: '15',
     title: 'Non-finalists Contestant Speeches',
     cardMeta: 'Monday · Congress Plaza Hotel',
     day: 'Monday',
@@ -778,8 +835,8 @@ const EVENTS = [
 
   /* ─── 15 · Monday Night ─── */
   {
-    id: 'event-15',
-    number: '15',
+    id: 'event-16',
+    number: '16',
     title: 'Geartunes',
     cardMeta: 'Monday Night · Sidetrack',
     day: 'Monday Night',
@@ -810,8 +867,8 @@ const EVENTS = [
 
   /* ─── 16 · Monday Night ─── */
   {
-    id: 'event-16',
-    number: '16',
+    id: 'event-17',
+    number: '17',
     title: 'The Black and Blue Ball',
     cardMeta: 'Monday Night - Jackhammer Bar',
     day: 'Monday Night',
@@ -841,62 +898,5 @@ const EVENTS = [
   },
 
 ];
-
-  /* ─── 17 · Friday & Saturday ─── */
-  {
-    id: 'event-17',
-    number: '17',
-    title: 'IMBB Contestant Interviews',
-    cardMeta: 'Friday',
-    day: 'Friday',
-    time: '9:00 AM \u2013 10:00 AM',
-    callTime: '8:30 AM',
-    venue: 'Congress Plaza Hotel - Judges Room',
-    badge: 'MANDATORY',
-    contest: 'IMBB',
-    leftCol: [
-      {
-        type: 'qa',
-        q: 'What happens here?',
-        a: 'The first stage of judging. Each contestant has an 8-minute private interview with a panel of judges. You will be asked about your background, your community involvement, and your vision for the IMBB title. This is your chance to show the judges who you are beyond the stage.',
-      },
-      {
-        type: 'checklist',
-        q: 'Scoring criteria',
-        items: [
-          'Be Prepared to talk about anything you are wearing',
-          'Presence and confidence',
-          'Overall presentation and grooming',
-          'How authentically you embody the leather aesthetic',
-        ],
-        note: '',
-      },
-      {
-        type: 'callout',
-        label: 'Remember',
-        text: 'The judges want to see you \u2014 your authentic leather self. Don\u2019t perform; inhabit.',
-      },
-    ],
-    rightCol: [
-      {
-        type: 'checklist',
-        q: 'Gear checklist',
-        items: [
-          'Leather polished and conditioned',
-          'All hardware shined',
-          'Boots \u2014 spit-polished or mirror-finish',
-          'Sash / title badge secured',
-        ],
-        note: '',
-      },
-      {
-        type: 'textarea',
-        q: 'Your prep notes',
-        placeholder: 'Add personal notes here\u2026',
-        rows: 3,
-      },
-
-    ],
-  },
 
 if (typeof module !== 'undefined') module.exports = { EVENTS };
