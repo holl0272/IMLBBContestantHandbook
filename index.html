@@ -1534,8 +1534,6 @@
       margin-bottom: 1.5em;
     }
 
-    /* IML page accent */
-    .history-iml-bar { height: 4px; width: 100%; background: var(--blue-light); flex-shrink: 0; }
     .history-iml-label { color: var(--blue-light) !important; }
 
     /* IMBB History page ─────────────────────────────── */
@@ -1543,22 +1541,18 @@
       padding: 0; border-top: none; overflow: hidden;
       display: flex; flex-direction: column;
     }
-    .imbb-hist-bar {
-      height: 5px; width: 100%;
-      background: linear-gradient(90deg, #b8860b 0%, #e0a840 40%, #f5c842 70%, #e0a840 100%);
-      flex-shrink: 0;
-    }
     .imbb-hist-head {
       text-align: center; padding: 40px 5vw 28px;
       border-bottom: 1px solid rgba(224,168,64,.2);
     }
     .imbb-hist-eyebrow {
-      display: block; font-size: 10px; letter-spacing: 6px;
-      text-transform: uppercase; color: #e0a840; margin-bottom: 10px;
+      display: inline-block; font-size: 10px; letter-spacing: 5px;
+      text-transform: uppercase; color: #e0a840;
+      border: 1px solid rgba(224,168,64,.3); padding: 4px 12px; margin-bottom: 20px;
     }
     .imbb-hist-title {
-      font-size: clamp(52px, 9vw, 110px); font-weight: 900;
-      letter-spacing: -2px; line-height: 1;
+      font-size: clamp(32px, 5vw, 72px); font-weight: 700;
+      letter-spacing: 6px; line-height: 1;
       background: linear-gradient(135deg, #b8860b 0%, #e0a840 40%, #f5d060 70%, #c9921a 100%);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       background-clip: text; margin: 0 0 12px;
@@ -2066,8 +2060,6 @@
       .founder-dates { font-size: 6.5pt !important; margin-bottom: 3pt !important; }
       .history-body { font-size: 11.5pt !important; line-height: 1.65 !important; margin-bottom: 6pt !important; }
 
-      /* IML page print accent */
-      .history-iml-bar { height: 3pt !important; }
 
       /* ══ IMBB HISTORY PAGE print ══════════════════════
          Page: 8.5 × 11in  padding: 0 (bar flush to edge)
@@ -2081,13 +2073,12 @@
         display: flex !important; flex-direction: column !important;
         overflow: hidden !important; border-top: none !important;
       }
-      .imbb-hist-bar { height: 4pt !important; flex-shrink: 0 !important; }
-      .imbb-hist-head {
+.imbb-hist-head {
         padding: 0.18in 0.52in 0.14in !important;
         flex-shrink: 0 !important;
       }
-      .imbb-hist-eyebrow { font-size: 7pt !important; letter-spacing: 5pt !important; margin-bottom: 4pt !important; }
-      .imbb-hist-title { font-size: 58pt !important; margin-bottom: 6pt !important; letter-spacing: -2pt !important; }
+      .imbb-hist-eyebrow { font-size: 6.5pt !important; letter-spacing: 3pt !important; padding: 2pt 8pt !important; margin-bottom: 8pt !important; }
+      .imbb-hist-title { font-size: 22pt !important; margin-bottom: 6pt !important; letter-spacing: 3pt !important; }
       .imbb-hist-tagline { font-size: 9pt !important; line-height: 1.55 !important; max-width: 100% !important; }
       .imbb-hist-founder {
         padding: 10pt 0.52in !important;
@@ -2380,10 +2371,9 @@
 
 <!-- ── PAGE 5: HISTORY ── -->
 <section id="history">
-  <div class="history-iml-bar"></div>
   <div class="s-header" style="padding-top:0;">
     <span class="s-num history-iml-label">International Mr. Leather</span>
-    <h2 class="s-title">IML - Founded 1979</h2>
+    <h2 class="s-title history-iml-label">IML - Founded 1979</h2>
   </div>
   <p class="history-body">
     The International Mr. Leather competition was founded in 1979 by Chuck Renslow
@@ -2417,9 +2407,6 @@
 
 <!-- ── IMBB HISTORY PAGE ── -->
 <section id="imbb-history">
-
-  <!-- gold accent bar -->
-  <div class="imbb-hist-bar"></div>
 
   <!-- header -->
   <div class="imbb-hist-head">
